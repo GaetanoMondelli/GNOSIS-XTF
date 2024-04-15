@@ -1,38 +1,4 @@
-# 🏗 XRP BRIDGE SOLUTIONS
-
-
-Terms used in this context from https://opensource.ripple.com/
-
-**Locking Chain:** The chain where the token originally exists. If the locking chain is an XRPL chain, the bridge IOU issuer isn't the bridge door account. If the locking chain is an EVM chain, the ERC20 owner isn't the bridge door account.
-**Issuing Chain**: The chain the token is bridged to. If the issuing chain is an XRPL chain, the bridged IOU issuer is the bridge door account. If the issuing chain is an EVM chain, the bridged ERC20 owner is the bridge door account and can mint/burn tokens.
-
-
-# First implementation we wrapped tokens on Locking Chain and we do not port wrapped tokens
-
-Alternatlively we can implement a messaging system that is not wrapping tokens so we can have 1:1 messages and 1:n messgaes (Broadcast)
-Chainlink - CCIP is the leader for x-chains messanging solution XRP Legder is not supported by Chainlink. So we can deploy a Hyperlane bridge for this demo
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+https://www.gnosis.io/
 
 # 🏗 Scaffold-ETH 2
 
@@ -113,3 +79,18 @@ To know more about its features, check out our [website](https://scaffoldeth.io)
 We welcome contributions to Scaffold-ETH 2!
 
 Please see [CONTRIBUTING.MD](https://github.com/scaffold-eth/scaffold-eth-2/blob/main/CONTRIBUTING.md) for more information and guidelines for contributing to Scaffold-ETH 2.
+
+
+# 🏗 BRIDGE SOLUTIONS
+
+
+Terms used in this context from https://opensource.ripple.com/
+
+**Locking Chain:** The chain where the token originally exists. If the locking chain is an XRPL chain, the bridge IOU issuer isn't the bridge door account. If the locking chain is an EVM chain, the ERC20 owner isn't the bridge door account.
+**Issuing Chain**: The chain the token is bridged to. If the issuing chain is an XRPL chain, the bridged IOU issuer is the bridge door account. If the issuing chain is an EVM chain, the bridged ERC20 owner is the bridge door account and can mint/burn tokens.
+
+
+# First implementation we wrapped tokens on Locking Chain and we do not port wrapped tokens
+
+Alternatlively we can implement a messaging system that is not wrapping tokens so we can have 1:1 messages and 1:n messgaes (Broadcast)
+Chainlink - CCIP is the leader for x-chains messanging solution XRP Legder is not supported by Chainlink. So we can deploy a Hyperlane bridge for this demo

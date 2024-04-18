@@ -2680,6 +2680,7 @@ __metadata:
     prettier: ~2.8.4
     qrcode: ~1.5.1
     solidity-coverage: ~0.8.5
+    solidity-rlp: ^2.0.8
     ts-node: ~10.9.1
     typechain: ~8.1.0
     typescript: ~5.1.6
@@ -14480,6 +14481,13 @@ __metadata:
   bin:
     solidity-coverage: plugins/bin.js
   checksum: 8839416986fc76d27931dca885d915717fea3d7bae3cd2506f315f8b0583b50e05bd25a0d481262ad6cf2786966f603b6481b1658810e4add5761ce96cf5ffe4
+  languageName: node
+  linkType: hard
+
+"solidity-rlp@npm:^2.0.8":
+  version: 2.0.8
+  resolution: "solidity-rlp@npm:2.0.8"
+  checksum: e182087ffa1ee61447a04cae1b2ac3d814a65f52c1e6c81084ed181216f63fdc44df5197b5a35a627809db392fddd65f6e8dde4b8e49decdfc6fdfc7ed7ba3e8
   languageName: node
   linkType: hard
 

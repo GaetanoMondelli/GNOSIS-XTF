@@ -1,5 +1,53 @@
 {
   "chains": {
+    "chiado": {
+      "blockExplorers": [
+        {
+          "apiUrl": "https://gnosis-chiado.blockscout.com/api",
+          "family": "blockscout",
+          "name": "GnosisScan",
+          "url": "https://gnosis-chiado.blockscout.com"
+        }
+      ],
+      "blocks": {
+        "confirmations": 1,
+        "estimateBlockTime": 5,
+        "reorgPeriod": 14
+      },
+      "chainId": 10200,
+      "displayName": "Chiado",
+      "domainId": 10200,
+      "isTestnet": true,
+      "name": "chiado",
+      "nativeToken": {
+        "decimals": 18,
+        "name": "xDai",
+        "symbol": "xDai"
+      },
+      "protocol": "ethereum",
+      "rpcUrls": [
+        {
+          "http": "https://rpc.chiadochain.net"
+        }
+      ],
+      "staticMerkleRootMultisigIsmFactory": "0xdE617C9DaDDF41EbD739cA57eBbA607C11ba902d",
+      "staticMessageIdMultisigIsmFactory": "0x04a14C5c473bde21bDd52C2f169d99597B298a5B",
+      "staticAggregationIsmFactory": "0xa88e1a1f892124a33DC6044b6B869C467238D1e3",
+      "staticAggregationHookFactory": "0x314773c7C42587d72801A47687CebD789b8BC363",
+      "domainRoutingIsmFactory": "0x0195247B6B2b78219A78865F85350543562eadbc",
+      "interchainSecurityModule": "0xB1A759e4CA0e33F8f7086703881BB988d3b8905c",
+      "messageIdMultisigIsm": "0xB1A759e4CA0e33F8f7086703881BB988d3b8905c",
+      "merkleTreeHook": "0xe63D576Dbff811650F9823a63Ed05DEfE5f43533",
+      "protocolFee": "0xff5cdbb96477B974E1d72af11A725EC761F4FfC4",
+      "testRecipient": "0x79A975746ED76D152524e07ed030EF84e298b438",
+      "mailbox": "0xC946BF8e51E6861BEf8831a458cF174771a777F7",
+      "proxyAdmin": "0xfAD3E45dfE1f6e73Fdd5E9426Cc69752698337af",
+      "validatorAnnounce": "0x4d14c5856EAdb0364308d3F086C16C9820bC6f34",
+      "interchainGasPaymaster": "0x0000000000000000000000000000000000000000",
+      "index": {
+        "from": 9345941
+      }
+    },
     "sepolia": {
       "blockExplorers": [
         {
@@ -47,7 +95,7 @@
       "staticMerkleRootMultisigIsmFactory": "0x0a71AcC99967829eE305a285750017C4916Ca269",
       "staticMessageIdMultisigIsmFactory": "0xFEb9585b2f948c1eD74034205a7439261a9d27DD",
       "storageGasOracle": "0x71775B071F77F1ce52Ece810ce084451a3045FFe",
-      "testRecipient": "0xe5A006425eDd6f835B0C48b8C5E79da466bC67d0",
+      "testRecipient": "0xCED4dec12Bab267D1F6be4adc880C86D29aef07a",
       "testTokenRecipient": "0x031AD9c560D37baC7d6Bd2d27A2443bAfd10101A",
       "timelockController": "0x0000000000000000000000000000000000000000",
       "validatorAnnounce": "0xE6105C59480a1B7DD3E4f28153aFdbE12F4CfCD9",
@@ -55,34 +103,6 @@
       "customHook": "0x4917a9746A7B6E0A57159cCb7F5a6744247f2d0d",
       "index": {
         "from": 4517401
-      }
-    },
-    "xrpledger": {
-      "name": "xrpledger",
-      "chainId": 1440002,
-      "domainId": 1440002,
-      "protocol": "ethereum",
-      "rpcUrls": [
-        {
-          "http": "https://rpc-evm-sidechain.xrpl.org"
-        }
-      ],
-      "staticMerkleRootMultisigIsmFactory": "0xdE617C9DaDDF41EbD739cA57eBbA607C11ba902d",
-      "staticMessageIdMultisigIsmFactory": "0x04a14C5c473bde21bDd52C2f169d99597B298a5B",
-      "staticAggregationIsmFactory": "0xa88e1a1f892124a33DC6044b6B869C467238D1e3",
-      "staticAggregationHookFactory": "0x314773c7C42587d72801A47687CebD789b8BC363",
-      "domainRoutingIsmFactory": "0x0195247B6B2b78219A78865F85350543562eadbc",
-      "interchainSecurityModule": "0xB1A759e4CA0e33F8f7086703881BB988d3b8905c",
-      "messageIdMultisigIsm": "0xB1A759e4CA0e33F8f7086703881BB988d3b8905c",
-      "merkleTreeHook": "0xe63D576Dbff811650F9823a63Ed05DEfE5f43533",
-      "protocolFee": "0xff5cdbb96477B974E1d72af11A725EC761F4FfC4",
-      "testRecipient": "0x79A975746ED76D152524e07ed030EF84e298b438",
-      "mailbox": "0xC946BF8e51E6861BEf8831a458cF174771a777F7",
-      "proxyAdmin": "0xfAD3E45dfE1f6e73Fdd5E9426Cc69752698337af",
-      "validatorAnnounce": "0x4d14c5856EAdb0364308d3F086C16C9820bC6f34",
-      "interchainGasPaymaster": "0x0000000000000000000000000000000000000000",
-      "index": {
-        "from": 7699328
       }
     }
   },

@@ -1,4 +1,4 @@
-xrpledger:
+chiado:
   type: messageIdMultisigIsm
   threshold: 1
   validators:

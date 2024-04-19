@@ -39,7 +39,7 @@ rm -rf $DB_RELAYER
 rm -rf $DB_VALIDATOR
 
 hyperlane deploy core \
-    --targets xrpledger,sepolia \
+    --targets chiado,sepolia \
     --chains $CONFIG_FOLDER/chains.yaml \
     --ism $CONFIG_FOLDER/ism.yaml \
     --out $ART_FOLDER \
@@ -66,10 +66,10 @@ cd hyperlane-monorepo/rust
 export CONFIG_FILES=../../$ART_FOLDER/$ARG_FILE
 
 export VALIDATOR_SIGNATURES_DIR_SEPOLIA=.../../validator_signatures_sepolia
-export VALIDATOR_SIGNATURES_DIR_XRPLEDGER=.../../validator_signatures_xrpledger
+export VALIDATOR_SIGNATURES_DIR_CHIADO=.../../validator_signatures_chiado
 
 export DB_VALIDATOR_SEPOLIA=../../hyperlane_db_validator_sepolia
-export DB_VALIDATOR_XRPLEDGER=../../hyperlane_db_validator_xrpledger
+export DB_VALIDATOR_CHIADO=../../hyperlane_db_validator_chiado
 
 export DB_RELAYER=../../hyperlane_db_relayer
 
@@ -89,7 +89,7 @@ pid1=$!
 # Start the second process (validator) in the background for second chain
 cargo run --release --bin validator -- \
     --db $DB_VALIDATOR_XRPLEDGER \
-    --originChainName xrpledger \
+    --originChainName chiado \
     --checkpointSyncer.type localStorage \
     --checkpointSyncer.path $VALIDATOR_SIGNATURES_DIR_XRPLEDGER \
     --validator.key $HYP_KEY &
@@ -97,7 +97,7 @@ cargo run --release --bin validator -- \
 # Start the second process (relayer) in the background
 cargo run --release --bin relayer -- \
     --db $DB_RELAYER \
-    --relayChains xrpledger,sepolia \
+    --relayChains chiado,sepolia \
     --allowLocalCheckpointSyncers true \
     --defaultSigner.key $HYP_KEY \
     --metrics-port 9091 &

@@ -1,8 +1,7 @@
 import { HardhatRuntimeEnvironment } from "hardhat/types";
 import { DeployFunction } from "hardhat-deploy/types";
-import { SimpleERC20, ETFLock, contracts } from "../typechain-types";
-// import * as CORE_DEPLOYMENT from "../../../../bridge/artifacts/core-deployment-2024-04-11-01-28-34.json";
-// import * as RECEIVER_DEPLOYMENT from "../deployments/sepolia/HyperlaneMessageReceiver.json";
+import { SimpleERC20, ETFIssuingChain } from "../typechain-types";
+import * as CORE_DEPLOYMENT from "../../../bridge/artifacts/core-deployment-2024-04-19-15-37-56.json";
 import { BigNumber } from "@ethersproject/bignumber";
 
 /**
@@ -23,6 +22,8 @@ const deployYourContract: DeployFunction = async function (hre: HardhatRuntimeEn
   const sepoliaMailBoxAddress = CORE_DEPLOYMENT["sepolia"]["mailbox"];
   const sepoliaISMAddress = CORE_DEPLOYMENT["sepolia"]["messageIdMultisigIsm"];
 
+  const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+
   if (hre.network.name === "sepolia") {
     const requiredSideTokens = [
       {
@@ -35,7 +36,11 @@ const deployYourContract: DeployFunction = async function (hre: HardhatRuntimeEn
       },
     ];
 
-
+    await deploy("SimpleERC20", {
+      from: deployer,
+      args: ["SIDEToken" + 0, "SIDETK" + 0, 0],
+      log: true,
+    });
 
 
     for (let i = 0; i < requiredSideTokens.length; i++) {
@@ -51,13 +56,13 @@ const deployYourContract: DeployFunction = async function (hre: HardhatRuntimeEn
     }
 
     console.log("Required side tokens: ", requiredSideTokens);
-    await deploy("ETFLock", {
+    await deploy("ETFIssuingChain", {
       from: deployer,
       args: [chiadoChainId, sepoliaChainId, requiredSideTokens, zeroAddress, tokenPerVault],
       log: true,
     });
 
-    const etfSide = await hre.ethers.getContract<ETFLock>("ETFLock", deployer);
+    const etfSide = await hre.ethers.getContract<ETFIssuingChain>("ETFIssuingChain", deployer);
 
     // // await requiredSideTokens.map(async token => {
     // const t = await hre.ethers.getContract<SimpleERC20>("SimpleERC20", deployer);
@@ -65,13 +70,13 @@ const deployYourContract: DeployFunction = async function (hre: HardhatRuntimeEn
     // });
 
     // const main ETF contract
-    const mainETFAddress = "0x0F077B8750838830309F93fa7f746f440DbF7690";
+    const mainETFAddress = "0x39C07e48dfCAfd49A6e4be9ca0164c5Be9A505fc";
 
     // set side chain params
     await etfSide.setSideChainParams(mainETFAddress, sepoliaMailBoxAddress, sepoliaISMAddress);
   }
 
-  if (hre.network.name === "etherlink") {
+  if (hre.network.name === "chiado") {
     console.log("Deploying ETF contract");
     //deploy tokenA and tokenB contracts
     const requiredTokens = [
@@ -91,7 +96,7 @@ const deployYourContract: DeployFunction = async function (hre: HardhatRuntimeEn
       },
     ];
 
-    for (let i = 0; i < requiredTokens.length; i++) {
+    for (let i = 0; i < 1; i++) {
       await deploy("SimpleERC20", {
         from: deployer,
         args: ["Token" + i, "TK" + i, 0],
@@ -103,16 +108,43 @@ const deployYourContract: DeployFunction = async function (hre: HardhatRuntimeEn
         log: true,
       });
       const t = await hre.ethers.getContract<SimpleERC20>("SimpleERC20", deployer);
+      // // get contract at 0x2C5e23Cdbff221B707D1a42577764586791B5074
+      // // const t = await hre.ethers.getContractAt("SimpleERC20", "0x2C5e23Cdbff221B707D1a42577764586791B5074");
+      // await t.mint(
+      //   "0x2a1F5eB3e84e58e6F1e565306298B9dE1273f203",
+      //   BigNumber.from(10000).mul(BigNumber.from(10).pow(18)).toString(),
+      // );
+      requiredTokens[i]._address = await t.getAddress();
+      requiredTokens[i]._aggregator = await (await hre.ethers.getContract("MockAggregator", deployer)).getAddress();
+      console.log("Token address: ", requiredTokens[i]._address);
+      await sleep(4000);
+    }
+
+
+    for (let i = 1; i < 2; i++) {
+      await deploy("SimpleERC20", {
+        from: deployer,
+        args: ["Token_2" + i, "TK2" + i, 0],
+        log: true,
+      });
+      await deploy("MockAggregator", {
+        from: deployer,
+        args: [10 * i, 18],
+        log: true,
+      });
+      const t = await hre.ethers.getContract<SimpleERC20>("SimpleERC20", deployer);
       // get contract at 0x2C5e23Cdbff221B707D1a42577764586791B5074
       // const t = await hre.ethers.getContractAt("SimpleERC20", "0x2C5e23Cdbff221B707D1a42577764586791B5074");
       await t.mint(
-        "0x001385E75cfc5563a925981F8501916D7Efb4344",
+        "0x2a1F5eB3e84e58e6F1e565306298B9dE1273f203",
         BigNumber.from(10000).mul(BigNumber.from(10).pow(18)).toString(),
       );
       requiredTokens[i]._address = await t.getAddress();
       requiredTokens[i]._aggregator = await (await hre.ethers.getContract("MockAggregator", deployer)).getAddress();
       console.log("Token address: ", requiredTokens[i]._address);
+      await sleep(4000);
     }
+
 
     await deploy("MockAggregator", {
       from: deployer,
@@ -123,37 +155,39 @@ const deployYourContract: DeployFunction = async function (hre: HardhatRuntimeEn
     const aggregatorForForeignToken = await hre.ethers.getContract<SimpleERC20>("MockAggregator", deployer);
 
     requiredTokens.push({
-      _address: "0xA0ac5c99C36128C1De7F88e4f0894D8859Bbc2B2",
+      _address: "0x5e3eFC5b603d0AfD11f664d8d58DA94159247f60",
       _quantity: BigNumber.from(100).mul(decimalFactor).toString(),
       _chainId: sepoliaChainId,
       _contributor: deployer,
       _aggregator: await aggregatorForForeignToken.getAddress(),
     });
 
-    // console.log("Required tokens: ", requiredTokens);
+    console.log("Required tokens: ", requiredTokens);
 
     // deploy etfToken contract
     await deploy("SimpleERC20", {
       from: deployer,
-      args: ["ETFToken", "ETF", 0],
+      args: ["ETFToken", "ETFT", 0],
       log: true,
     });
     const etfToken = await hre.ethers.getContract<SimpleERC20>("SimpleERC20", deployer);
     console.log("ETF Token address: ", await etfToken.getAddress());
 
-    await deploy("ETFLock", {
+    await deploy("ETFIssuingChain", {
       from: deployer,
       args: [chiadoChainId, chiadoChainId, requiredTokens, await etfToken.getAddress(), tokenPerVault],
       log: true,
     });
-    const etf = await hre.ethers.getContract<ETFLock>("ETFLock", deployer);
+    const etf = await hre.ethers.getContract<ETFIssuingChain>("ETFIssuingChain", deployer);
     await etfToken.setOwner(await etf.getAddress());
+    await sleep(4000);
+
 
     await etf.setMainChainParams(
-      "0x0d808c694f5b916343D2139181599CA545d72B0e",
+      "0x5e3eFC5b603d0AfD11f664d8d58DA94159247f60",
       sepoliaChainId,
-      CORE_DEPLOYMENT["etherlink"]["mailbox"],
-      CORE_DEPLOYMENT["etherlink"]["messageIdMultisigIsm"],
+      CORE_DEPLOYMENT["chiado"]["mailbox"],
+      CORE_DEPLOYMENT["chiado"]["messageIdMultisigIsm"],
     );
   }
 };

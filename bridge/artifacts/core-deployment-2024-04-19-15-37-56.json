@@ -1,5 +1,5 @@
 {
-  "xrpledger": {
+  "chiado": {
     "staticMerkleRootMultisigIsmFactory": "0xdE617C9DaDDF41EbD739cA57eBbA607C11ba902d",
     "staticMessageIdMultisigIsmFactory": "0x04a14C5c473bde21bDd52C2f169d99597B298a5B",
     "staticAggregationIsmFactory": "0xa88e1a1f892124a33DC6044b6B869C467238D1e3",
@@ -25,7 +25,7 @@
     "merkleTreeHook": "0x4917a9746A7B6E0A57159cCb7F5a6744247f2d0d",
     "protocolFee": "0x13AC3349Cb159fE86A22cf42DdA803D9f7309DB5",
     "customHook": "0x4917a9746A7B6E0A57159cCb7F5a6744247f2d0d",
-    "testRecipient": "0xe5A006425eDd6f835B0C48b8C5E79da466bC67d0",
+    "testRecipient": "0xCED4dec12Bab267D1F6be4adc880C86D29aef07a",
     "mailbox": "0xfFAEF09B3cd11D9b20d1a19bECca54EEC2884766",
     "proxyAdmin": "0x97Bbc6bBaFa5Ce3b2FA966c121Af63bD09e940f8",
     "validatorAnnounce": "0xE6105C59480a1B7DD3E4f28153aFdbE12F4CfCD9"

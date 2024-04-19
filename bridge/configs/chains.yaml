@@ -1,10 +1,11 @@
-xrpledger:
+chiado:
   name: chiado
   chainId: 10200
   domainId: 10200
   protocol: ethereum
   rpcUrls:
-    - http: https://1rpc.io/gnosis
+    - http: https://rpc.chiadochain.net
+    - http: https://gnosis-chiado.drpc.org
 sepolia:
   name: sepolia
   chainId: 11155111

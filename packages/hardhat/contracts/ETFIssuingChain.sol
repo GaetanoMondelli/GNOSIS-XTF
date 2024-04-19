@@ -43,6 +43,7 @@ struct DepositInfo {
 }
 
 contract ETFIssuingChain {
+    bytes32 public latestCommitment;
 	address public sideChainLock;
 	uint32 public sideChainId;
 	TokenQuantity[] public requiredTokens;
@@ -122,6 +123,12 @@ contract ETFIssuingChain {
 		sideChainLock = _sideChainLock;
 	}
 
+	function updateCommitment() public {
+		// based on states values, generate a commitment
+		VaultState[] memory states = getVaultStates();
+		latestCommitment = keccak256(abi.encodePacked(states));
+	}
+
 	function getVaultStates() public view returns (VaultState[] memory) {
 		VaultState[] memory states = new VaultState[](90);
 		for (uint256 i = 0; i < states.length; i++) {
@@ -184,6 +191,7 @@ contract ETFIssuingChain {
 				);
 			}
 			vaults[_vaultId].state = VaultState.OPEN;
+			updateCommitment();
 		}
 
 		for (uint256 i = 0; i < _tokens.length; i++) {
@@ -246,6 +254,7 @@ contract ETFIssuingChain {
 			}
 		}
 		vaults[_vaultId].state = VaultState.MINTED;
+		updateCommitment();
 
 		if (isMainChain()) {
 			distributeShares(_vaultId);
@@ -338,6 +347,8 @@ contract ETFIssuingChain {
 			}
 		}
 		vaults[_vaultId].state = VaultState.BURNED;
+		updateCommitment();
+
 
 		// notify burn to sidechain
 		bytes32 sideChainLockBytes32 = addressToBytes32(sideChainLock);

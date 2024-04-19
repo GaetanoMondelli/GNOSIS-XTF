@@ -1,10 +1,10 @@
 xrpledger:
-  name: xrpledger
-  chainId: 1440002
-  domainId: 1440002
+  name: chiado
+  chainId: 10200
+  domainId: 10200
   protocol: ethereum
   rpcUrls:
-    - http: https://rpc-evm-sidechain.xrpl.org
+    - http: https://1rpc.io/gnosis
 sepolia:
   name: sepolia
   chainId: 11155111

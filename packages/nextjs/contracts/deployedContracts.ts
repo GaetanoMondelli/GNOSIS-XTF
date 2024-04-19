@@ -1009,6 +1009,75 @@ const deployedContracts = {
     },
   },
   11155111: {
+    Committer: {
+      address: "0x558016c6337dE3efb15Af53Cb6Dc7563988f2E62",
+      abi: [
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "targetChainId",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "constructor",
+        },
+        {
+          inputs: [],
+          name: "TARGET_CHAIN_ID",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes",
+              name: "data",
+              type: "bytes",
+            },
+          ],
+          name: "_generateCommitment",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "latestCommitment",
+          outputs: [
+            {
+              internalType: "bytes32",
+              name: "",
+              type: "bytes32",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "nonce",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+      ],
+      inheritedFunctions: {},
+    },
     ETFLockingChain: {
       address: "0x08a758eB8ba70b6b5Df483087F293cD0311b7258",
       abi: [
@@ -1459,6 +1528,221 @@ const deployedContracts = {
             },
           ],
           stateMutability: "view",
+          type: "function",
+        },
+      ],
+      inheritedFunctions: {},
+    },
+    Prover: {
+      address: "0x8f07903cac2FDDb1d9c1c53A3199e933C9E25508",
+      abi: [
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "sourceChainId",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "commitmentsSlot",
+              type: "uint256",
+            },
+            {
+              internalType: "address",
+              name: "giriGiriBashi",
+              type: "address",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "constructor",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes",
+              name: "accountRlp",
+              type: "bytes",
+            },
+          ],
+          name: "InvalidAccountRlp",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "InvalidAccountStorageRoot",
+          type: "error",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes32",
+              name: "blockHeaderHash",
+              type: "bytes32",
+            },
+            {
+              internalType: "bytes32",
+              name: "expectedBlockHeaderHash",
+              type: "bytes32",
+            },
+          ],
+          name: "InvalidBlockHeader",
+          type: "error",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes32",
+              name: "latestCommitment",
+              type: "bytes32",
+            },
+            {
+              internalType: "bytes32",
+              name: "expectedLatestCommitment",
+              type: "bytes32",
+            },
+          ],
+          name: "InvalidLatestCommitment",
+          type: "error",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "nonce",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "expectedNonce",
+              type: "uint256",
+            },
+          ],
+          name: "InvalidNonce",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "ACCOUNT",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "COMMITMENTS_SLOT",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "GIRI_GIRI_BASHI",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "SOURCE_CHAIN_ID",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              components: [
+                {
+                  internalType: "uint256",
+                  name: "blockNumber",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "nonce",
+                  type: "uint256",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "storageRoot",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "storageProof",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct IProver.Proof",
+              name: "proof",
+              type: "tuple",
+            },
+            {
+              internalType: "bytes",
+              name: "data",
+              type: "bytes",
+            },
+          ],
+          name: "_verifyProof",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "expectedNonce",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "account",
+              type: "address",
+            },
+          ],
+          name: "setAccount",
+          outputs: [],
+          stateMutability: "nonpayable",
           type: "function",
         },
       ],

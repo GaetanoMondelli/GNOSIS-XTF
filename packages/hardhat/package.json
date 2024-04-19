@@ -7,6 +7,7 @@
     "compile": "hardhat compile",
     "deploy": "hardhat deploy",
     "deploy-xrpledger": "hardhat deploy --tags etf,generateTsAbis --network xrpledger",
+    "deploy-committer": "hardhat deploy --tags committer,generateTsAbis --network sepolia",
     "deploy-sepolia": "hardhat deploy --tags etf,generateTsAbis --network sepolia",
     "flatten": "hardhat flatten",
     "fork": "MAINNET_FORKING_ENABLED=true hardhat node --network hardhat --no-deploy",
@@ -19,6 +20,8 @@
     "verify": "hardhat etherscan-verify"
   },
   "dependencies": {
+    "@aragon/evm-storage-proofs": "^0.1.0",
+    "@aragon/web3-proofs": "^0.1.0",
     "@chainlink/contracts": "0.6.1",
     "@hyperlane-xyz/core": "^3.10.0",
     "@openzeppelin/contracts": "~4.8.1",

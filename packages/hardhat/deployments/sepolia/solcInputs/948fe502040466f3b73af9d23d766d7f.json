@@ -1,0 +1,37 @@
+{
+  "language": "Solidity",
+  "sources": {
+    "contracts/Committer.sol": {
+      "content": "//SPDX-License-Identifier: MIT\n\npragma solidity ^0.8.20;\n\ncontract Committer {\n    mapping(address => bytes32) public latestCommitments;\n    uint256 public nonce;\n    uint256 public immutable TARGET_CHAIN_ID;\n\n    constructor(uint256 targetChainId) {\n        TARGET_CHAIN_ID = targetChainId;\n    }\n\n    function _generateCommitment(bytes memory data) public {\n        uint256 currentNonce = nonce;\n        bytes32 commitment = keccak256(abi.encode(TARGET_CHAIN_ID, data, currentNonce));\n        latestCommitments[msg.sender] = commitment;\n        unchecked {\n            ++nonce;\n        }\n    }\n}"
+    }
+  },
+  "settings": {
+    "viaIR": true,
+    "optimizer": {
+      "enabled": true,
+      "runs": 1000
+    },
+    "evmVersion": "paris",
+    "outputSelection": {
+      "*": {
+        "*": [
+          "abi",
+          "evm.bytecode",
+          "evm.deployedBytecode",
+          "evm.methodIdentifiers",
+          "metadata",
+          "devdoc",
+          "userdoc",
+          "storageLayout",
+          "evm.gasEstimates"
+        ],
+        "": [
+          "ast"
+        ]
+      }
+    },
+    "metadata": {
+      "useLiteralContent": true
+    }
+  }
+}

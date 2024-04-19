@@ -1,310 +1,128 @@
-// SPDX-License-Identifier: MIT
+import { expect } from "chai";
+import { ethers } from "hardhat";
+import { ETFIssuingChain, SimpleERC20, MockAggregator, Hashi, ShoyuBashi, MockAdapter } from "../typechain-types";
+import { BigNumber } from "@ethersproject/bignumber";
+import { Web3Proofs } from "@aragon/web3-proofs";
 
-pragma solidity ^0.8.0;
+describe("Hyperlane Bridge", function () {
+  // We define a fixture to reuse the same setup in every test.
+  let owner: any;
+  let etf: ETFIssuingChain;
+  let etfToken: SimpleERC20;
+  let tokenA: SimpleERC20;
+  let tokenB: SimpleERC20;
+  const domain = 42;
+  const decimalFactor = BigNumber.from(10).pow(18);
+  const tokenPerVault = BigNumber.from(100).mul(decimalFactor).toString();
+  let requiredTokens: any[];
+  let hashi: Hashi;
+  let shoyuBashi: ShoyuBashi;
 
-import { IERC721 } from "@openzeppelin/contracts/token/ERC721/IERC721.sol";
-import { IERC20 } from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
-import { ISimpleERC20 } from "./SimpleERC20.sol";
-import "@hyperlane-xyz/core/contracts/interfaces/IMailbox.sol";
-import { IInterchainSecurityModule } from "@hyperlane-xyz/core/contracts/interfaces/IInterchainSecurityModule.sol";
-import "@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol";
-import "hardhat/console.sol";
+  const HASH_ZERO = "0x0000000000000000000000000000000000000000000000000000000000000000";
+  const HASH_GOOD = "0x0000000000000000000000000000000000000000000000000000000000000001";
+  const HASH_BAD = "0x0000000000000000000000000000000000000000000000000000000000000bad";
 
-struct TokenQuantity {
-	address _address;
-	uint256 _quantity;
-	uint32 _chainId;
-	address _contributor;
-	address _aggregator;
-}
+  before(async () => {
+    [owner] = await ethers.getSigners();
+    const etfLockFactory = await ethers.getContractFactory("ETFIssuingChain");
+    const hashiFactory = await ethers.getContractFactory("Hashi");
+    const shuSoFactory = await ethers.getContractFactory("ShoyuBashi");
 
-struct Vault {
-	TokenQuantity[] _tokens;
-	VaultState state;
-}
+    const simpleFactory = await ethers.getContractFactory("SimpleERC20");
+    const aggregatorFactory = await ethers.getContractFactory("MockAggregator");
 
-enum VaultState {
-	EMPTY,
-	OPEN,
-	MINTED,
-	BURNED
-}
+    hashi = (await hashiFactory.deploy()) as Hashi;
+    shoyuBashi = (await shuSoFactory.deploy(owner, await hashi.getAddress())) as ShoyuBashi;
+    const settings = {
+      quarantined: false,
+      minimumBond: ethers.parseEther("1"),
+      startId: 1,
+      idDepth: 20,
+      timeout: 500,
+    };
 
-struct EventInfo {
-	address sender;
-	uint256 quantity;
-	uint32 chainId;
-	address contributor;
-}
+    const MockAdapter = await ethers.getContractFactory("MockAdapter");
+    const firstmockAdapter = (await MockAdapter.deploy()) as MockAdapter;
+    const secondMockAdapter = (await MockAdapter.deploy()) as MockAdapter;
+    const DOMAIN_ID = 1;
 
-struct DepositInfo {
-	uint256 vaultId;
-	TokenQuantity[] tokens;
-}
+    await firstmockAdapter.setHashes(
+      DOMAIN_ID,
+      [0, 1, 20, 21, 22, 23],
+      [HASH_ZERO, HASH_GOOD, HASH_BAD, HASH_GOOD, HASH_BAD, HASH_ZERO],
+    );
+    await secondMockAdapter.setHashes(
+      DOMAIN_ID,
+      [0, 1, 20, 21, 22, 23],
+      [HASH_ZERO, HASH_GOOD, HASH_GOOD, HASH_GOOD, HASH_GOOD, HASH_ZERO],
+    );
+    await shoyuBashi.enableAdapters(DOMAIN_ID, [
+      await firstmockAdapter.getAddress(),
+      await secondMockAdapter.getAddress(),
+    ]);
+    await shoyuBashi.setThreshold(DOMAIN_ID, 2);
 
-contract ETFLock {
-	address public sideChainLock;
-	TokenQuantity[] public requiredTokens;
-	mapping(address => TokenQuantity) public addressToToken;
-	uint32 public chainId;
-	uint32 public mainChainId;
-	
-	// Siechain params
-	address public mainChainLock;
-	IMailbox outbox;
-	IInterchainSecurityModule securityModule;
+    // Disagree
+    // await shoyuBashi.getHash(DOMAIN_ID, 20, [await firstmockAdapter.getAddress(), await secondMockAdapter.getAddress()]);
 
-	// Mainchain params
-	address public etfToken;
-	uint256 public etfTokenPerVault;
+    await shoyuBashi.getHash(DOMAIN_ID, 1, [await firstmockAdapter.getAddress(), await secondMockAdapter.getAddress()]);
 
-	mapping(uint256 => address[]) contributorsByVault;
-	mapping(uint256 => mapping(address => uint256))
-		public accountContributionsPerVault;
+    etfToken = (await simpleFactory.deploy("ETF Token", "ETF", 0)) as SimpleERC20;
+    tokenA = (await simpleFactory.deploy("TokenA", "TKA", 18)) as SimpleERC20;
+    tokenB = (await simpleFactory.deploy("TokenB", "TKB", 18)) as SimpleERC20;
+    await tokenA.mint(owner.address, BigNumber.from(1000).mul(decimalFactor).toString());
+    await tokenB.mint(owner.address, BigNumber.from(1000).mul(decimalFactor).toString());
+    const aggrTokenA = (await aggregatorFactory.deploy(1, 18)) as MockAggregator;
+    const aggrTokenB = (await aggregatorFactory.deploy(2, 28)) as MockAggregator;
 
-	event Deposit(
-		uint256 _vaultId,
-		address _address,
-		uint256 _quantity,
-		uint32 _chainId,
-		address _contributor
-	);
+    requiredTokens = [
+      {
+        _address: await tokenA.getAddress(),
+        _quantity: BigNumber.from(10).mul(decimalFactor).toString(),
+        _chainId: domain,
+        _contributor: owner.address,
+        _aggregator: await aggrTokenA.getAddress(),
+      },
+      {
+        _address: await tokenB.getAddress(),
+        _quantity: BigNumber.from(20).mul(decimalFactor).toString(),
+        _chainId: domain,
+        _contributor: owner.address,
+        _aggregator: await aggrTokenB.getAddress(),
+      },
+    ];
 
-	mapping(uint256 => Vault) public vaults;
+    etf = (await etfLockFactory.deploy(domain, domain, requiredTokens, etfToken, tokenPerVault)) as ETFIssuingChain;
+    await etfToken.setOwner(await etf.getAddress());
+    await tokenA.approve(await etf.getAddress(), BigNumber.from(1000).mul(decimalFactor).toString());
+    await tokenB.approve(await etf.getAddress(), BigNumber.from(1000).mul(decimalFactor).toString());
+  });
 
-	constructor(
-		uint32 _mainChain,
-		uint32 _chainId,
-		TokenQuantity[] memory _requiredTokens,
-		address _etfToken,
-		uint256 _etfTokenPerVault
-	) {
-		mainChainId = _mainChain;
-		chainId = _chainId;
-		etfToken = _etfToken;
-		etfTokenPerVault = _etfTokenPerVault;
-		for (uint256 i = 0; i < _requiredTokens.length; i++) {
-			requiredTokens.push(_requiredTokens[i]);
-			addressToToken[_requiredTokens[i]._address] = _requiredTokens[i];
-		}
-	}
+  it("Should have deployed the etf lock", async function () {
+    const etfAddress = await etf.getAddress();
+    expect(await etfAddress).to.be.not.null;
+  });
 
-	function setSideChainParams(address _mainChainLock,
-		address _outbox, address _securityModule 
-	) public {
-		require(!isMainChain(), "Main chain lock address cannot be set on main chain");
-		mainChainLock = _mainChainLock;
-		outbox = IMailbox(_outbox);
-		securityModule = IInterchainSecurityModule(_securityModule);
-	}
+  it("Should be able to Mint the Vault", async function () {
+    const depositInfo = {
+      vaultId: 1,
+      tokens: requiredTokens,
+    };
 
-	function getVaultStates() public view returns (VaultState[] memory) {
-		VaultState[] memory states = new VaultState[](90);
-		for (uint256 i = 0; i < states.length; i++) {
-			states[i] = vaults[i].state;
-		}
-		return states;
-	}
+    expect(await etfToken.balanceOf(owner.address)).to.be.equal(0);
+    expect(await tokenA.balanceOf(await etf.getAddress())).to.be.equal(0);
+    await etf.deposit(depositInfo);
+    expect(await tokenA.balanceOf(await etf.getAddress())).to.be.equal(
+      BigNumber.from(10).mul(decimalFactor).toString(),
+    );
+    expect(await etfToken.balanceOf(owner.address)).to.be.gt(0);
+    const blockNumber = await ethers.provider.getBlockNumber();
 
-	function getVault(uint256 _vaultId) public view returns (Vault memory) {
-		return vaults[_vaultId];
-	}
-
-	function getRequiredTokens() public view returns (TokenQuantity[] memory) {
-		return requiredTokens;
-	}
-
-	function setVaultState(uint256 _vaultId, VaultState _state) public {
-		vaults[_vaultId].state = _state;
-	}
-
-	function isMainChain() public view returns (bool) {
-		return chainId == mainChainId;
-	}
-
-	function _deposit(
-		DepositInfo memory _depositInfo,
-		uint32 _chainId
-	) internal {
-		uint256 _vaultId = _depositInfo.vaultId;
-		TokenQuantity[] memory _tokens = _depositInfo.tokens;
-		require(
-			vaults[_vaultId].state == VaultState.OPEN ||
-				vaults[_vaultId].state == VaultState.EMPTY,
-			"Vault is not open or empty"
-		);
-
-		// require(_chainId == chainId, "ChainId does not match the contract chainId")
-
-		if (vaults[_vaultId].state == VaultState.EMPTY) {
-			for (uint256 i = 0; i < requiredTokens.length; i++) {
-				vaults[_vaultId]._tokens.push(
-					TokenQuantity(
-						requiredTokens[i]._address,
-						0,
-						requiredTokens[i]._chainId,
-						address(0),
-						requiredTokens[i]._aggregator
-					)
-				);
-			}
-			vaults[_vaultId].state = VaultState.OPEN;
-		}
-
-		for (uint256 i = 0; i < _tokens.length; i++) {
-			// if (_tokens[i]._chainId != _chainId) {
-			// 	revert(
-			// 		"Token chainId does not match the chainId of the contract"
-			// 	);
-			// }
-			console.log(
-				"Token address: %s",
-				_tokens[i]._address,
-				i,
-				vaults[_vaultId]._tokens.length
-			);
-			if (
-				_tokens[i]._quantity + vaults[_vaultId]._tokens[i]._quantity >
-				addressToToken[_tokens[i]._address]._quantity
-			) {
-				revert("Token quantity exceeds the required amount");
-			}
-
-			if (_tokens[i]._chainId == _chainId) {
-				IERC20(_tokens[i]._address).transferFrom(
-					_tokens[i]._contributor,
-					address(this),
-					_tokens[i]._quantity
-				);
-			}
-
-			vaults[_vaultId]._tokens[i]._quantity += _tokens[i]._quantity;
-
-			emit Deposit(
-				_vaultId,
-				_tokens[i]._address,
-				_tokens[i]._quantity,
-				_tokens[i]._chainId,
-				_tokens[i]._contributor
-			);
-
-			if (isMainChain()) {
-				if (accountContributionsPerVault[_vaultId][msg.sender] == 0) {
-					contributorsByVault[_vaultId].push(msg.sender);
-				}
-
-				// uint256 price = AggregatorV3Interface(_tokens[i]._aggretator).latestRoundData().answer;
-
-				// (, /* uint80 roundID */ int answer, , , ) = AggregatorV3Interface(
-				// 	_tokens[i]._aggregator
-				// ).latestRoundData();
-
-				accountContributionsPerVault[_vaultId][msg.sender] += _tokens[i]
-					._quantity;
-			}
-		}
-
-		for (uint256 i = 0; i < requiredTokens.length; i++) {
-			if (
-				vaults[_vaultId]._tokens[i]._quantity <
-				requiredTokens[i]._quantity
-			) {
-				return;
-			}
-		}
-		vaults[_vaultId].state = VaultState.MINTED;
-
-		if(isMainChain()){
-			distributeShares(_vaultId);
-		}
-		else{
-			notifyDepositToMainChain(_depositInfo);
-		}
-	}
+    // // get hardhat provider
+    // const provider = ethers.provider;
+    // const web3proofs = new Web3Proofs(provider);
+    // const proof = await web3proofs.getProof(contractAddress, [slot1, slot2], blockNumber)
 
 
-
-	function notifyDepositToMainChain(
-		DepositInfo memory _depositInfo
-	)internal {
-		bytes32 mainChainLockBytes32 = addressToBytes32(mainChainLock);
-		uint256 fee = outbox.quoteDispatch(
-			chainId,
-			mainChainLockBytes32,
-			abi.encode(_depositInfo)
-		);
-		outbox.dispatch{ value: fee }(
-			chainId,
-			mainChainLockBytes32,
-			abi.encode(_depositInfo)
-		);
-	}
-
-
-	function distributeShares(uint256 _vaultId) internal {
-		uint256 totalContributions = 0;
-		for (uint256 i = 0; i < contributorsByVault[_vaultId].length; i++) {
-			totalContributions += accountContributionsPerVault[_vaultId][
-				contributorsByVault[_vaultId][i]
-			];
-		}
-
-		for (uint256 i = 0; i < contributorsByVault[_vaultId].length; i++) {
-			uint256 shares = (accountContributionsPerVault[_vaultId][
-				contributorsByVault[_vaultId][i]
-			] * etfTokenPerVault) / totalContributions;
-			ISimpleERC20(etfToken).mint(
-				contributorsByVault[_vaultId][i],
-				shares
-			);
-		}
-	}
-
-	function deposit(DepositInfo memory _depositInfo) public {
-		_deposit(_depositInfo, chainId);
-	}
-
-	function handle(
-		uint32 _origin,
-		bytes32 _sender,
-		bytes calldata _message
-	) external payable {
-		require(
-			bytes32ToAddress(_sender) == sideChainLock,
-			"Sender is not the sideChainLock"
-		);
-
-		DepositInfo memory _depositInfo = abi.decode(_message, (DepositInfo));
-		uint32 _chainId = _depositInfo.tokens[0]._chainId;
-		_deposit(_depositInfo, _chainId);
-	}
-
-	function burn(uint256 _vaultId) public {
-		require(
-			vaults[_vaultId].state == VaultState.MINTED,
-			"Vault is not minted"
-		);
-		// require to pay back the etfToken
-		require(isMainChain(), "Only main chain can burn");
-		ISimpleERC20(etfToken).burn(msg.sender, etfTokenPerVault);
-		for (uint256 j = 0; j < vaults[_vaultId]._tokens.length; j++) {
-			if (vaults[_vaultId]._tokens[j]._chainId == chainId) {
-				IERC20(vaults[_vaultId]._tokens[j]._address).transfer(
-					msg.sender,
-					vaults[_vaultId]._tokens[j]._quantity
-				);
-			}
-		}
-		vaults[_vaultId].state = VaultState.BURNED;
-	}
-
-	function addressToBytes32(address _addr) internal pure returns (bytes32) {
-		return bytes32(uint256(uint160(_addr)));
-	}
-
-	function bytes32ToAddress(
-		bytes32 _bytes32
-	) internal pure returns (address) {
-		return address(uint160(uint256(_bytes32)));
-	}
-}
+  });
+});

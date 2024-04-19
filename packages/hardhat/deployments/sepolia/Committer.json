@@ -1,0 +1,134 @@
+{
+  "address": "0x558016c6337dE3efb15Af53Cb6Dc7563988f2E62",
+  "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "targetChainId",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    },
+    {
+      "inputs": [],
+      "name": "TARGET_CHAIN_ID",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes",
+          "name": "data",
+          "type": "bytes"
+        }
+      ],
+      "name": "_generateCommitment",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "latestCommitment",
+      "outputs": [
+        {
+          "internalType": "bytes32",
+          "name": "",
+          "type": "bytes32"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "nonce",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "transactionHash": "0x20196cb835e9e3bea044d44436e02fc01df12d6c7610403804519fa2f31f3366",
+  "receipt": {
+    "to": null,
+    "from": "0x2a1F5eB3e84e58e6F1e565306298B9dE1273f203",
+    "contractAddress": "0x558016c6337dE3efb15Af53Cb6Dc7563988f2E62",
+    "transactionIndex": 171,
+    "gasUsed": "184738",
+    "logsBloom": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+    "blockHash": "0xde18a84b03cb25cdcef1fe88064ae92c08134afc18b97ee26d0929e2d3ff412e",
+    "transactionHash": "0x20196cb835e9e3bea044d44436e02fc01df12d6c7610403804519fa2f31f3366",
+    "logs": [],
+    "blockNumber": 5731122,
+    "cumulativeGasUsed": "23632217",
+    "status": 1,
+    "byzantium": true
+  },
+  "args": [
+    11155111
+  ],
+  "numDeployments": 3,
+  "solcInputHash": "20dbbf2f25ce2598833cdc3a3d752edb",
+  "metadata": "{\"compiler\":{\"version\":\"0.8.20+commit.a1b79de6\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"targetChainId\",\"type\":\"uint256\"}],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"inputs\":[],\"name\":\"TARGET_CHAIN_ID\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes\",\"name\":\"data\",\"type\":\"bytes\"}],\"name\":\"_generateCommitment\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"latestCommitment\",\"outputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"nonce\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"contracts/Committer.sol\":\"Committer\"},\"evmVersion\":\"paris\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\",\"useLiteralContent\":true},\"optimizer\":{\"enabled\":true,\"runs\":1000},\"remappings\":[],\"viaIR\":true},\"sources\":{\"contracts/Committer.sol\":{\"content\":\"//SPDX-License-Identifier: MIT\\n\\npragma solidity ^0.8.20;\\n\\ncontract Committer {\\n    bytes32 public latestCommitment;\\n    uint256 public nonce;\\n    uint256 public immutable TARGET_CHAIN_ID;\\n\\n    constructor(uint256 targetChainId) {\\n        TARGET_CHAIN_ID = targetChainId;\\n    }\\n\\n    function _generateCommitment(bytes memory data) public {\\n        uint256 currentNonce = nonce;\\n        bytes32 commitment = keccak256(abi.encode(TARGET_CHAIN_ID, data, currentNonce));\\n        latestCommitment = commitment;\\n        unchecked {\\n            ++nonce;\\n        }\\n    }\\n}\",\"keccak256\":\"0x7f799ff70d500c4748012a9bb02206347a67b4e312a5cc377c4f48c2057ed568\",\"license\":\"MIT\"}},\"version\":1}",
+  "bytecode": "0x60a03461006057601f6102d738819003918201601f19168301916001600160401b0383118484101761006557808492602094604052833981010312610060575160805260405161025b908161007c82396080518181816064015261012f0152f35b600080fd5b634e487b7160e01b600052604160045260246000fdfe60806040818152600436101561001457600080fd5b600091823560e01c9081636268acb2146101d3575080639336bd37146100a9578063affed0e01461008b5763c940baf81461004e57600080fd5b34610087578160031936011261008757602090517f00000000000000000000000000000000000000000000000000000000000000008152f35b5080fd5b50346100875781600319360112610087576020906001549051908152f35b5090346101d057602080600319360112610087576004359267ffffffffffffffff918285116101cc57366023860112156101cc5784600401359283116101b857815192601f19956101018388601f85011601866101ed565b81855236602483830101116101b45781869260248593018388013785010152600154928251916060818401947f00000000000000000000000000000000000000000000000000000000000000008652840152815191826080850152865b8381106101a05750505060a0828697601f84600199856101949786010152886060850152011681010360808101845201826101ed565b51902083550160015580f35b81810183015185820160a00152820161015e565b8580fd5b602484634e487b7160e01b81526041600452fd5b8380fd5b80fd5b839034610087578160031936011261008757602091548152f35b90601f8019910116810190811067ffffffffffffffff82111761020f57604052565b634e487b7160e01b600052604160045260246000fdfea2646970667358221220532b8edb16138df69e22e6ef21ef69897d9a669bb6ff7283eec5405fab8cdc6564736f6c63430008140033",
+  "deployedBytecode": "0x60806040818152600436101561001457600080fd5b600091823560e01c9081636268acb2146101d3575080639336bd37146100a9578063affed0e01461008b5763c940baf81461004e57600080fd5b34610087578160031936011261008757602090517f00000000000000000000000000000000000000000000000000000000000000008152f35b5080fd5b50346100875781600319360112610087576020906001549051908152f35b5090346101d057602080600319360112610087576004359267ffffffffffffffff918285116101cc57366023860112156101cc5784600401359283116101b857815192601f19956101018388601f85011601866101ed565b81855236602483830101116101b45781869260248593018388013785010152600154928251916060818401947f00000000000000000000000000000000000000000000000000000000000000008652840152815191826080850152865b8381106101a05750505060a0828697601f84600199856101949786010152886060850152011681010360808101845201826101ed565b51902083550160015580f35b81810183015185820160a00152820161015e565b8580fd5b602484634e487b7160e01b81526041600452fd5b8380fd5b80fd5b839034610087578160031936011261008757602091548152f35b90601f8019910116810190811067ffffffffffffffff82111761020f57604052565b634e487b7160e01b600052604160045260246000fdfea2646970667358221220532b8edb16138df69e22e6ef21ef69897d9a669bb6ff7283eec5405fab8cdc6564736f6c63430008140033",
+  "devdoc": {
+    "kind": "dev",
+    "methods": {},
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "version": 1
+  },
+  "storageLayout": {
+    "storage": [
+      {
+        "astId": 3,
+        "contract": "contracts/Committer.sol:Committer",
+        "label": "latestCommitment",
+        "offset": 0,
+        "slot": "0",
+        "type": "t_bytes32"
+      },
+      {
+        "astId": 5,
+        "contract": "contracts/Committer.sol:Committer",
+        "label": "nonce",
+        "offset": 0,
+        "slot": "1",
+        "type": "t_uint256"
+      }
+    ],
+    "types": {
+      "t_bytes32": {
+        "encoding": "inplace",
+        "label": "bytes32",
+        "numberOfBytes": "32"
+      },
+      "t_uint256": {
+        "encoding": "inplace",
+        "label": "uint256",
+        "numberOfBytes": "32"
+      }
+    }
+  }
+}

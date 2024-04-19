@@ -13,6 +13,15 @@ interface IGiriGiriBashi {
 	) external view returns (bytes32);
 }
 
+struct Proof {
+	uint256 blockNumber;
+	uint256 nonce;
+	// bytes blockHeader;
+	bytes32 storageRoot;
+	// bytes accountProof;
+	bytes storageProof;
+}
+
 interface IProver {
 	error InvalidLatestCommitment(
 		bytes32 latestCommitment,
@@ -25,15 +34,6 @@ interface IProver {
 	error InvalidAccountStorageRoot();
 	error InvalidNonce(uint256 nonce, uint256 expectedNonce);
 	error InvalidAccountRlp(bytes accountRlp);
-
-	struct Proof {
-		uint256 blockNumber;
-		uint256 nonce;
-		// bytes blockHeader;
-		bytes32 storageRoot;
-		// bytes accountProof;
-		bytes storageProof;
-	}
 
 	function setAccount(address account) external;
 }
@@ -133,7 +133,7 @@ contract Prover is IProver {
 			// 		)
 			// 	)
 			// ),
-            abi.encodePacked(keccak256(abi.encodePacked(uint256(0)))),
+			abi.encodePacked(keccak256(abi.encodePacked(uint256(0)))),
 			storageProof.toRlpItem().toList()
 		);
 		return _bytesToBytes32(slotValue);

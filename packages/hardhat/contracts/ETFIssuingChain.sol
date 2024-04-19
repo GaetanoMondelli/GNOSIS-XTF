@@ -8,6 +8,12 @@ import { ISimpleERC20 } from "./SimpleERC20.sol";
 import "@hyperlane-xyz/core/contracts/interfaces/IMailbox.sol";
 import { IInterchainSecurityModule } from "@hyperlane-xyz/core/contracts/interfaces/IInterchainSecurityModule.sol";
 import "@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol";
+import { Proof, Prover } from "./Prover.sol";
+import {IYaho} from "./interfaces/IYaho.sol";
+import {IHashi} from "./interfaces/IHashi.sol";
+import {GiriGiriBashi} from "./ownable/GiriGiriBashi.sol";
+import {IReporter} from "./interfaces/IReporter.sol";
+import {IAdapter} from "./interfaces/IAdapter.sol";
 import "hardhat/console.sol";
 
 struct TokenQuantity {
@@ -17,6 +23,7 @@ struct TokenQuantity {
 	address _contributor;
 	address _aggregator;
 }
+
 
 struct Vault {
 	TokenQuantity[] _tokens;
@@ -43,7 +50,7 @@ struct DepositInfo {
 }
 
 contract ETFIssuingChain {
-    bytes32 public latestCommitment;
+	bytes32 public latestCommitment;
 	address public sideChainLock;
 	uint32 public sideChainId;
 	TokenQuantity[] public requiredTokens;
@@ -57,10 +64,16 @@ contract ETFIssuingChain {
 	address public mainChainLock;
 	IMailbox outbox;
 	IInterchainSecurityModule securityModule;
-
+	Prover proverSlotZero;
+	address hashi;
+	IAdapter adapter;
+	IReporter reporter;
+	IYaho yaho;
+	GiriGiriBashi giriGiriBashi;
 	// Mainchain params
 	address public etfToken;
 	uint256 public etfTokenPerVault;
+	uint256 THRESHOLD = 1;
 
 	mapping(uint256 => address[]) contributorsByVault;
 	mapping(uint256 => mapping(address => uint256))
@@ -80,6 +93,10 @@ contract ETFIssuingChain {
 		uint32 _mainChain,
 		uint32 _chainId,
 		TokenQuantity[] memory _requiredTokens,
+		address _hashi,
+		address _hyperlaneAdapter,
+		address _hyperlaneReporter,
+		address _yahoAddress,
 		address _etfToken,
 		uint256 _etfTokenPerVault
 	) {
@@ -91,6 +108,12 @@ contract ETFIssuingChain {
 			requiredTokens.push(_requiredTokens[i]);
 			addressToToken[_requiredTokens[i]._address] = _requiredTokens[i];
 		}
+		adapter = IAdapter(_hyperlaneAdapter);
+		reporter = IReporter(_hyperlaneReporter);
+		hashi = _hashi;
+		giriGiriBashi = new GiriGiriBashi(msg.sender, hashi, payable(msg.sender));
+		proverSlotZero = new Prover(_chainId, 0x0, address(giriGiriBashi));
+		yaho = IYaho(_yahoAddress);
 	}
 
 	function setSideChainParams(
@@ -153,8 +176,9 @@ contract ETFIssuingChain {
 		return chainId == mainChainId;
 	}
 
-
-	function getIndexForDepositInfo(TokenQuantity memory _tokenQuantity) public view returns (uint256) {
+	function getIndexForDepositInfo(
+		TokenQuantity memory _tokenQuantity
+	) public view returns (uint256) {
 		// return the index of the token in the requiredTokens array
 		for (uint256 i = 0; i < requiredTokens.length; i++) {
 			if (requiredTokens[i]._address == _tokenQuantity._address) {
@@ -207,7 +231,6 @@ contract ETFIssuingChain {
 				revert("Token quantity exceeds the required amount");
 			}
 
-
 			uint256 index = getIndexForDepositInfo(_tokens[i]);
 
 			if (_tokens[i]._chainId == _chainId) {
@@ -218,7 +241,6 @@ contract ETFIssuingChain {
 				);
 			}
 
-			
 			vaults[_vaultId]._tokens[index]._quantity += _tokens[i]._quantity;
 
 			emit Deposit(
@@ -230,7 +252,11 @@ contract ETFIssuingChain {
 			);
 
 			if (isMainChain()) {
-				if (accountContributionsPerVault[_vaultId][_tokens[i]._contributor] == 0) {
+				if (
+					accountContributionsPerVault[_vaultId][
+						_tokens[i]._contributor
+					] == 0
+				) {
 					contributorsByVault[_vaultId].push(_tokens[i]._contributor);
 				}
 
@@ -240,8 +266,9 @@ contract ETFIssuingChain {
 				// 	_tokens[i]._aggregator
 				// ).latestRoundData();
 
-				accountContributionsPerVault[_vaultId][_tokens[i]._contributor] += _tokens[i]
-					._quantity;
+				accountContributionsPerVault[_vaultId][
+					_tokens[i]._contributor
+				] += _tokens[i]._quantity;
 			}
 		}
 
@@ -317,26 +344,67 @@ contract ETFIssuingChain {
 		// 	"Sender to sideChain is not the mainChainLock"
 		// );
 
-
-		if(isMainChain()) {
-			DepositInfo memory _depositInfo = abi.decode(_message, (DepositInfo));
+		if (isMainChain()) {
+			DepositInfo memory _depositInfo = abi.decode(
+				_message,
+				(DepositInfo)
+			);
 			// uint32 _chainId = _depositInfo.tokens[0]._chainId;
 			_deposit(_depositInfo, chainId);
 			return;
-		}
-		else {
+		} else {
 			uint256 _vaultId = abi.decode(_message, (uint256));
-			burn(_vaultId);
+			_burn(_vaultId);
 		}
 	}
 
-	function burn(uint256 _vaultId) public {
+	function _burn(uint256 _vaultId) internal {
 		require(
 			vaults[_vaultId].state == VaultState.MINTED,
 			"Vault is not minted"
 		);
-		// require to pay back the etfToken
-		require(isMainChain(), "Only main chain can burn");
+
+		for (uint256 j = 0; j < vaults[_vaultId]._tokens.length; j++) {
+			IERC20(vaults[_vaultId]._tokens[j]._address).transfer(
+				msg.sender,
+				vaults[_vaultId]._tokens[j]._quantity
+			);
+		}
+		vaults[_vaultId].state = VaultState.BURNED;
+		updateCommitment();
+	}
+
+	function dispatchCommitment(
+        IReporter[] calldata reporters,
+        IAdapter[] calldata adapters
+	) public {
+		// make sure that the commitment is updated
+		yaho.dispatchMessage(
+			chainId,
+			THRESHOLD,
+			sideChainLock,
+			abi.encode(latestCommitment),
+			reporters,
+			adapters
+		);
+	}
+
+
+	function secureBurn(uint256 _vaultId, bytes32 mainChainLastCommitment, Proof calldata proof) public {
+		require(!isMainChain(), "Secure Hashi burn can only be called on side chain");
+		require(
+			proverSlotZero._verifyProof(proof, abi.encode(mainChainLastCommitment)),
+			"Proof verification failed"
+		);
+	}
+
+	function burn(uint256 _vaultId, Proof calldata proof) public {
+		require(
+			vaults[_vaultId].state == VaultState.MINTED,
+			"Vault is not minted"
+		);
+		require(isMainChain(), "Burn can only be called on main chain");
+
 		ISimpleERC20(etfToken).burn(msg.sender, etfTokenPerVault);
 		for (uint256 j = 0; j < vaults[_vaultId]._tokens.length; j++) {
 			if (vaults[_vaultId]._tokens[j]._chainId == chainId) {
@@ -348,7 +416,6 @@ contract ETFIssuingChain {
 		}
 		vaults[_vaultId].state = VaultState.BURNED;
 		updateCommitment();
-
 
 		// notify burn to sidechain
 		bytes32 sideChainLockBytes32 = addressToBytes32(sideChainLock);

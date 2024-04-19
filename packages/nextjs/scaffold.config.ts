@@ -13,7 +13,7 @@ export type ScaffoldConfig = {
 const scaffoldConfig = {
   // The networks on which your DApp is live
   // targetNetworks: [chains.sepolia],
-  targetNetworks: [xrpledgerChain],
+  targetNetworks: [chains.gnosisChiado],
 
 
   // The interval at which your front-end polls the RPC servers for new data

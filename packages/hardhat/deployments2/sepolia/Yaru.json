@@ -1,0 +1,447 @@
+{
+  "address": "0x802D794421799a23C21743745218b084E8203788",
+  "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "hashi",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "yaho_",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "sourceChainId",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    },
+    {
+      "inputs": [],
+      "name": "CallFailed",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "chainId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "expectedChainId",
+          "type": "uint256"
+        }
+      ],
+      "name": "InvalidToChainId",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "messageId",
+          "type": "uint256"
+        }
+      ],
+      "name": "MessageIdAlreadyExecuted",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "ThresholdNotMet",
+      "type": "error"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "uint256",
+          "name": "messageId",
+          "type": "uint256"
+        },
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "nonce",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "targetChainId",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "threshold",
+              "type": "uint256"
+            },
+            {
+              "internalType": "address",
+              "name": "sender",
+              "type": "address"
+            },
+            {
+              "internalType": "address",
+              "name": "receiver",
+              "type": "address"
+            },
+            {
+              "internalType": "bytes",
+              "name": "data",
+              "type": "bytes"
+            },
+            {
+              "internalType": "contract IReporter[]",
+              "name": "reporters",
+              "type": "address[]"
+            },
+            {
+              "internalType": "contract IAdapter[]",
+              "name": "adapters",
+              "type": "address[]"
+            }
+          ],
+          "indexed": false,
+          "internalType": "struct Message",
+          "name": "message",
+          "type": "tuple"
+        }
+      ],
+      "name": "MessageExecuted",
+      "type": "event"
+    },
+    {
+      "inputs": [],
+      "name": "HASHI",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "SOURCE_CHAIN_ID",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "YAHO",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "nonce",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "targetChainId",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "threshold",
+              "type": "uint256"
+            },
+            {
+              "internalType": "address",
+              "name": "sender",
+              "type": "address"
+            },
+            {
+              "internalType": "address",
+              "name": "receiver",
+              "type": "address"
+            },
+            {
+              "internalType": "bytes",
+              "name": "data",
+              "type": "bytes"
+            },
+            {
+              "internalType": "contract IReporter[]",
+              "name": "reporters",
+              "type": "address[]"
+            },
+            {
+              "internalType": "contract IAdapter[]",
+              "name": "adapters",
+              "type": "address[]"
+            }
+          ],
+          "internalType": "struct Message",
+          "name": "message",
+          "type": "tuple"
+        }
+      ],
+      "name": "calculateMessageHash",
+      "outputs": [
+        {
+          "internalType": "bytes32",
+          "name": "",
+          "type": "bytes32"
+        }
+      ],
+      "stateMutability": "pure",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "sourceChainId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "address",
+          "name": "dispatcherAddress",
+          "type": "address"
+        },
+        {
+          "internalType": "bytes32",
+          "name": "messageHash",
+          "type": "bytes32"
+        }
+      ],
+      "name": "calculateMessageId",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "pure",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "nonce",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "targetChainId",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "threshold",
+              "type": "uint256"
+            },
+            {
+              "internalType": "address",
+              "name": "sender",
+              "type": "address"
+            },
+            {
+              "internalType": "address",
+              "name": "receiver",
+              "type": "address"
+            },
+            {
+              "internalType": "bytes",
+              "name": "data",
+              "type": "bytes"
+            },
+            {
+              "internalType": "contract IReporter[]",
+              "name": "reporters",
+              "type": "address[]"
+            },
+            {
+              "internalType": "contract IAdapter[]",
+              "name": "adapters",
+              "type": "address[]"
+            }
+          ],
+          "internalType": "struct Message[]",
+          "name": "messages",
+          "type": "tuple[]"
+        }
+      ],
+      "name": "executeMessages",
+      "outputs": [
+        {
+          "internalType": "bytes[]",
+          "name": "",
+          "type": "bytes[]"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "name": "executed",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "transactionHash": "0x3f7b20998c82d09b74c31ab05804bc87db6f963ed50fa771f81e9a18317b7387",
+  "receipt": {
+    "to": null,
+    "from": "0x2a1F5eB3e84e58e6F1e565306298B9dE1273f203",
+    "contractAddress": "0x802D794421799a23C21743745218b084E8203788",
+    "transactionIndex": 19,
+    "gasUsed": "725295",
+    "logsBloom": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+    "blockHash": "0xcf6db020f297c30cf040386d3038f3435f68a27a050462a7e679d43a2aaec069",
+    "transactionHash": "0x3f7b20998c82d09b74c31ab05804bc87db6f963ed50fa771f81e9a18317b7387",
+    "logs": [],
+    "blockNumber": 5738747,
+    "cumulativeGasUsed": "4423373",
+    "status": 1,
+    "byzantium": true
+  },
+  "args": [
+    "0xFC2c9d0094c6D64F3a4e4C6BF30E2229F4268b70",
+    "0x73a7d1B252300b2e2e9a1119D1E490C6F9bf9c9B",
+    10200
+  ],
+  "numDeployments": 1,
+  "solcInputHash": "310df9762748bfe64aebb5ab3f6df0e5",
+  "metadata": "{\"compiler\":{\"version\":\"0.8.20+commit.a1b79de6\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"address\",\"name\":\"hashi\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"yaho_\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"sourceChainId\",\"type\":\"uint256\"}],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"inputs\":[],\"name\":\"CallFailed\",\"type\":\"error\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"chainId\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"expectedChainId\",\"type\":\"uint256\"}],\"name\":\"InvalidToChainId\",\"type\":\"error\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"messageId\",\"type\":\"uint256\"}],\"name\":\"MessageIdAlreadyExecuted\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"ThresholdNotMet\",\"type\":\"error\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"messageId\",\"type\":\"uint256\"},{\"components\":[{\"internalType\":\"uint256\",\"name\":\"nonce\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"targetChainId\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"threshold\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"sender\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"receiver\",\"type\":\"address\"},{\"internalType\":\"bytes\",\"name\":\"data\",\"type\":\"bytes\"},{\"internalType\":\"contract IReporter[]\",\"name\":\"reporters\",\"type\":\"address[]\"},{\"internalType\":\"contract IAdapter[]\",\"name\":\"adapters\",\"type\":\"address[]\"}],\"indexed\":false,\"internalType\":\"struct Message\",\"name\":\"message\",\"type\":\"tuple\"}],\"name\":\"MessageExecuted\",\"type\":\"event\"},{\"inputs\":[],\"name\":\"HASHI\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"SOURCE_CHAIN_ID\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"YAHO\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"components\":[{\"internalType\":\"uint256\",\"name\":\"nonce\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"targetChainId\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"threshold\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"sender\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"receiver\",\"type\":\"address\"},{\"internalType\":\"bytes\",\"name\":\"data\",\"type\":\"bytes\"},{\"internalType\":\"contract IReporter[]\",\"name\":\"reporters\",\"type\":\"address[]\"},{\"internalType\":\"contract IAdapter[]\",\"name\":\"adapters\",\"type\":\"address[]\"}],\"internalType\":\"struct Message\",\"name\":\"message\",\"type\":\"tuple\"}],\"name\":\"calculateMessageHash\",\"outputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"stateMutability\":\"pure\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"sourceChainId\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"dispatcherAddress\",\"type\":\"address\"},{\"internalType\":\"bytes32\",\"name\":\"messageHash\",\"type\":\"bytes32\"}],\"name\":\"calculateMessageId\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"pure\",\"type\":\"function\"},{\"inputs\":[{\"components\":[{\"internalType\":\"uint256\",\"name\":\"nonce\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"targetChainId\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"threshold\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"sender\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"receiver\",\"type\":\"address\"},{\"internalType\":\"bytes\",\"name\":\"data\",\"type\":\"bytes\"},{\"internalType\":\"contract IReporter[]\",\"name\":\"reporters\",\"type\":\"address[]\"},{\"internalType\":\"contract IAdapter[]\",\"name\":\"adapters\",\"type\":\"address[]\"}],\"internalType\":\"struct Message[]\",\"name\":\"messages\",\"type\":\"tuple[]\"}],\"name\":\"executeMessages\",\"outputs\":[{\"internalType\":\"bytes[]\",\"name\":\"\",\"type\":\"bytes[]\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"executed\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"events\":{\"MessageExecuted(uint256,(uint256,uint256,uint256,address,address,bytes,address[],address[]))\":{\"details\":\"Emitted when a message is executed with its associated message ID and message object.\",\"params\":{\"message\":\"- The message object associated with this event.\",\"messageId\":\"- The message ID associated with the executed message.\"}}},\"kind\":\"dev\",\"methods\":{\"calculateMessageHash((uint256,uint256,uint256,address,address,bytes,address[],address[]))\":{\"details\":\"Calculates and returns the hash of a given message.\",\"params\":{\"message\":\"- The `Message` structure containing various fields to be hashed.\"},\"returns\":{\"_0\":\"hash The keccak256 hash of the message, represented as a 32-byte hexadecimal string.\"}},\"calculateMessageId(uint256,address,bytes32)\":{\"details\":\"Calculates and returns a unique identifier (ID) for a message.\",\"params\":{\"dispatcherAddress\":\"- The address of the dispatcher sending the message.\",\"messageHash\":\"- The keccak256 hash of the message, represented as a 32-byte hexadecimal string.\",\"sourceChainId\":\"- The ID of the chain from which the message originates.\"},\"returns\":{\"_0\":\"messageId The unique identifier for the message, calculated based on the input parameters.\"}},\"executeMessages((uint256,uint256,uint256,address,address,bytes,address[],address[])[])\":{\"details\":\"Executes a batch of messages and returns the results if the threshold for a single message has been reached\",\"params\":{\"messages\":\"- An array of `Message` structures\"},\"returns\":{\"_0\":\"result An array of byte arrays, where each byte array is the result of executing a respective message from the input.\"}}},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"contracts/Yaru.sol\":\"Yaru\"},\"evmVersion\":\"paris\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\",\"useLiteralContent\":true},\"optimizer\":{\"enabled\":true,\"runs\":1000},\"remappings\":[],\"viaIR\":true},\"sources\":{\"@openzeppelin/contracts/security/ReentrancyGuard.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\n// OpenZeppelin Contracts (last updated v4.8.0) (security/ReentrancyGuard.sol)\\n\\npragma solidity ^0.8.0;\\n\\n/**\\n * @dev Contract module that helps prevent reentrant calls to a function.\\n *\\n * Inheriting from `ReentrancyGuard` will make the {nonReentrant} modifier\\n * available, which can be applied to functions to make sure there are no nested\\n * (reentrant) calls to them.\\n *\\n * Note that because there is a single `nonReentrant` guard, functions marked as\\n * `nonReentrant` may not call one another. This can be worked around by making\\n * those functions `private`, and then adding `external` `nonReentrant` entry\\n * points to them.\\n *\\n * TIP: If you would like to learn more about reentrancy and alternative ways\\n * to protect against it, check out our blog post\\n * https://blog.openzeppelin.com/reentrancy-after-istanbul/[Reentrancy After Istanbul].\\n */\\nabstract contract ReentrancyGuard {\\n    // Booleans are more expensive than uint256 or any type that takes up a full\\n    // word because each write operation emits an extra SLOAD to first read the\\n    // slot's contents, replace the bits taken up by the boolean, and then write\\n    // back. This is the compiler's defense against contract upgrades and\\n    // pointer aliasing, and it cannot be disabled.\\n\\n    // The values being non-zero value makes deployment a bit more expensive,\\n    // but in exchange the refund on every call to nonReentrant will be lower in\\n    // amount. Since refunds are capped to a percentage of the total\\n    // transaction's gas, it is best to keep them low in cases like this one, to\\n    // increase the likelihood of the full refund coming into effect.\\n    uint256 private constant _NOT_ENTERED = 1;\\n    uint256 private constant _ENTERED = 2;\\n\\n    uint256 private _status;\\n\\n    constructor() {\\n        _status = _NOT_ENTERED;\\n    }\\n\\n    /**\\n     * @dev Prevents a contract from calling itself, directly or indirectly.\\n     * Calling a `nonReentrant` function from another `nonReentrant`\\n     * function is not supported. It is possible to prevent this from happening\\n     * by making the `nonReentrant` function external, and making it call a\\n     * `private` function that does the actual work.\\n     */\\n    modifier nonReentrant() {\\n        _nonReentrantBefore();\\n        _;\\n        _nonReentrantAfter();\\n    }\\n\\n    function _nonReentrantBefore() private {\\n        // On the first call to nonReentrant, _status will be _NOT_ENTERED\\n        require(_status != _ENTERED, \\\"ReentrancyGuard: reentrant call\\\");\\n\\n        // Any calls to nonReentrant after this point will fail\\n        _status = _ENTERED;\\n    }\\n\\n    function _nonReentrantAfter() private {\\n        // By storing the original value once again, a refund is triggered (see\\n        // https://eips.ethereum.org/EIPS/eip-2200)\\n        _status = _NOT_ENTERED;\\n    }\\n}\\n\",\"keccak256\":\"0x190dd6f8d592b7e4e930feb7f4313aeb8e1c4ad3154c27ce1cf6a512fc30d8cc\",\"license\":\"MIT\"},\"contracts/Yaru.sol\":{\"content\":\"// SPDX-License-Identifier: LGPL-3.0-only\\npragma solidity ^0.8.20;\\n\\nimport { ReentrancyGuard } from \\\"@openzeppelin/contracts/security/ReentrancyGuard.sol\\\";\\nimport { IYaru } from \\\"./interfaces/IYaru.sol\\\";\\nimport { IHashi, IAdapter } from \\\"./interfaces/IHashi.sol\\\";\\nimport { Message } from \\\"./interfaces/IMessage.sol\\\";\\nimport { MessageIdCalculator } from \\\"./utils/MessageIdCalculator.sol\\\";\\nimport { MessageHashCalculator } from \\\"./utils/MessageHashCalculator.sol\\\";\\nimport { IJushin } from \\\"./interfaces/IJushin.sol\\\";\\n\\ncontract Yaru is IYaru, MessageIdCalculator, MessageHashCalculator, ReentrancyGuard {\\n    address public immutable HASHI;\\n    address public immutable YAHO;\\n    uint256 public immutable SOURCE_CHAIN_ID;\\n\\n    mapping(uint256 => bool) public executed;\\n\\n    constructor(address hashi, address yaho_, uint256 sourceChainId) {\\n        HASHI = hashi;\\n        YAHO = yaho_;\\n        SOURCE_CHAIN_ID = sourceChainId;\\n    }\\n\\n    /// @inheritdoc IYaru\\n    function executeMessages(Message[] calldata messages) external nonReentrant returns (bytes[] memory) {\\n        bytes[] memory returnDatas = new bytes[](messages.length);\\n        for (uint256 i = 0; i < messages.length; ) {\\n            Message memory message = messages[i];\\n\\n            bytes32 messageHash = calculateMessageHash(message);\\n            uint256 messageId = calculateMessageId(SOURCE_CHAIN_ID, YAHO, messageHash);\\n\\n            if (message.targetChainId != block.chainid) revert InvalidToChainId(message.targetChainId, block.chainid);\\n\\n            if (executed[messageId]) revert MessageIdAlreadyExecuted(messageId);\\n            executed[messageId] = true;\\n\\n            if (\\n                !IHashi(HASHI).checkHashWithThresholdFromAdapters(\\n                    SOURCE_CHAIN_ID,\\n                    messageId,\\n                    message.threshold,\\n                    message.adapters\\n                )\\n            ) revert ThresholdNotMet();\\n\\n            try IJushin(message.receiver).onMessage(SOURCE_CHAIN_ID, messageId, message.sender, message.data) returns (\\n                bytes memory returnData\\n            ) {\\n                returnDatas[i] = returnData;\\n            } catch {\\n                revert CallFailed();\\n            }\\n\\n            emit MessageExecuted(messageId, message);\\n\\n            unchecked {\\n                ++i;\\n            }\\n        }\\n        return returnDatas;\\n    }\\n}\\n\",\"keccak256\":\"0x3baa59ec78ffa8bd9e178cbf250d1d33b8af01a29769e02471895e410b1e069f\",\"license\":\"LGPL-3.0-only\"},\"contracts/interfaces/IAdapter.sol\":{\"content\":\"// SPDX-License-Identifier: LGPL-3.0-only\\npragma solidity ^0.8.0;\\n\\n/**\\n * @title IAdapter\\n */\\ninterface IAdapter {\\n    error ConflictingBlockHeader(uint256 blockNumber, bytes32 blockHash, bytes32 storedBlockHash);\\n    error InvalidBlockHeaderLength(uint256 length);\\n    error InvalidBlockHeaderRLP();\\n\\n    /**\\n     * @dev Emitted when a hash is stored.\\n     * @param id - The ID of the stored hash.\\n     * @param hash - The stored hash as bytes32 values.\\n     */\\n    event HashStored(uint256 indexed id, bytes32 indexed hash);\\n\\n    /**\\n     * @dev Returns the hash for a given ID.\\n     * @param domain - Identifier for the domain to query.\\n     * @param id - Identifier for the ID to query.\\n     * @return hash Bytes32 hash for the given ID on the given domain.\\n     * @notice MUST return bytes32(0) if the hash is not present.\\n     */\\n    function getHash(uint256 domain, uint256 id) external view returns (bytes32 hash);\\n}\\n\",\"keccak256\":\"0xc3c6fca20c390f619072fe34bde40b91ceca4bbd1627a892af627b2e10f8a38d\",\"license\":\"LGPL-3.0-only\"},\"contracts/interfaces/IHashi.sol\":{\"content\":\"// SPDX-License-Identifier: LGPL-3.0-only\\npragma solidity ^0.8.0;\\n\\nimport { IAdapter } from \\\"./IAdapter.sol\\\";\\n\\n/**\\n * @title IHashi\\n */\\ninterface IHashi {\\n    error AdaptersDisagree(IAdapter adapterOne, IAdapter adapterTwo);\\n    error HashNotAvailableInAdapter(IAdapter adapter);\\n    error InvalidThreshold(uint256 threshold, uint256 maxThreshold);\\n    error NoAdaptersGiven();\\n\\n    /**\\n     * @dev Checks whether the threshold is reached for a message given a set of adapters.\\n     * @param domain - ID of the domain to query.\\n     * @param id - ID for which to return hash.\\n     * @param threshold - Threshold to use.\\n     * @param adapters - Array of addresses for the adapters to query.\\n     * @notice If the threshold is 1, it will always return true.\\n     * @return result A boolean indicating if a threshold for a given message has been reached.\\n     */\\n    function checkHashWithThresholdFromAdapters(\\n        uint256 domain,\\n        uint256 id,\\n        uint256 threshold,\\n        IAdapter[] calldata adapters\\n    ) external view returns (bool);\\n\\n    /**\\n     * @dev Returns the hash stored by a given adapter for a given ID.\\n     * @param domain - ID of the domain to query.\\n     * @param id - ID for which to return a hash.\\n     * @param adapter - Address of the adapter to query.\\n     * @return hash stored by the given adapter for the given ID.\\n     */\\n    function getHashFromAdapter(uint256 domain, uint256 id, IAdapter adapter) external view returns (bytes32);\\n\\n    /**\\n     * @dev Returns the hashes for a given ID stored by a given set of adapters.\\n     * @param domain - The ID of the domain to query.\\n     * @param id - The ID for which to return hashes.\\n     * @param adapters - An array of addresses for the adapters to query.\\n     * @return hashes An array of hashes stored by the given adapters for the specified ID.\\n     */\\n    function getHashesFromAdapters(\\n        uint256 domain,\\n        uint256 id,\\n        IAdapter[] calldata adapters\\n    ) external view returns (bytes32[] memory);\\n\\n    /**\\n     * @dev Returns the hash unanimously agreed upon by a given set of adapters.\\n     * @param domain - The ID of the domain to query.\\n     * @param id - The ID for which to return a hash.\\n     * @param adapters - An array of addresses for the adapters to query.\\n     * @return hash agreed on by the given set of adapters.\\n     * @notice MUST revert if adapters disagree on the hash or if an adapter does not report.\\n     */\\n    function getHash(uint256 domain, uint256 id, IAdapter[] calldata adapters) external view returns (bytes32);\\n}\\n\",\"keccak256\":\"0xa3f568e3922d3d271bcb3c4436934942ed7a145f91d305f8cc65bdc697bcd991\",\"license\":\"LGPL-3.0-only\"},\"contracts/interfaces/IJushin.sol\":{\"content\":\"// SPDX-License-Identifier: LGPL-3.0-only\\npragma solidity ^0.8.0;\\n\\n/**\\n * @title IJushin\\n */\\ninterface IJushin {\\n    /**\\n     * @dev Handles the incoming message from a specified chain.\\n     * @param sourceChainId - The ID of the origin chain from which the message originates.\\n     * @param messageId - The unique identifier of the message.\\n     * @param sender - The address of the sender of the message on the origin chain.\\n     * @param data - The data contained in the message, in bytes.\\n     * @return result bytes at the user's choice\\n     */\\n    function onMessage(\\n        uint256 sourceChainId,\\n        uint256 messageId,\\n        address sender,\\n        bytes calldata data\\n    ) external returns (bytes memory);\\n}\\n\",\"keccak256\":\"0x677b461677f8b19c66ff761227e74c0c0367f9a2e376c4231ea4e0fc3199f929\",\"license\":\"LGPL-3.0-only\"},\"contracts/interfaces/IMessage.sol\":{\"content\":\"// SPDX-License-Identifier: LGPL-3.0-only\\npragma solidity ^0.8.0;\\n\\nimport { IReporter } from \\\"./IReporter.sol\\\";\\nimport { IAdapter } from \\\"./IAdapter.sol\\\";\\n\\nstruct Message {\\n    uint256 nonce;\\n    uint256 targetChainId;\\n    uint256 threshold;\\n    address sender;\\n    address receiver;\\n    bytes data;\\n    IReporter[] reporters;\\n    IAdapter[] adapters;\\n}\\n\",\"keccak256\":\"0xd12970c9aaf7e4f46b436f515619f78ed6b08e9142d2ba034c18d8263bce9294\",\"license\":\"LGPL-3.0-only\"},\"contracts/interfaces/IMessageHashCalculator.sol\":{\"content\":\"// SPDX-License-Identifier: LGPL-3.0-only\\npragma solidity ^0.8.0;\\n\\nimport { Message } from \\\"./IMessage.sol\\\";\\n\\n/**\\n * @title IMessageHashCalculator\\n */\\ninterface IMessageHashCalculator {\\n    /**\\n     * @dev Calculates and returns the hash of a given message.\\n     * @param message - The `Message` structure containing various fields to be hashed.\\n     * @return hash The keccak256 hash of the message, represented as a 32-byte hexadecimal string.\\n     */\\n    function calculateMessageHash(Message memory message) external pure returns (bytes32);\\n}\\n\",\"keccak256\":\"0x17b81d1ad11d6ff10fb563134f7ba306fe9c4dd1c9db543fe7214182b3b6ba07\",\"license\":\"LGPL-3.0-only\"},\"contracts/interfaces/IMessageIdCalculator.sol\":{\"content\":\"// SPDX-License-Identifier: LGPL-3.0-only\\npragma solidity ^0.8.0;\\n\\n/**\\n * @title IMessageIdCalculator\\n */\\ninterface IMessageIdCalculator {\\n    /**\\n     * @dev Calculates and returns a unique identifier (ID) for a message.\\n     *\\n     * @param sourceChainId - The ID of the chain from which the message originates.\\n     * @param dispatcherAddress - The address of the dispatcher sending the message.\\n     * @param messageHash - The keccak256 hash of the message, represented as a 32-byte hexadecimal string.\\n     * @return messageId The unique identifier for the message, calculated based on the input parameters.\\n     */\\n    function calculateMessageId(\\n        uint256 sourceChainId,\\n        address dispatcherAddress,\\n        bytes32 messageHash\\n    ) external pure returns (uint256);\\n}\\n\",\"keccak256\":\"0xd74a8068483d1dc5bb3d1c707597fd39133c2626bd2f165f0f354afdb7e3b9f3\",\"license\":\"LGPL-3.0-only\"},\"contracts/interfaces/IReporter.sol\":{\"content\":\"// SPDX-License-Identifier: LGPL-3.0-only\\npragma solidity ^0.8.0;\\n\\nimport { IAdapter } from \\\"./IAdapter.sol\\\";\\n\\ninterface IReporter {\\n    error NotYaho(address sender, address expectedYaho);\\n\\n    /**\\n     * @dev Emitted when a block is dispatched to another chain.\\n     * @param targetChainId - The target chain's identifier associated with the dispatched block.\\n     * @param adapter - The adapter address associated with the dispatched block.\\n     * @param blockNumber - The block number associated with the dispatched block.\\n     * @param blockHeader - The dispatched block header as a bytes32 value.\\n     */\\n    event BlockDispatched(\\n        uint256 indexed targetChainId,\\n        IAdapter adapter,\\n        uint256 indexed blockNumber,\\n        bytes32 blockHeader\\n    );\\n\\n    /**\\n     * @dev Emitted when a message is dispatched to another chain.\\n     * @param targetChainId - The target chain's identifier associated with the dispatched message.\\n     * @param adapter - The adapter address associated with the dispatched message.\\n     * @param messageId - The message identifier associated with the dispatched message.\\n     * @param messageHash - The dispatched message hash as a bytes32 value.\\n     */\\n    event MessageDispatched(\\n        uint256 indexed targetChainId,\\n        IAdapter adapter,\\n        uint256 indexed messageId,\\n        bytes32 messageHash\\n    );\\n\\n    /**\\n     * @dev Dispatches blocks to a given adapter on the target chaib.\\n     * @param targetChainId - The target chain's Uint256 identifier.\\n     * @param adapter - The adapter instance to use.\\n     * @param blockNumbers - An array of Uint256 block numbers to dispatch.\\n     * @notice blockNumbers must include block numbers that are greater than or equal to (currentBlock - 256) due to EVM limitations.\\n     * @return result - The result returned by the adapter as bytes.\\n     */\\n    function dispatchBlocks(\\n        uint256 targetChainId,\\n        IAdapter adapter,\\n        uint256[] memory blockNumbers\\n    ) external payable returns (bytes32);\\n\\n    /**\\n     * @dev Dispatches messages to a target chain using the specified adapter.\\n     * @param targetChainId - The target chain's Uint256 identifier.\\n     * @param adapter - The adapter instance to use.\\n     * @param messageIds - An array of Uint256 message identifiers.\\n     * @param messageHashes - An array of bytes32 message hashes.\\n     * @notice This function can be called only by Yaho\\n     * @return result - The result returned by the adapter as bytes.\\n     */\\n    function dispatchMessages(\\n        uint256 targetChainId,\\n        IAdapter adapter,\\n        uint256[] memory messageIds,\\n        bytes32[] memory messageHashes\\n    ) external payable returns (bytes32);\\n}\\n\",\"keccak256\":\"0xda2089ab19b5517907b3ea017e2d6bb83bd38eb687eca8867f1bec7533e3d0a3\",\"license\":\"LGPL-3.0-only\"},\"contracts/interfaces/IYaru.sol\":{\"content\":\"// SPDX-License-Identifier: LGPL-3.0-only\\npragma solidity ^0.8.0;\\n\\nimport { Message } from \\\"./IMessage.sol\\\";\\nimport { IMessageHashCalculator } from \\\"./IMessageHashCalculator.sol\\\";\\nimport { IMessageIdCalculator } from \\\"./IMessageIdCalculator.sol\\\";\\n\\n/**\\n * @title IYaru\\n */\\ninterface IYaru is IMessageHashCalculator, IMessageIdCalculator {\\n    error CallFailed();\\n    error InvalidToChainId(uint256 chainId, uint256 expectedChainId);\\n    error MessageIdAlreadyExecuted(uint256 messageId);\\n    error ThresholdNotMet();\\n\\n    /**\\n     * @dev Emitted when a message is executed with its associated message ID and message object.\\n     * @param messageId - The message ID associated with the executed message.\\n     * @param message - The message object associated with this event.\\n     */\\n    event MessageExecuted(uint256 indexed messageId, Message message);\\n\\n    /**\\n     * @dev Executes a batch of messages and returns the results if the threshold for a single message has been reached\\n     * @param messages - An array of `Message` structures\\n     * @return result An array of byte arrays, where each byte array is the result of executing a respective message from the input.\\n     */\\n    function executeMessages(Message[] calldata messages) external returns (bytes[] memory);\\n}\\n\",\"keccak256\":\"0x105d093006d7b9045c17aae1fa3571c4ad1a1230e824e6ff6819ccfd18513429\",\"license\":\"LGPL-3.0-only\"},\"contracts/utils/MessageHashCalculator.sol\":{\"content\":\"// SPDX-License-Identifier: LGPL-3.0-only\\npragma solidity ^0.8.20;\\n\\nimport { IMessageHashCalculator } from \\\"../interfaces/IMessageHashCalculator.sol\\\";\\nimport { Message } from \\\"../interfaces/IMessage.sol\\\";\\n\\ncontract MessageHashCalculator is IMessageHashCalculator {\\n    /// @inheritdoc IMessageHashCalculator\\n    function calculateMessageHash(Message memory message) public pure returns (bytes32) {\\n        return keccak256(abi.encode(message));\\n    }\\n}\\n\",\"keccak256\":\"0xcb6c06700dbaa9cde9cc8f13ad49228ae60f6eff6c53dd24c1754fc53747c424\",\"license\":\"LGPL-3.0-only\"},\"contracts/utils/MessageIdCalculator.sol\":{\"content\":\"// SPDX-License-Identifier: LGPL-3.0-only\\npragma solidity ^0.8.20;\\n\\nimport { IMessageIdCalculator } from \\\"../interfaces/IMessageIdCalculator.sol\\\";\\n\\ncontract MessageIdCalculator is IMessageIdCalculator {\\n    /// @inheritdoc IMessageIdCalculator\\n    function calculateMessageId(\\n        uint256 sourceChainId,\\n        address dispatcherAddress,\\n        bytes32 messageHash\\n    ) public pure returns (uint256) {\\n        return uint256(keccak256(abi.encode(sourceChainId, dispatcherAddress, messageHash)));\\n    }\\n}\\n\",\"keccak256\":\"0x6bd8bfe677dae7d6fc20803035a07f923a3c84696b1025d712856aae343adde6\",\"license\":\"LGPL-3.0-only\"}},\"version\":1}",
+  "bytecode": "0x60e0346100b357601f610ca838819003918201601f19168301916001600160401b038311848410176100b8578084926060946040528339810103126100b357610047816100ce565b906040610056602083016100ce565b91015191600160005560805260a05260c052604051610bc590816100e382396080518181816101840152610446015260a05181818160c2015261033c015260c05181818160fe0152818161035d015281816103fa01526104d50152f35b600080fd5b634e487b7160e01b600052604160045260246000fd5b51906001600160a01b03821682036100b35756fe608080604052600436101561001357600080fd5b60003560e01c908163036a7954146101de5750806331fa321b146101a8578063523d415a14610164578063543836b11461012157806374be2150146100e65780639e83334b146100a25763d3ecebd71461006c57600080fd5b3461009d57602036600319011261009d576004356000526001602052602060ff604060002054166040519015158152f35b600080fd5b3461009d57600036600319011261009d5760206040516001600160a01b037f0000000000000000000000000000000000000000000000000000000000000000168152f35b3461009d57600036600319011261009d5760206040517f00000000000000000000000000000000000000000000000000000000000000008152f35b3461009d57602036600319011261009d5760043567ffffffffffffffff811161009d5761015c610157602092369060040161082e565b610b23565b604051908152f35b3461009d57600036600319011261009d5760206040516001600160a01b037f0000000000000000000000000000000000000000000000000000000000000000168152f35b3461009d57606036600319011261009d576024356001600160a01b038116810361009d5761015c60209160443590600435610b4c565b3461009d57602036600319011261009d5767ffffffffffffffff6004351161009d5736602360043501121561009d5767ffffffffffffffff600435600401351161009d573660246004356004013560051b60043501011161009d5760026000541461070a57600260005561025760043560040135610816565b61026460405191826107c2565b600480350135808252601f199061027a90610816565b0160005b8181106106f9578260005b6004356004013581106102fe575060018060005560405190602082016020835283518091526040830190602060408260051b8601019501916000905b8282106102d25785870386f35b909192936020806102ee8399603f198a82030186528851610789565b98960194939190910191016102c5565b60248160051b6004350101356101221960043536030181121561009d5761032d9060243691600435010161082e565b9061038161033a83610b23565b7f00000000000000000000000000000000000000000000000000000000000000007f0000000000000000000000000000000000000000000000000000000000000000610b4c565b60208301514681036106c2575080600052600160205260ff60406000205416610691578060005260016020526040600020600160ff1982541617905561043a6020604085015160e08601519060405193849283927fb0bb1be40000000000000000000000000000000000000000000000000000000084527f0000000000000000000000000000000000000000000000000000000000000000600485015287602485015260448401526080606484015260848301906109fa565b03816001600160a01b037f0000000000000000000000000000000000000000000000000000000000000000165afa9081156106855760009161064a575b5015610620578260006001600160a01b036080610515960151166001600160a01b036060840151169060a084015191836040518099819582947f8c3010500000000000000000000000000000000000000000000000000000000084527f000000000000000000000000000000000000000000000000000000000000000060048501528a60248501526044840152608060648401526084830190610789565b03925af1600094816105a4575b506105515760046040517f3204506f000000000000000000000000000000000000000000000000000000008152fd5b61059b7fdd1bdfea38460565f157126e887f629eef09468d58dcb316e9b432eaabe1463a916001956105838689610a37565b5261058e8588610a37565b5060405191829182610a61565b0390a201610289565b9094503d806000833e6105b781836107c2565b81019060208183031261009d5780519067ffffffffffffffff821161009d570181601f8201121561009d5780516105ed816107fa565b926105fb60405194856107c2565b8184526020828401011161009d576106199160208085019101610766565b9386610522565b60046040517f59fa4a93000000000000000000000000000000000000000000000000000000008152fd5b90506020813d60201161067d575b81610665602093836107c2565b8101031261009d5751801515810361009d5785610477565b3d9150610658565b6040513d6000823e3d90fd5b602490604051907f5919bfee0000000000000000000000000000000000000000000000000000000082526004820152fd5b604490604051907f841022d50000000000000000000000000000000000000000000000000000000082526004820152466024820152fd5b80606060208093860101520161027e565b807f08c379a0000000000000000000000000000000000000000000000000000000006064925260206004820152601f60248201527f5265656e7472616e637947756172643a207265656e7472616e742063616c6c006044820152fd5b60005b8381106107795750506000910152565b8181015183820152602001610769565b906020916107a281518092818552858086019101610766565b601f01601f1916010190565b35906001600160a01b038216820361009d57565b90601f8019910116810190811067ffffffffffffffff8211176107e457604052565b634e487b7160e01b600052604160045260246000fd5b67ffffffffffffffff81116107e457601f01601f191660200190565b67ffffffffffffffff81116107e45760051b60200190565b9190610100808483031261009d5760409182519182019067ffffffffffffffff91838110838211176107e457845282958035845260209283820135848601528582013586860152610881606083016107ae565b6060860152610892608083016107ae565b608086015260a082013581811161009d5782019183601f8401121561009d5782356108bc816107fa565b906108c9895192836107c2565b8082528587828701011161009d5780878096018684013760009485918301015260a087015260c08101358281116109f657810184601f820112156109f65780359061091382610816565b916109208a5193846107c2565b808352878084019160051b830101918783116109f2578801905b8282106109cf5750505060c087015260e08101359182116109c457019082601f830112156109cc5781359161097a61097184610816565b975197886107c2565b828752848088019360051b8201019384116109c8578401915b8383106109a557505050505060e00152565b82356001600160a01b03811681036109c4578152918401918401610993565b8280fd5b5080fd5b80fd5b81356001600160a01b03811681036109ee57815290880190880161093a565b8780fd5b8680fd5b8380fd5b90815180825260208080930193019160005b828110610a1a575050505090565b83516001600160a01b031685529381019392810192600101610a0c565b8051821015610a4b5760209160051b010190565b634e487b7160e01b600052603260045260246000fd5b9190916020808252835181830152808401516040830152604084015160608301526001600160a01b03918260608601511660808201528260808601511660a082015260a0850151610ac0610100918260c0850152610120840190610789565b9360c087015194601f1994858583030160e08601528080885193848152019701926000905b838210610b0a57505050505060e0610b079596015192828503019101526109fa565b90565b8451811689529782019793820193600190910190610ae5565b604051610b4681610b38602082019485610a61565b03601f1981018352826107c2565b51902090565b916001600160a01b0360405192602084019485521660408301526060820152606081526080810181811067ffffffffffffffff8211176107e4576040525190209056fea26469706673582212202fdb45db79c3d3cd7c448850941927af2fc1f7c5634103dab7674abe8581743e64736f6c63430008140033",
+  "deployedBytecode": "0x608080604052600436101561001357600080fd5b60003560e01c908163036a7954146101de5750806331fa321b146101a8578063523d415a14610164578063543836b11461012157806374be2150146100e65780639e83334b146100a25763d3ecebd71461006c57600080fd5b3461009d57602036600319011261009d576004356000526001602052602060ff604060002054166040519015158152f35b600080fd5b3461009d57600036600319011261009d5760206040516001600160a01b037f0000000000000000000000000000000000000000000000000000000000000000168152f35b3461009d57600036600319011261009d5760206040517f00000000000000000000000000000000000000000000000000000000000000008152f35b3461009d57602036600319011261009d5760043567ffffffffffffffff811161009d5761015c610157602092369060040161082e565b610b23565b604051908152f35b3461009d57600036600319011261009d5760206040516001600160a01b037f0000000000000000000000000000000000000000000000000000000000000000168152f35b3461009d57606036600319011261009d576024356001600160a01b038116810361009d5761015c60209160443590600435610b4c565b3461009d57602036600319011261009d5767ffffffffffffffff6004351161009d5736602360043501121561009d5767ffffffffffffffff600435600401351161009d573660246004356004013560051b60043501011161009d5760026000541461070a57600260005561025760043560040135610816565b61026460405191826107c2565b600480350135808252601f199061027a90610816565b0160005b8181106106f9578260005b6004356004013581106102fe575060018060005560405190602082016020835283518091526040830190602060408260051b8601019501916000905b8282106102d25785870386f35b909192936020806102ee8399603f198a82030186528851610789565b98960194939190910191016102c5565b60248160051b6004350101356101221960043536030181121561009d5761032d9060243691600435010161082e565b9061038161033a83610b23565b7f00000000000000000000000000000000000000000000000000000000000000007f0000000000000000000000000000000000000000000000000000000000000000610b4c565b60208301514681036106c2575080600052600160205260ff60406000205416610691578060005260016020526040600020600160ff1982541617905561043a6020604085015160e08601519060405193849283927fb0bb1be40000000000000000000000000000000000000000000000000000000084527f0000000000000000000000000000000000000000000000000000000000000000600485015287602485015260448401526080606484015260848301906109fa565b03816001600160a01b037f0000000000000000000000000000000000000000000000000000000000000000165afa9081156106855760009161064a575b5015610620578260006001600160a01b036080610515960151166001600160a01b036060840151169060a084015191836040518099819582947f8c3010500000000000000000000000000000000000000000000000000000000084527f000000000000000000000000000000000000000000000000000000000000000060048501528a60248501526044840152608060648401526084830190610789565b03925af1600094816105a4575b506105515760046040517f3204506f000000000000000000000000000000000000000000000000000000008152fd5b61059b7fdd1bdfea38460565f157126e887f629eef09468d58dcb316e9b432eaabe1463a916001956105838689610a37565b5261058e8588610a37565b5060405191829182610a61565b0390a201610289565b9094503d806000833e6105b781836107c2565b81019060208183031261009d5780519067ffffffffffffffff821161009d570181601f8201121561009d5780516105ed816107fa565b926105fb60405194856107c2565b8184526020828401011161009d576106199160208085019101610766565b9386610522565b60046040517f59fa4a93000000000000000000000000000000000000000000000000000000008152fd5b90506020813d60201161067d575b81610665602093836107c2565b8101031261009d5751801515810361009d5785610477565b3d9150610658565b6040513d6000823e3d90fd5b602490604051907f5919bfee0000000000000000000000000000000000000000000000000000000082526004820152fd5b604490604051907f841022d50000000000000000000000000000000000000000000000000000000082526004820152466024820152fd5b80606060208093860101520161027e565b807f08c379a0000000000000000000000000000000000000000000000000000000006064925260206004820152601f60248201527f5265656e7472616e637947756172643a207265656e7472616e742063616c6c006044820152fd5b60005b8381106107795750506000910152565b8181015183820152602001610769565b906020916107a281518092818552858086019101610766565b601f01601f1916010190565b35906001600160a01b038216820361009d57565b90601f8019910116810190811067ffffffffffffffff8211176107e457604052565b634e487b7160e01b600052604160045260246000fd5b67ffffffffffffffff81116107e457601f01601f191660200190565b67ffffffffffffffff81116107e45760051b60200190565b9190610100808483031261009d5760409182519182019067ffffffffffffffff91838110838211176107e457845282958035845260209283820135848601528582013586860152610881606083016107ae565b6060860152610892608083016107ae565b608086015260a082013581811161009d5782019183601f8401121561009d5782356108bc816107fa565b906108c9895192836107c2565b8082528587828701011161009d5780878096018684013760009485918301015260a087015260c08101358281116109f657810184601f820112156109f65780359061091382610816565b916109208a5193846107c2565b808352878084019160051b830101918783116109f2578801905b8282106109cf5750505060c087015260e08101359182116109c457019082601f830112156109cc5781359161097a61097184610816565b975197886107c2565b828752848088019360051b8201019384116109c8578401915b8383106109a557505050505060e00152565b82356001600160a01b03811681036109c4578152918401918401610993565b8280fd5b5080fd5b80fd5b81356001600160a01b03811681036109ee57815290880190880161093a565b8780fd5b8680fd5b8380fd5b90815180825260208080930193019160005b828110610a1a575050505090565b83516001600160a01b031685529381019392810192600101610a0c565b8051821015610a4b5760209160051b010190565b634e487b7160e01b600052603260045260246000fd5b9190916020808252835181830152808401516040830152604084015160608301526001600160a01b03918260608601511660808201528260808601511660a082015260a0850151610ac0610100918260c0850152610120840190610789565b9360c087015194601f1994858583030160e08601528080885193848152019701926000905b838210610b0a57505050505060e0610b079596015192828503019101526109fa565b90565b8451811689529782019793820193600190910190610ae5565b604051610b4681610b38602082019485610a61565b03601f1981018352826107c2565b51902090565b916001600160a01b0360405192602084019485521660408301526060820152606081526080810181811067ffffffffffffffff8211176107e4576040525190209056fea26469706673582212202fdb45db79c3d3cd7c448850941927af2fc1f7c5634103dab7674abe8581743e64736f6c63430008140033",
+  "devdoc": {
+    "events": {
+      "MessageExecuted(uint256,(uint256,uint256,uint256,address,address,bytes,address[],address[]))": {
+        "details": "Emitted when a message is executed with its associated message ID and message object.",
+        "params": {
+          "message": "- The message object associated with this event.",
+          "messageId": "- The message ID associated with the executed message."
+        }
+      }
+    },
+    "kind": "dev",
+    "methods": {
+      "calculateMessageHash((uint256,uint256,uint256,address,address,bytes,address[],address[]))": {
+        "details": "Calculates and returns the hash of a given message.",
+        "params": {
+          "message": "- The `Message` structure containing various fields to be hashed."
+        },
+        "returns": {
+          "_0": "hash The keccak256 hash of the message, represented as a 32-byte hexadecimal string."
+        }
+      },
+      "calculateMessageId(uint256,address,bytes32)": {
+        "details": "Calculates and returns a unique identifier (ID) for a message.",
+        "params": {
+          "dispatcherAddress": "- The address of the dispatcher sending the message.",
+          "messageHash": "- The keccak256 hash of the message, represented as a 32-byte hexadecimal string.",
+          "sourceChainId": "- The ID of the chain from which the message originates."
+        },
+        "returns": {
+          "_0": "messageId The unique identifier for the message, calculated based on the input parameters."
+        }
+      },
+      "executeMessages((uint256,uint256,uint256,address,address,bytes,address[],address[])[])": {
+        "details": "Executes a batch of messages and returns the results if the threshold for a single message has been reached",
+        "params": {
+          "messages": "- An array of `Message` structures"
+        },
+        "returns": {
+          "_0": "result An array of byte arrays, where each byte array is the result of executing a respective message from the input."
+        }
+      }
+    },
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "version": 1
+  },
+  "storageLayout": {
+    "storage": [
+      {
+        "astId": 473,
+        "contract": "contracts/Yaru.sol:Yaru",
+        "label": "_status",
+        "offset": 0,
+        "slot": "0",
+        "type": "t_uint256"
+      },
+      {
+        "astId": 4422,
+        "contract": "contracts/Yaru.sol:Yaru",
+        "label": "executed",
+        "offset": 0,
+        "slot": "1",
+        "type": "t_mapping(t_uint256,t_bool)"
+      }
+    ],
+    "types": {
+      "t_bool": {
+        "encoding": "inplace",
+        "label": "bool",
+        "numberOfBytes": "1"
+      },
+      "t_mapping(t_uint256,t_bool)": {
+        "encoding": "mapping",
+        "key": "t_uint256",
+        "label": "mapping(uint256 => bool)",
+        "numberOfBytes": "32",
+        "value": "t_bool"
+      },
+      "t_uint256": {
+        "encoding": "inplace",
+        "label": "uint256",
+        "numberOfBytes": "32"
+      }
+    }
+  }
+}

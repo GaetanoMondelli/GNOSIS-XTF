@@ -1,0 +1,202 @@
+{
+  "address": "0x690878fB6118d99882c6B27e495E2f07f6df3b2b",
+  "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "blockNumber",
+          "type": "uint256"
+        }
+      ],
+      "name": "HeaderOutOfRange",
+      "type": "error"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "uint256",
+          "name": "blockNumber",
+          "type": "uint256"
+        },
+        {
+          "indexed": true,
+          "internalType": "bytes32",
+          "name": "blockHeader",
+          "type": "bytes32"
+        }
+      ],
+      "name": "HeaderStored",
+      "type": "event"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "name": "headers",
+      "outputs": [
+        {
+          "internalType": "bytes32",
+          "name": "",
+          "type": "bytes32"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "blockNumber",
+          "type": "uint256"
+        }
+      ],
+      "name": "storeBlockHeader",
+      "outputs": [
+        {
+          "internalType": "bytes32",
+          "name": "",
+          "type": "bytes32"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256[]",
+          "name": "blockNumbers",
+          "type": "uint256[]"
+        }
+      ],
+      "name": "storeBlockHeaders",
+      "outputs": [
+        {
+          "internalType": "bytes32[]",
+          "name": "",
+          "type": "bytes32[]"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "transactionHash": "0xeeb50acea1f56c739a12a8952536b91d73378f472415d746eb789358db524215",
+  "receipt": {
+    "to": null,
+    "from": "0x2a1F5eB3e84e58e6F1e565306298B9dE1273f203",
+    "contractAddress": "0x690878fB6118d99882c6B27e495E2f07f6df3b2b",
+    "transactionIndex": 0,
+    "gasUsed": "216804",
+    "logsBloom": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+    "blockHash": "0x747083e5630b2fee60739ebb8430b2a6722ab93dd0b2044f66f4bbb40bd7c904",
+    "transactionHash": "0xeeb50acea1f56c739a12a8952536b91d73378f472415d746eb789358db524215",
+    "logs": [],
+    "blockNumber": 9361590,
+    "cumulativeGasUsed": "216804",
+    "status": 1,
+    "byzantium": true
+  },
+  "args": [],
+  "numDeployments": 1,
+  "solcInputHash": "310df9762748bfe64aebb5ab3f6df0e5",
+  "metadata": "{\"compiler\":{\"version\":\"0.8.20+commit.a1b79de6\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"blockNumber\",\"type\":\"uint256\"}],\"name\":\"HeaderOutOfRange\",\"type\":\"error\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"blockNumber\",\"type\":\"uint256\"},{\"indexed\":true,\"internalType\":\"bytes32\",\"name\":\"blockHeader\",\"type\":\"bytes32\"}],\"name\":\"HeaderStored\",\"type\":\"event\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"headers\",\"outputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"blockNumber\",\"type\":\"uint256\"}],\"name\":\"storeBlockHeader\",\"outputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256[]\",\"name\":\"blockNumbers\",\"type\":\"uint256[]\"}],\"name\":\"storeBlockHeaders\",\"outputs\":[{\"internalType\":\"bytes32[]\",\"name\":\"\",\"type\":\"bytes32[]\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"events\":{\"HeaderStored(uint256,bytes32)\":{\"details\":\"Emitted when a block header is stored.\",\"params\":{\"blockHeader\":\"- The stored block header as a bytes32 value.\",\"blockNumber\":\"- The block number associated with the stored header.\"}}},\"kind\":\"dev\",\"methods\":{\"storeBlockHeader(uint256)\":{\"details\":\"Stores and returns the header for the given block.\",\"params\":{\"blockNumber\":\"- Block number.\"},\"returns\":{\"_0\":\"blockHeader - Block header stored.\"}},\"storeBlockHeaders(uint256[])\":{\"details\":\"Stores and returns the header for an array of given blocks.\",\"params\":{\"blockNumbers\":\"- Array of block numbers.\"},\"returns\":{\"_0\":\"blockHeaders - Array of block headers stored.\"}}},\"stateVariables\":{\"headers\":{\"details\":\"Retrieves the stored block header for a specific block number.\",\"params\":{\"blockNumber\":\"- The block number as a uint256 value.\"},\"return\":\"The block header as a bytes32 value.\",\"returns\":{\"_0\":\"The block header as a bytes32 value.\"}}},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{\"storeBlockHeader(uint256)\":{\"notice\":\"Reverts if the given block header was not previously stored and is now out of range.\"},\"storeBlockHeaders(uint256[])\":{\"notice\":\"Reverts if the given block header was not previously stored and is now out of range.\"}},\"version\":1}},\"settings\":{\"compilationTarget\":{\"contracts/utils/HeaderStorage.sol\":\"HeaderStorage\"},\"evmVersion\":\"paris\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\",\"useLiteralContent\":true},\"optimizer\":{\"enabled\":true,\"runs\":1000},\"remappings\":[],\"viaIR\":true},\"sources\":{\"contracts/interfaces/IHeaderStorage.sol\":{\"content\":\"// SPDX-License-Identifier: LGPL-3.0-only\\npragma solidity ^0.8.0;\\n\\n/**\\n * @title IHeaderStorage\\n */\\ninterface IHeaderStorage {\\n    error HeaderOutOfRange(uint256 blockNumber);\\n\\n    /**\\n     * @dev Emitted when a block header is stored.\\n     * @param blockNumber - The block number associated with the stored header.\\n     * @param blockHeader - The stored block header as a bytes32 value.\\n     */\\n    event HeaderStored(uint256 indexed blockNumber, bytes32 indexed blockHeader);\\n\\n    /**\\n     * @dev Retrieves the stored block header for a specific block number.\\n     * @param blockNumber - The block number as a uint256 value.\\n     * @return The block header as a bytes32 value.\\n     */\\n    function headers(uint256 blockNumber) external view returns (bytes32);\\n\\n    /**\\n     * @dev Stores and returns the header for the given block.\\n     * @param blockNumber - Block number.\\n     * @return blockHeader - Block header stored.\\n     * @notice Reverts if the given block header was not previously stored and is now out of range.\\n     */\\n    function storeBlockHeader(uint256 blockNumber) external returns (bytes32);\\n\\n    /**\\n     * @dev Stores and returns the header for an array of given blocks.\\n     * @param blockNumbers - Array of block numbers.\\n     * @return blockHeaders - Array of block headers stored.\\n     * @notice Reverts if the given block header was not previously stored and is now out of range.\\n     */\\n    function storeBlockHeaders(uint256[] memory blockNumbers) external returns (bytes32[] memory);\\n}\\n\",\"keccak256\":\"0x8ac05c0f5a8e9afbe26337ff6858d3597ff540cc3e365fd8a98fc861643a9eb3\",\"license\":\"LGPL-3.0-only\"},\"contracts/utils/HeaderStorage.sol\":{\"content\":\"// SPDX-License-Identifier: LGPL-3.0-only\\npragma solidity ^0.8.20;\\n\\nimport { IHeaderStorage } from \\\"../interfaces/IHeaderStorage.sol\\\";\\n\\ncontract HeaderStorage is IHeaderStorage {\\n    mapping(uint256 => bytes32) public headers;\\n\\n    /// @inheritdoc IHeaderStorage\\n    function storeBlockHeader(uint256 blockNumber) public returns (bytes32) {\\n        bytes32 blockHeader = headers[blockNumber];\\n        if (blockHeader == 0) {\\n            blockHeader = blockhash(blockNumber);\\n            if (blockHeader == 0) revert HeaderOutOfRange(blockNumber);\\n            headers[blockNumber] = blockHeader;\\n            emit HeaderStored(blockNumber, blockHeader);\\n        }\\n        return blockHeader;\\n    }\\n\\n    /// @inheritdoc IHeaderStorage\\n    function storeBlockHeaders(uint256[] memory blockNumbers) public returns (bytes32[] memory) {\\n        bytes32[] memory blockHeaders = new bytes32[](blockNumbers.length);\\n        for (uint256 i = 0; i < blockNumbers.length; ) {\\n            blockHeaders[i] = storeBlockHeader(blockNumbers[i]);\\n            unchecked {\\n                ++i;\\n            }\\n        }\\n        return blockHeaders;\\n    }\\n}\\n\",\"keccak256\":\"0x5d6a0f7d5cbc14599bbedc5c620dabfb2683251cfb5f2e966c611659f3682332\",\"license\":\"LGPL-3.0-only\"}},\"version\":1}",
+  "bytecode": "0x60808060405234610016576102f6908161001c8239f35b600080fdfe608080604052600436101561001357600080fd5b600090813560e01c90816356f90d7914610190575080636c1e8a95146101695763ceee6e551461004257600080fd5b3461016257602080600319360112610165576004359167ffffffffffffffff8311610162573660238401121561016257826004013592610089610084856101f2565b6101b6565b9360248486838152019160051b8301019136831161015e576024859101915b83831061014e57505050508251906100ce6100c5610084846101f2565b928084526101f2565b82840190601f1901368237815b855181101561010b57806100fa6100f460019389610296565b5161020a565b6101048287610296565b52016100db565b508390839260405193838594850191818652518092526040850193925b82811061013757505050500390f35b835185528695509381019392810192600101610128565b82358152918101918591016100a8565b8380fd5b80fd5b5080fd5b503461016257602036600319011261016257602061018860043561020a565b604051908152f35b905034610165576020366003190112610165576040602092600435815280845220548152f35b6040519190601f01601f1916820167ffffffffffffffff8111838210176101dc57604052565b634e487b7160e01b600052604160045260246000fd5b67ffffffffffffffff81116101dc5760051b60200190565b600081815280602052604081205491821561022457505090565b8040925090821561026557907ff7df17dce0093aedfcbae24b4f04e823f9e863c97986ab1ba6c5267ace49ddea82828594528060205283604082205580a390565b602482604051907f9c97e72e0000000000000000000000000000000000000000000000000000000082526004820152fd5b80518210156102aa5760209160051b010190565b634e487b7160e01b600052603260045260246000fdfea26469706673582212204b566d34c44bb0f849cd1307fba3d8295584259cdad6d9adfc3cb9f53e1eb81f64736f6c63430008140033",
+  "deployedBytecode": "0x608080604052600436101561001357600080fd5b600090813560e01c90816356f90d7914610190575080636c1e8a95146101695763ceee6e551461004257600080fd5b3461016257602080600319360112610165576004359167ffffffffffffffff8311610162573660238401121561016257826004013592610089610084856101f2565b6101b6565b9360248486838152019160051b8301019136831161015e576024859101915b83831061014e57505050508251906100ce6100c5610084846101f2565b928084526101f2565b82840190601f1901368237815b855181101561010b57806100fa6100f460019389610296565b5161020a565b6101048287610296565b52016100db565b508390839260405193838594850191818652518092526040850193925b82811061013757505050500390f35b835185528695509381019392810192600101610128565b82358152918101918591016100a8565b8380fd5b80fd5b5080fd5b503461016257602036600319011261016257602061018860043561020a565b604051908152f35b905034610165576020366003190112610165576040602092600435815280845220548152f35b6040519190601f01601f1916820167ffffffffffffffff8111838210176101dc57604052565b634e487b7160e01b600052604160045260246000fd5b67ffffffffffffffff81116101dc5760051b60200190565b600081815280602052604081205491821561022457505090565b8040925090821561026557907ff7df17dce0093aedfcbae24b4f04e823f9e863c97986ab1ba6c5267ace49ddea82828594528060205283604082205580a390565b602482604051907f9c97e72e0000000000000000000000000000000000000000000000000000000082526004820152fd5b80518210156102aa5760209160051b010190565b634e487b7160e01b600052603260045260246000fdfea26469706673582212204b566d34c44bb0f849cd1307fba3d8295584259cdad6d9adfc3cb9f53e1eb81f64736f6c63430008140033",
+  "devdoc": {
+    "events": {
+      "HeaderStored(uint256,bytes32)": {
+        "details": "Emitted when a block header is stored.",
+        "params": {
+          "blockHeader": "- The stored block header as a bytes32 value.",
+          "blockNumber": "- The block number associated with the stored header."
+        }
+      }
+    },
+    "kind": "dev",
+    "methods": {
+      "storeBlockHeader(uint256)": {
+        "details": "Stores and returns the header for the given block.",
+        "params": {
+          "blockNumber": "- Block number."
+        },
+        "returns": {
+          "_0": "blockHeader - Block header stored."
+        }
+      },
+      "storeBlockHeaders(uint256[])": {
+        "details": "Stores and returns the header for an array of given blocks.",
+        "params": {
+          "blockNumbers": "- Array of block numbers."
+        },
+        "returns": {
+          "_0": "blockHeaders - Array of block headers stored."
+        }
+      }
+    },
+    "stateVariables": {
+      "headers": {
+        "details": "Retrieves the stored block header for a specific block number.",
+        "params": {
+          "blockNumber": "- The block number as a uint256 value."
+        },
+        "return": "The block header as a bytes32 value.",
+        "returns": {
+          "_0": "The block header as a bytes32 value."
+        }
+      }
+    },
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {
+      "storeBlockHeader(uint256)": {
+        "notice": "Reverts if the given block header was not previously stored and is now out of range."
+      },
+      "storeBlockHeaders(uint256[])": {
+        "notice": "Reverts if the given block header was not previously stored and is now out of range."
+      }
+    },
+    "version": 1
+  },
+  "storageLayout": {
+    "storage": [
+      {
+        "astId": 6549,
+        "contract": "contracts/utils/HeaderStorage.sol:HeaderStorage",
+        "label": "headers",
+        "offset": 0,
+        "slot": "0",
+        "type": "t_mapping(t_uint256,t_bytes32)"
+      }
+    ],
+    "types": {
+      "t_bytes32": {
+        "encoding": "inplace",
+        "label": "bytes32",
+        "numberOfBytes": "32"
+      },
+      "t_mapping(t_uint256,t_bytes32)": {
+        "encoding": "mapping",
+        "key": "t_uint256",
+        "label": "mapping(uint256 => bytes32)",
+        "numberOfBytes": "32",
+        "value": "t_bytes32"
+      },
+      "t_uint256": {
+        "encoding": "inplace",
+        "label": "uint256",
+        "numberOfBytes": "32"
+      }
+    }
+  }
+}

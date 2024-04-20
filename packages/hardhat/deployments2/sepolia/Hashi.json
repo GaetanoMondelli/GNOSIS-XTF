@@ -1,0 +1,263 @@
+{
+  "address": "0xFC2c9d0094c6D64F3a4e4C6BF30E2229F4268b70",
+  "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "contract IAdapter",
+          "name": "adapterOne",
+          "type": "address"
+        },
+        {
+          "internalType": "contract IAdapter",
+          "name": "adapterTwo",
+          "type": "address"
+        }
+      ],
+      "name": "AdaptersDisagree",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "contract IAdapter",
+          "name": "adapter",
+          "type": "address"
+        }
+      ],
+      "name": "HashNotAvailableInAdapter",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "threshold",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "maxThreshold",
+          "type": "uint256"
+        }
+      ],
+      "name": "InvalidThreshold",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "NoAdaptersGiven",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "domain",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "id",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "threshold",
+          "type": "uint256"
+        },
+        {
+          "internalType": "contract IAdapter[]",
+          "name": "adapters",
+          "type": "address[]"
+        }
+      ],
+      "name": "checkHashWithThresholdFromAdapters",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "domain",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "id",
+          "type": "uint256"
+        },
+        {
+          "internalType": "contract IAdapter[]",
+          "name": "adapters",
+          "type": "address[]"
+        }
+      ],
+      "name": "getHash",
+      "outputs": [
+        {
+          "internalType": "bytes32",
+          "name": "hash",
+          "type": "bytes32"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "domain",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "id",
+          "type": "uint256"
+        },
+        {
+          "internalType": "contract IAdapter",
+          "name": "adapter",
+          "type": "address"
+        }
+      ],
+      "name": "getHashFromAdapter",
+      "outputs": [
+        {
+          "internalType": "bytes32",
+          "name": "",
+          "type": "bytes32"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "domain",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "id",
+          "type": "uint256"
+        },
+        {
+          "internalType": "contract IAdapter[]",
+          "name": "adapters",
+          "type": "address[]"
+        }
+      ],
+      "name": "getHashesFromAdapters",
+      "outputs": [
+        {
+          "internalType": "bytes32[]",
+          "name": "",
+          "type": "bytes32[]"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "transactionHash": "0xddef4889f394465321ef3b0985be60439bd565824ffb9ed834a88f28b40002a3",
+  "receipt": {
+    "to": null,
+    "from": "0x2a1F5eB3e84e58e6F1e565306298B9dE1273f203",
+    "contractAddress": "0xFC2c9d0094c6D64F3a4e4C6BF30E2229F4268b70",
+    "transactionIndex": 45,
+    "gasUsed": "434842",
+    "logsBloom": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+    "blockHash": "0xc04c4097124b345fff70589df413b98ccc9c449c78a9c35c04134560df336896",
+    "transactionHash": "0xddef4889f394465321ef3b0985be60439bd565824ffb9ed834a88f28b40002a3",
+    "logs": [],
+    "blockNumber": 5738743,
+    "cumulativeGasUsed": "10688789",
+    "status": 1,
+    "byzantium": true
+  },
+  "args": [],
+  "numDeployments": 1,
+  "solcInputHash": "310df9762748bfe64aebb5ab3f6df0e5",
+  "metadata": "{\"compiler\":{\"version\":\"0.8.20+commit.a1b79de6\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"contract IAdapter\",\"name\":\"adapterOne\",\"type\":\"address\"},{\"internalType\":\"contract IAdapter\",\"name\":\"adapterTwo\",\"type\":\"address\"}],\"name\":\"AdaptersDisagree\",\"type\":\"error\"},{\"inputs\":[{\"internalType\":\"contract IAdapter\",\"name\":\"adapter\",\"type\":\"address\"}],\"name\":\"HashNotAvailableInAdapter\",\"type\":\"error\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"threshold\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"maxThreshold\",\"type\":\"uint256\"}],\"name\":\"InvalidThreshold\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"NoAdaptersGiven\",\"type\":\"error\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"domain\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"id\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"threshold\",\"type\":\"uint256\"},{\"internalType\":\"contract IAdapter[]\",\"name\":\"adapters\",\"type\":\"address[]\"}],\"name\":\"checkHashWithThresholdFromAdapters\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"domain\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"id\",\"type\":\"uint256\"},{\"internalType\":\"contract IAdapter[]\",\"name\":\"adapters\",\"type\":\"address[]\"}],\"name\":\"getHash\",\"outputs\":[{\"internalType\":\"bytes32\",\"name\":\"hash\",\"type\":\"bytes32\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"domain\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"id\",\"type\":\"uint256\"},{\"internalType\":\"contract IAdapter\",\"name\":\"adapter\",\"type\":\"address\"}],\"name\":\"getHashFromAdapter\",\"outputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"domain\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"id\",\"type\":\"uint256\"},{\"internalType\":\"contract IAdapter[]\",\"name\":\"adapters\",\"type\":\"address[]\"}],\"name\":\"getHashesFromAdapters\",\"outputs\":[{\"internalType\":\"bytes32[]\",\"name\":\"\",\"type\":\"bytes32[]\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{\"checkHashWithThresholdFromAdapters(uint256,uint256,uint256,address[])\":{\"details\":\"Checks whether the threshold is reached for a message given a set of adapters.\",\"params\":{\"adapters\":\"- Array of addresses for the adapters to query.\",\"domain\":\"- ID of the domain to query.\",\"id\":\"- ID for which to return hash.\",\"threshold\":\"- Threshold to use.\"},\"returns\":{\"_0\":\"result A boolean indicating if a threshold for a given message has been reached.\"}},\"getHash(uint256,uint256,address[])\":{\"details\":\"Returns the hash unanimously agreed upon by a given set of adapters.\",\"params\":{\"adapters\":\"- An array of addresses for the adapters to query.\",\"domain\":\"- The ID of the domain to query.\",\"id\":\"- The ID for which to return a hash.\"},\"returns\":{\"hash\":\"agreed on by the given set of adapters.\"}},\"getHashFromAdapter(uint256,uint256,address)\":{\"details\":\"Returns the hash stored by a given adapter for a given ID.\",\"params\":{\"adapter\":\"- Address of the adapter to query.\",\"domain\":\"- ID of the domain to query.\",\"id\":\"- ID for which to return a hash.\"},\"returns\":{\"_0\":\"hash stored by the given adapter for the given ID.\"}},\"getHashesFromAdapters(uint256,uint256,address[])\":{\"details\":\"Returns the hashes for a given ID stored by a given set of adapters.\",\"params\":{\"adapters\":\"- An array of addresses for the adapters to query.\",\"domain\":\"- The ID of the domain to query.\",\"id\":\"- The ID for which to return hashes.\"},\"returns\":{\"_0\":\"hashes An array of hashes stored by the given adapters for the specified ID.\"}}},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{\"checkHashWithThresholdFromAdapters(uint256,uint256,uint256,address[])\":{\"notice\":\"If the threshold is 1, it will always return true.\"},\"getHash(uint256,uint256,address[])\":{\"notice\":\"MUST revert if adapters disagree on the hash or if an adapter does not report.\"}},\"version\":1}},\"settings\":{\"compilationTarget\":{\"contracts/Hashi.sol\":\"Hashi\"},\"evmVersion\":\"paris\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\",\"useLiteralContent\":true},\"optimizer\":{\"enabled\":true,\"runs\":1000},\"remappings\":[],\"viaIR\":true},\"sources\":{\"contracts/Hashi.sol\":{\"content\":\"/*\\n                  \\u2588\\u2588\\u2588\\u2584\\u2584\\u2584                               ,\\u2584\\u2584\\u2588\\u2588\\u2588\\u2584\\n                  \\u2588\\u2588\\u2588\\u2588\\u2580`                      ,\\u2553\\u2584\\u2584\\u2584\\u2588\\u2588\\u2588\\u2588\\u2588\\u2588\\u2588\\u2588\\u2588\\u2588\\u2588\\u2588\\u2584\\n                  \\u2588\\u2588\\u2588\\u258c             ,\\u2553\\u2584\\u2584\\u2584\\u2584\\u2588\\u2588\\u2588\\u2588\\u2588\\u2588\\u2588\\u2588\\u2588\\u2580\\u2580\\u2580\\u2580\\u2580\\u2580\\u2559\\u2514`\\n                  \\u2588\\u2588\\u2588\\u258c       \\u2580\\u2580\\u2580\\u2580\\u2580\\u2580\\u2580\\u2580\\u2580\\u2580\\u2559\\u2514\\u2514-  \\u2588\\u2588\\u2588\\u2588L\\n                  \\u2588\\u2588\\u2588\\u258c                      \\u2588\\u2588\\u2588\\u2588`               \\u2553\\u2588\\u2588\\u2584\\n                  \\u2588\\u2588\\u2588\\u258c    \\u2553\\u2584    \\u2553\\u2553\\u2553\\u2553\\u2553\\u2553\\u2553\\u2553\\u2553\\u2553\\u2553\\u2588\\u2588\\u2588\\u2588\\u2584\\u2553\\u2553\\u2553\\u2553\\u2553\\u2553\\u2553\\u2553\\u2553\\u2553\\u2553\\u2553\\u2553\\u2553\\u2584\\u2588\\u2588\\u2588\\u2588\\u2588\\u2588\\u2588\\u2584\\n                  \\u2588\\u2588\\u2588\\u258c  \\u2584\\u2588\\u2588\\u2588\\u2588\\u2588\\u2584 \\u2580\\u2580\\u2580\\u2580\\u2580\\u2580\\u2580\\u2580\\u2580\\u2580\\u2588\\u2588\\u2588\\u2588\\u2580\\u2580\\u2580\\u2580\\u2580\\u2580\\u2588\\u2588\\u2580\\u2580\\u2580\\u2580\\u2580\\u2580\\u2580\\u2580\\u2580\\u2580\\u2580\\u2580\\u2580\\u2580\\u2580\\u2580\\u2580\\n         \\u2588\\u2588\\u2588\\u2588\\u2588\\u2588\\u2588\\u2588\\u2588\\u2588\\u2588\\u2588\\u2588\\u2588\\u2588\\u2588\\u2588\\u2588\\u2588\\u2588\\u2588\\u2588\\u2588_       \\u2584\\u2588\\u2588\\u2588\\u2580        \\u2588\\u2588\\u00b5\\n                 \\u2590\\u2588\\u2588\\u2588\\u258c                ,\\u2588\\u2588\\u2588\\u2580           \\u2580\\u2588\\u2588\\u00b5\\n                 \\u2588\\u2588\\u2588\\u2588\\u258c               \\u2584\\u2588\\u2588\\u2588\\u258c,           \\u2584\\u2588\\u2588\\u2588\\u2588\\u2584\\n                \\u2590\\u2588\\u2588\\u2588\\u2588\\u258c             \\u2584\\u2588\\u2588\\u2580\\u2588\\u2588\\u2588\\u2588\\u2580\\u2580\\u2580\\u2580\\u2580\\u2580\\u2580\\u2580\\u2580\\u2580\\u2588\\u2588\\u2588\\u2588\\u2588\\u2580\\u2588\\u2588\\u2588\\u2584\\n               ,\\u2588\\u2588\\u2588\\u2588\\u2588\\u258c          ,\\u2584\\u2588\\u2588\\u2580_ \\u2593\\u2588\\u2588\\u2588          \\u2590\\u2588\\u2588\\u2588_  \\u2580\\u2588\\u2588\\u2588\\u2588\\u2584\\u2584\\n               \\u2588\\u2588\\u2588\\u2588\\u2588\\u2588\\u258c,       \\u2584\\u2588\\u2588\\u2580_    \\u2593\\u2588\\u2588\\u2588          \\u2590\\u2588\\u2588\\u2588_    \\u2580\\u2588\\u2588\\u2588\\u2588\\u2588\\u2588\\u2588\\u2584-\\n              \\u2588\\u2588\\u2588\\u2580\\u2588\\u2588\\u2588\\u258c\\u2580\\u2588\\u2588\\u2588\\u2584  \\u2559\\\"        \\u2593\\u2588\\u2588\\u2588\\u2584\\u2584\\u2584\\u2584\\u2584\\u2584\\u2584\\u2584\\u2584\\u2584\\u2584\\u2588\\u2588\\u2588_      `\\u2580\\u2588\\u2588\\u2588\\u2514\\n             \\u2584\\u2588\\u2588^ \\u2588\\u2588\\u2588\\u258c  ^\\u2588\\u2588\\u2588\\u2588\\u2584         \\u2593\\u2588\\u2588\\u2588\\u2580\\u2580\\u2580\\u2580\\u2580\\u2580\\u2580\\u2580\\u2580\\u2580\\u2580\\u2588\\u2588\\u2588_         `\\n            \\u2584\\u2588\\u2588_  \\u2588\\u2588\\u2588\\u258c    \\u2559\\u2588\\u2588\\u2588         \\u2593\\u2588\\u2588\\u2580          \\u2514\\u2580\\u2580_        \\u2584,\\n           \\u2588\\u2588\\u2580    \\u2588\\u2588\\u2588\\u258c      \\u2580\\u2514 \\u2590\\u2588\\u2588\\u2588\\u2584\\u2584\\u2584\\u2584\\u2584\\u2584\\u2584\\u2584\\u2584\\u2584\\u2584\\u2584\\u2584\\u2584\\u2584\\u2584\\u2584\\u2584\\u2584\\u2584\\u2584\\u2584\\u2584\\u2584\\u2584\\u2584\\u2584\\u2584\\u2584\\u2588\\u2588\\u2588\\u2588\\u2584\\u00b5\\n          \\u2588\\u2588^     \\u2588\\u2588\\u2588\\u258c         \\u2590\\u2588\\u2588\\u2588\\u2580\\u2580\\u2580\\u2580\\u2580\\u2580\\u2580\\u2580\\u2580\\u2580\\u2580\\u2580\\u2580\\u2580\\u2580\\u2580\\u2580\\u2580\\u2580\\u2580\\u2580\\u2580\\u2580\\u2580\\u2580\\u2580\\u2580\\u2580\\u2580\\u2588\\u2588\\u2588\\u2588\\u2588\\u2588\\u2580\\n        \\u2553\\u2588\\u2580       \\u2588\\u2588\\u2588\\u258c         \\u2590\\u2588\\u2588\\u2588\\u2310      \\u00b5          \\u2553          \\u2590\\u2588\\u2588\\u2588\\n        \\u2580         \\u2588\\u2588\\u2588\\u258c         \\u2590\\u2588\\u2588\\u2588\\u2310      \\u2588\\u2588\\u2588\\u2584\\u2584\\u2584\\u2584\\u2584\\u2584\\u2584\\u2588\\u2588\\u2588\\u2588\\u2584       \\u2590\\u2588\\u2588\\u2588\\n                  \\u2588\\u2588\\u2588\\u258c         \\u2590\\u2588\\u2588\\u2588\\u2310      \\u2588\\u2588\\u2588\\u2588\\u2580\\u2580\\u2580\\u2580\\u2580\\u2580\\u2580\\u2588\\u2588\\u2588\\u2588\\u2580      \\u2590\\u2588\\u2588\\u2588\\n                  \\u2588\\u2588\\u2588\\u258c         \\u2590\\u2588\\u2588\\u2588\\u2310      \\u2588\\u2588\\u2588\\u258c      J\\u2588\\u2588\\u2588M       \\u2590\\u2588\\u2588\\u2588\\n                  \\u2588\\u2588\\u2588\\u258c         \\u2590\\u2588\\u2588\\u2588\\u2310      \\u2588\\u2588\\u2588\\u258c      J\\u2588\\u2588\\u2588M       \\u2590\\u2588\\u2588\\u2588\\n                  \\u2588\\u2588\\u2588\\u258c         \\u2590\\u2588\\u2588\\u2588\\u2310      \\u2588\\u2588\\u2588\\u2588\\u2584\\u2584\\u2584\\u2584\\u2584\\u2584\\u2588\\u2588\\u2588\\u2588M       \\u2590\\u2588\\u2588\\u2588\\n                  \\u2588\\u2588\\u2588\\u258c         \\u2590\\u2588\\u2588\\u2588\\u2310      \\u2588\\u2588\\u2588\\u258c      \\u2590\\u2588\\u2588\\u2588M       \\u2590\\u2588\\u2588\\u2588\\n                  \\u2588\\u2588\\u2588\\u258c         \\u2590\\u2588\\u2588\\u2588\\u2310      \\u2588\\u2588\\u2588\\u258c       \\u2580\\u2580_        \\u2588\\u2588\\u2588\\u2588\\n                  \\u2588\\u2588\\u2588\\u258c         \\u2590\\u2588\\u2588\\u2588\\u2310      \\u2580\\u2580_             \\u2580\\u2580\\u2580\\u2588\\u2588\\u2588\\u2588\\u2588\\u2588\\u2588\\n                  \\u2588\\u2588\\u2588^         \\u2590\\u2588\\u2588\\u2588_                          \\u2590\\u2588\\u2588\\u2580\\u2580\\u3000\\n\\n                                           Made with \\u2764\\ufe0f by Gnosis Guild\\n*/\\n// SPDX-License-Identifier: LGPL-3.0-only\\npragma solidity ^0.8.20;\\n\\nimport { IAdapter } from \\\"./interfaces/IAdapter.sol\\\";\\nimport { IHashi } from \\\"./interfaces/IHashi.sol\\\";\\n\\ncontract Hashi is IHashi {\\n    /// @inheritdoc IHashi\\n    function checkHashWithThresholdFromAdapters(\\n        uint256 domain,\\n        uint256 id,\\n        uint256 threshold,\\n        IAdapter[] calldata adapters\\n    ) external view returns (bool) {\\n        if (adapters.length == 0) revert NoAdaptersGiven();\\n        if (threshold > adapters.length || threshold == 0) revert InvalidThreshold(threshold, adapters.length);\\n\\n        bytes32[] memory hashes = new bytes32[](adapters.length);\\n        for (uint256 i = 0; i < adapters.length; ) {\\n            hashes[i] = adapters[i].getHash(domain, id);\\n            unchecked {\\n                ++i;\\n            }\\n        }\\n\\n        for (uint256 i = 0; i < hashes.length; ) {\\n            if (i > hashes.length - threshold) break;\\n\\n            bytes32 baseHash = hashes[i];\\n            if (baseHash == bytes32(0)) {\\n                unchecked {\\n                    ++i;\\n                }\\n                continue;\\n            }\\n\\n            uint256 num = 0;\\n            for (uint256 j = i; j < hashes.length; ) {\\n                if (baseHash == hashes[j]) {\\n                    unchecked {\\n                        ++num;\\n                    }\\n                    if (num == threshold) return true;\\n                }\\n                unchecked {\\n                    ++j;\\n                }\\n            }\\n\\n            unchecked {\\n                ++i;\\n            }\\n        }\\n        return false;\\n    }\\n\\n    /// @inheritdoc IHashi\\n    function getHashFromAdapter(uint256 domain, uint256 id, IAdapter adapter) public view returns (bytes32) {\\n        return adapter.getHash(domain, id);\\n    }\\n\\n    /// @inheritdoc IHashi\\n    function getHashesFromAdapters(\\n        uint256 domain,\\n        uint256 id,\\n        IAdapter[] calldata adapters\\n    ) public view returns (bytes32[] memory) {\\n        if (adapters.length == 0) revert NoAdaptersGiven();\\n        bytes32[] memory hashes = new bytes32[](adapters.length);\\n        for (uint256 i = 0; i < adapters.length; ) {\\n            hashes[i] = getHashFromAdapter(domain, id, adapters[i]);\\n            unchecked {\\n                ++i;\\n            }\\n        }\\n        return hashes;\\n    }\\n\\n    /// @inheritdoc IHashi\\n    function getHash(uint256 domain, uint256 id, IAdapter[] calldata adapters) external view returns (bytes32 hash) {\\n        if (adapters.length == 0) revert NoAdaptersGiven();\\n        bytes32[] memory hashes = getHashesFromAdapters(domain, id, adapters);\\n        hash = hashes[0];\\n        if (hash == bytes32(0)) revert HashNotAvailableInAdapter(adapters[0]);\\n        for (uint256 i = 1; i < hashes.length; ) {\\n            if (hashes[i] == bytes32(0)) revert HashNotAvailableInAdapter(adapters[i]);\\n            if (hash != hashes[i]) revert AdaptersDisagree(adapters[i - 1], adapters[i]);\\n            unchecked {\\n                ++i;\\n            }\\n        }\\n    }\\n}\\n\",\"keccak256\":\"0xbf89471a205f6a9258ddae8fafe5bc746e51e7c19947889a9bcd9f194f802a68\",\"license\":\"LGPL-3.0-only\"},\"contracts/interfaces/IAdapter.sol\":{\"content\":\"// SPDX-License-Identifier: LGPL-3.0-only\\npragma solidity ^0.8.0;\\n\\n/**\\n * @title IAdapter\\n */\\ninterface IAdapter {\\n    error ConflictingBlockHeader(uint256 blockNumber, bytes32 blockHash, bytes32 storedBlockHash);\\n    error InvalidBlockHeaderLength(uint256 length);\\n    error InvalidBlockHeaderRLP();\\n\\n    /**\\n     * @dev Emitted when a hash is stored.\\n     * @param id - The ID of the stored hash.\\n     * @param hash - The stored hash as bytes32 values.\\n     */\\n    event HashStored(uint256 indexed id, bytes32 indexed hash);\\n\\n    /**\\n     * @dev Returns the hash for a given ID.\\n     * @param domain - Identifier for the domain to query.\\n     * @param id - Identifier for the ID to query.\\n     * @return hash Bytes32 hash for the given ID on the given domain.\\n     * @notice MUST return bytes32(0) if the hash is not present.\\n     */\\n    function getHash(uint256 domain, uint256 id) external view returns (bytes32 hash);\\n}\\n\",\"keccak256\":\"0xc3c6fca20c390f619072fe34bde40b91ceca4bbd1627a892af627b2e10f8a38d\",\"license\":\"LGPL-3.0-only\"},\"contracts/interfaces/IHashi.sol\":{\"content\":\"// SPDX-License-Identifier: LGPL-3.0-only\\npragma solidity ^0.8.0;\\n\\nimport { IAdapter } from \\\"./IAdapter.sol\\\";\\n\\n/**\\n * @title IHashi\\n */\\ninterface IHashi {\\n    error AdaptersDisagree(IAdapter adapterOne, IAdapter adapterTwo);\\n    error HashNotAvailableInAdapter(IAdapter adapter);\\n    error InvalidThreshold(uint256 threshold, uint256 maxThreshold);\\n    error NoAdaptersGiven();\\n\\n    /**\\n     * @dev Checks whether the threshold is reached for a message given a set of adapters.\\n     * @param domain - ID of the domain to query.\\n     * @param id - ID for which to return hash.\\n     * @param threshold - Threshold to use.\\n     * @param adapters - Array of addresses for the adapters to query.\\n     * @notice If the threshold is 1, it will always return true.\\n     * @return result A boolean indicating if a threshold for a given message has been reached.\\n     */\\n    function checkHashWithThresholdFromAdapters(\\n        uint256 domain,\\n        uint256 id,\\n        uint256 threshold,\\n        IAdapter[] calldata adapters\\n    ) external view returns (bool);\\n\\n    /**\\n     * @dev Returns the hash stored by a given adapter for a given ID.\\n     * @param domain - ID of the domain to query.\\n     * @param id - ID for which to return a hash.\\n     * @param adapter - Address of the adapter to query.\\n     * @return hash stored by the given adapter for the given ID.\\n     */\\n    function getHashFromAdapter(uint256 domain, uint256 id, IAdapter adapter) external view returns (bytes32);\\n\\n    /**\\n     * @dev Returns the hashes for a given ID stored by a given set of adapters.\\n     * @param domain - The ID of the domain to query.\\n     * @param id - The ID for which to return hashes.\\n     * @param adapters - An array of addresses for the adapters to query.\\n     * @return hashes An array of hashes stored by the given adapters for the specified ID.\\n     */\\n    function getHashesFromAdapters(\\n        uint256 domain,\\n        uint256 id,\\n        IAdapter[] calldata adapters\\n    ) external view returns (bytes32[] memory);\\n\\n    /**\\n     * @dev Returns the hash unanimously agreed upon by a given set of adapters.\\n     * @param domain - The ID of the domain to query.\\n     * @param id - The ID for which to return a hash.\\n     * @param adapters - An array of addresses for the adapters to query.\\n     * @return hash agreed on by the given set of adapters.\\n     * @notice MUST revert if adapters disagree on the hash or if an adapter does not report.\\n     */\\n    function getHash(uint256 domain, uint256 id, IAdapter[] calldata adapters) external view returns (bytes32);\\n}\\n\",\"keccak256\":\"0xa3f568e3922d3d271bcb3c4436934942ed7a145f91d305f8cc65bdc697bcd991\",\"license\":\"LGPL-3.0-only\"}},\"version\":1}",
+  "bytecode": "0x60808060405234610016576106ea908161001c8239f35b600080fdfe6040608081526004908136101561001557600080fd5b600090813560e01c806354580e4414610280578063b0bb1be41461022e578063c6eb7e90146101e75763ead227541461004d57600080fd5b346101e35761005b36610311565b95928695929195156101d45785610073928892610665565b918251156101c15760208301519485156101ac5760019693969384805b61009f575b6020888851908152f35b8897969597518110156101a3576100b6818a610404565b511561015c576100c6818a610404565b5187036100d95795969495850185610090565b859160001982018281116101495760449650918161010661010161010c9561010195896103ca565b6103f0565b956103ca565b9051927f435065db0000000000000000000000000000000000000000000000000000000084526001600160a01b0380931690840152166024820152fd5b602487601188634e487b7160e01b835252fd5b6101766101016001600160a01b03926024969489966103ca565b9251927f0bee135d0000000000000000000000000000000000000000000000000000000084521690820152fd5b85969750610095565b6024916001600160a01b0361017687936103f0565b906032602492634e487b7160e01b835252fd5b83855163c77f9c8160e01b8152fd5b5080fd5b50823461022a57606036600319011261022a57604435926001600160a01b038416840361022757506020926102209160243590356105ec565b9051908152f35b80fd5b8280fd5b509034610227576080366003190112610227576064359067ffffffffffffffff8211610227575060209261026861027792369083016102db565b91604435906024359035610418565b90519015158152f35b50346101e35761029b61029236610311565b92919091610665565b815192839260208080860192818752855180945286019401925b8281106102c457505050500390f35b8351855286955093810193928101926001016102b5565b9181601f8401121561030c5782359167ffffffffffffffff831161030c576020808501948460051b01011161030c57565b600080fd5b606060031982011261030c5760043591602435916044359067ffffffffffffffff821161030c57610344916004016102db565b9091565b90601f8019910116810190811067ffffffffffffffff82111761036a57604052565b634e487b7160e01b600052604160045260246000fd5b67ffffffffffffffff811161036a5760051b60200190565b906103a282610380565b6103af6040519182610348565b82815280926103c0601f1991610380565b0190602036910137565b91908110156103da5760051b0190565b634e487b7160e01b600052603260045260246000fd5b356001600160a01b038116810361030c5790565b80518210156103da5760209160051b010190565b9193929083156105db5783851180156105d3575b61059c5761043984610398565b9360005b8181106104fd5750505050506000915b8151808410156104f4578181039081116104de5783116104d6576104718383610404565b5180156104cb57600092845b81518110156104bd576104908183610404565b5183146104a0575b60010161047d565b6001809501948486146104b35750610498565b9550505050505090565b50925050916001019161044d565b50916001019161044d565b505050600090565b634e487b7160e01b600052601160045260246000fd5b50505050600090565b6001600160a01b036105136101018385886103ca565b16906040805180936306e1541160e21b825288600483015286602483015281604460209687935afa9182156105925750600091610561575b506001925061055a8289610404565b520161043d565b919282813d831161058b575b6105778183610348565b81010312610227575090600191513861054b565b503d61056d565b513d6000823e3d90fd5b60448585604051917f7b7a98f100000000000000000000000000000000000000000000000000000000835260048301526024820152fd5b50841561042c565b600460405163c77f9c8160e01b8152fd5b9060446020926001600160a01b0360405195869485936306e1541160e21b855260048501526024840152165afa9081156106595760009161062b575090565b906020823d8211610651575b8161064460209383610348565b8101031261022757505190565b3d9150610637565b6040513d6000823e3d90fd5b9083156105db5761067584610398565b9360005b81811061068857505050505090565b806106a361069c610101600194868a6103ca565b85876105ec565b6106ad8289610404565b520161067956fea2646970667358221220bf1730cb265b309b01e05b445330b8106f76e3350eb25eb7c5dd1df0c9f9fb5064736f6c63430008140033",
+  "deployedBytecode": "0x6040608081526004908136101561001557600080fd5b600090813560e01c806354580e4414610280578063b0bb1be41461022e578063c6eb7e90146101e75763ead227541461004d57600080fd5b346101e35761005b36610311565b95928695929195156101d45785610073928892610665565b918251156101c15760208301519485156101ac5760019693969384805b61009f575b6020888851908152f35b8897969597518110156101a3576100b6818a610404565b511561015c576100c6818a610404565b5187036100d95795969495850185610090565b859160001982018281116101495760449650918161010661010161010c9561010195896103ca565b6103f0565b956103ca565b9051927f435065db0000000000000000000000000000000000000000000000000000000084526001600160a01b0380931690840152166024820152fd5b602487601188634e487b7160e01b835252fd5b6101766101016001600160a01b03926024969489966103ca565b9251927f0bee135d0000000000000000000000000000000000000000000000000000000084521690820152fd5b85969750610095565b6024916001600160a01b0361017687936103f0565b906032602492634e487b7160e01b835252fd5b83855163c77f9c8160e01b8152fd5b5080fd5b50823461022a57606036600319011261022a57604435926001600160a01b038416840361022757506020926102209160243590356105ec565b9051908152f35b80fd5b8280fd5b509034610227576080366003190112610227576064359067ffffffffffffffff8211610227575060209261026861027792369083016102db565b91604435906024359035610418565b90519015158152f35b50346101e35761029b61029236610311565b92919091610665565b815192839260208080860192818752855180945286019401925b8281106102c457505050500390f35b8351855286955093810193928101926001016102b5565b9181601f8401121561030c5782359167ffffffffffffffff831161030c576020808501948460051b01011161030c57565b600080fd5b606060031982011261030c5760043591602435916044359067ffffffffffffffff821161030c57610344916004016102db565b9091565b90601f8019910116810190811067ffffffffffffffff82111761036a57604052565b634e487b7160e01b600052604160045260246000fd5b67ffffffffffffffff811161036a5760051b60200190565b906103a282610380565b6103af6040519182610348565b82815280926103c0601f1991610380565b0190602036910137565b91908110156103da5760051b0190565b634e487b7160e01b600052603260045260246000fd5b356001600160a01b038116810361030c5790565b80518210156103da5760209160051b010190565b9193929083156105db5783851180156105d3575b61059c5761043984610398565b9360005b8181106104fd5750505050506000915b8151808410156104f4578181039081116104de5783116104d6576104718383610404565b5180156104cb57600092845b81518110156104bd576104908183610404565b5183146104a0575b60010161047d565b6001809501948486146104b35750610498565b9550505050505090565b50925050916001019161044d565b50916001019161044d565b505050600090565b634e487b7160e01b600052601160045260246000fd5b50505050600090565b6001600160a01b036105136101018385886103ca565b16906040805180936306e1541160e21b825288600483015286602483015281604460209687935afa9182156105925750600091610561575b506001925061055a8289610404565b520161043d565b919282813d831161058b575b6105778183610348565b81010312610227575090600191513861054b565b503d61056d565b513d6000823e3d90fd5b60448585604051917f7b7a98f100000000000000000000000000000000000000000000000000000000835260048301526024820152fd5b50841561042c565b600460405163c77f9c8160e01b8152fd5b9060446020926001600160a01b0360405195869485936306e1541160e21b855260048501526024840152165afa9081156106595760009161062b575090565b906020823d8211610651575b8161064460209383610348565b8101031261022757505190565b3d9150610637565b6040513d6000823e3d90fd5b9083156105db5761067584610398565b9360005b81811061068857505050505090565b806106a361069c610101600194868a6103ca565b85876105ec565b6106ad8289610404565b520161067956fea2646970667358221220bf1730cb265b309b01e05b445330b8106f76e3350eb25eb7c5dd1df0c9f9fb5064736f6c63430008140033",
+  "devdoc": {
+    "kind": "dev",
+    "methods": {
+      "checkHashWithThresholdFromAdapters(uint256,uint256,uint256,address[])": {
+        "details": "Checks whether the threshold is reached for a message given a set of adapters.",
+        "params": {
+          "adapters": "- Array of addresses for the adapters to query.",
+          "domain": "- ID of the domain to query.",
+          "id": "- ID for which to return hash.",
+          "threshold": "- Threshold to use."
+        },
+        "returns": {
+          "_0": "result A boolean indicating if a threshold for a given message has been reached."
+        }
+      },
+      "getHash(uint256,uint256,address[])": {
+        "details": "Returns the hash unanimously agreed upon by a given set of adapters.",
+        "params": {
+          "adapters": "- An array of addresses for the adapters to query.",
+          "domain": "- The ID of the domain to query.",
+          "id": "- The ID for which to return a hash."
+        },
+        "returns": {
+          "hash": "agreed on by the given set of adapters."
+        }
+      },
+      "getHashFromAdapter(uint256,uint256,address)": {
+        "details": "Returns the hash stored by a given adapter for a given ID.",
+        "params": {
+          "adapter": "- Address of the adapter to query.",
+          "domain": "- ID of the domain to query.",
+          "id": "- ID for which to return a hash."
+        },
+        "returns": {
+          "_0": "hash stored by the given adapter for the given ID."
+        }
+      },
+      "getHashesFromAdapters(uint256,uint256,address[])": {
+        "details": "Returns the hashes for a given ID stored by a given set of adapters.",
+        "params": {
+          "adapters": "- An array of addresses for the adapters to query.",
+          "domain": "- The ID of the domain to query.",
+          "id": "- The ID for which to return hashes."
+        },
+        "returns": {
+          "_0": "hashes An array of hashes stored by the given adapters for the specified ID."
+        }
+      }
+    },
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {
+      "checkHashWithThresholdFromAdapters(uint256,uint256,uint256,address[])": {
+        "notice": "If the threshold is 1, it will always return true."
+      },
+      "getHash(uint256,uint256,address[])": {
+        "notice": "MUST revert if adapters disagree on the hash or if an adapter does not report."
+      }
+    },
+    "version": 1
+  },
+  "storageLayout": {
+    "storage": [],
+    "types": null
+  }
+}

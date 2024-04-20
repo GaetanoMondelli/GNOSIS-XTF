@@ -36,7 +36,11 @@ contract HyperlaneReporter is Reporter, Ownable {
         uint32 targetDomain = domains[targetChainId];
         if (targetDomain == 0) revert DomainNotAvailable();
         bytes memory payload = abi.encode(ids, hashes);
-        HYPERLANE_MAILBOX.dispatch{ value: msg.value }(targetDomain, adapter.addressToBytes32(), payload);
+        		uint256 fee = HYPERLANE_MAILBOX.quoteDispatch(
+			targetDomain, adapter.addressToBytes32(), payload
+		);
+        if (fee > msg.value) revert("Insufficient fee");
+        HYPERLANE_MAILBOX.dispatch{ value: fee }(targetDomain, adapter.addressToBytes32(), payload);
 
         return bytes32(0);
     }

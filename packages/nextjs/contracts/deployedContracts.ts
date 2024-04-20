@@ -6,102 +6,217 @@ import { GenericContractsDeclaration } from "~~/utils/scaffold-eth/contract";
 
 const deployedContracts = {
   10200: {
-    ETFIssuingChain: {
-      address: "0x6Ed1337F73D96F2ccE29BcA18553cE270478CF06",
+    Hashi: {
+      address: "0xd07eF911359F161A2361a62c6281c66de639f8A6",
       abi: [
         {
           inputs: [
             {
-              internalType: "uint32",
-              name: "_mainChain",
-              type: "uint32",
-            },
-            {
-              internalType: "uint32",
-              name: "_chainId",
-              type: "uint32",
-            },
-            {
-              components: [
-                {
-                  internalType: "address",
-                  name: "_address",
-                  type: "address",
-                },
-                {
-                  internalType: "uint256",
-                  name: "_quantity",
-                  type: "uint256",
-                },
-                {
-                  internalType: "uint32",
-                  name: "_chainId",
-                  type: "uint32",
-                },
-                {
-                  internalType: "address",
-                  name: "_contributor",
-                  type: "address",
-                },
-                {
-                  internalType: "address",
-                  name: "_aggregator",
-                  type: "address",
-                },
-              ],
-              internalType: "struct TokenQuantity[]",
-              name: "_requiredTokens",
-              type: "tuple[]",
-            },
-            {
-              internalType: "address",
-              name: "_etfToken",
+              internalType: "contract IAdapter",
+              name: "adapterOne",
               type: "address",
             },
             {
+              internalType: "contract IAdapter",
+              name: "adapterTwo",
+              type: "address",
+            },
+          ],
+          name: "AdaptersDisagree",
+          type: "error",
+        },
+        {
+          inputs: [
+            {
+              internalType: "contract IAdapter",
+              name: "adapter",
+              type: "address",
+            },
+          ],
+          name: "HashNotAvailableInAdapter",
+          type: "error",
+        },
+        {
+          inputs: [
+            {
               internalType: "uint256",
-              name: "_etfTokenPerVault",
+              name: "threshold",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "maxThreshold",
               type: "uint256",
             },
           ],
-          stateMutability: "nonpayable",
-          type: "constructor",
+          name: "InvalidThreshold",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "NoAdaptersGiven",
+          type: "error",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "domain",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "id",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "threshold",
+              type: "uint256",
+            },
+            {
+              internalType: "contract IAdapter[]",
+              name: "adapters",
+              type: "address[]",
+            },
+          ],
+          name: "checkHashWithThresholdFromAdapters",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "domain",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "id",
+              type: "uint256",
+            },
+            {
+              internalType: "contract IAdapter[]",
+              name: "adapters",
+              type: "address[]",
+            },
+          ],
+          name: "getHash",
+          outputs: [
+            {
+              internalType: "bytes32",
+              name: "hash",
+              type: "bytes32",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "domain",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "id",
+              type: "uint256",
+            },
+            {
+              internalType: "contract IAdapter",
+              name: "adapter",
+              type: "address",
+            },
+          ],
+          name: "getHashFromAdapter",
+          outputs: [
+            {
+              internalType: "bytes32",
+              name: "",
+              type: "bytes32",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "domain",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "id",
+              type: "uint256",
+            },
+            {
+              internalType: "contract IAdapter[]",
+              name: "adapters",
+              type: "address[]",
+            },
+          ],
+          name: "getHashesFromAdapters",
+          outputs: [
+            {
+              internalType: "bytes32[]",
+              name: "",
+              type: "bytes32[]",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+      ],
+      inheritedFunctions: {
+        checkHashWithThresholdFromAdapters: "contracts/interfaces/IHashi.sol",
+        getHash: "contracts/interfaces/IHashi.sol",
+        getHashFromAdapter: "contracts/interfaces/IHashi.sol",
+        getHashesFromAdapters: "contracts/interfaces/IHashi.sol",
+      },
+    },
+    HeaderStorage: {
+      address: "0x690878fB6118d99882c6B27e495E2f07f6df3b2b",
+      abi: [
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "blockNumber",
+              type: "uint256",
+            },
+          ],
+          name: "HeaderOutOfRange",
+          type: "error",
         },
         {
           anonymous: false,
           inputs: [
             {
-              indexed: false,
+              indexed: true,
               internalType: "uint256",
-              name: "_vaultId",
+              name: "blockNumber",
               type: "uint256",
             },
             {
-              indexed: false,
-              internalType: "address",
-              name: "_address",
-              type: "address",
-            },
-            {
-              indexed: false,
-              internalType: "uint256",
-              name: "_quantity",
-              type: "uint256",
-            },
-            {
-              indexed: false,
-              internalType: "uint32",
-              name: "_chainId",
-              type: "uint32",
-            },
-            {
-              indexed: false,
-              internalType: "address",
-              name: "_contributor",
-              type: "address",
+              indexed: true,
+              internalType: "bytes32",
+              name: "blockHeader",
+              type: "bytes32",
             },
           ],
-          name: "Deposit",
+          name: "HeaderStored",
           type: "event",
         },
         {
@@ -111,57 +226,13 @@ const deployedContracts = {
               name: "",
               type: "uint256",
             },
-            {
-              internalType: "address",
-              name: "",
-              type: "address",
-            },
           ],
-          name: "accountContributionsPerVault",
+          name: "headers",
           outputs: [
             {
-              internalType: "uint256",
+              internalType: "bytes32",
               name: "",
-              type: "uint256",
-            },
-          ],
-          stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [
-            {
-              internalType: "address",
-              name: "",
-              type: "address",
-            },
-          ],
-          name: "addressToToken",
-          outputs: [
-            {
-              internalType: "address",
-              name: "_address",
-              type: "address",
-            },
-            {
-              internalType: "uint256",
-              name: "_quantity",
-              type: "uint256",
-            },
-            {
-              internalType: "uint32",
-              name: "_chainId",
-              type: "uint32",
-            },
-            {
-              internalType: "address",
-              name: "_contributor",
-              type: "address",
-            },
-            {
-              internalType: "address",
-              name: "_aggregator",
-              type: "address",
+              type: "bytes32",
             },
           ],
           stateMutability: "view",
@@ -171,83 +242,169 @@ const deployedContracts = {
           inputs: [
             {
               internalType: "uint256",
-              name: "_vaultId",
+              name: "blockNumber",
               type: "uint256",
             },
           ],
-          name: "burn",
-          outputs: [],
+          name: "storeBlockHeader",
+          outputs: [
+            {
+              internalType: "bytes32",
+              name: "",
+              type: "bytes32",
+            },
+          ],
           stateMutability: "nonpayable",
           type: "function",
         },
         {
-          inputs: [],
-          name: "chainId",
-          outputs: [
+          inputs: [
             {
-              internalType: "uint32",
-              name: "",
-              type: "uint32",
+              internalType: "uint256[]",
+              name: "blockNumbers",
+              type: "uint256[]",
             },
           ],
-          stateMutability: "view",
+          name: "storeBlockHeaders",
+          outputs: [
+            {
+              internalType: "bytes32[]",
+              name: "",
+              type: "bytes32[]",
+            },
+          ],
+          stateMutability: "nonpayable",
           type: "function",
+        },
+      ],
+      inheritedFunctions: {
+        headers: "contracts/interfaces/IHeaderStorage.sol",
+        storeBlockHeader: "contracts/interfaces/IHeaderStorage.sol",
+        storeBlockHeaders: "contracts/interfaces/IHeaderStorage.sol",
+      },
+    },
+    HyperlaneAdapter: {
+      address: "0x84827596bfd9d4e9f723d448c751d78fa506f386",
+      abi: [
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "hyperlaneMailbox",
+              type: "address",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "constructor",
         },
         {
           inputs: [
             {
-              components: [
-                {
-                  internalType: "uint256",
-                  name: "vaultId",
-                  type: "uint256",
-                },
-                {
-                  components: [
-                    {
-                      internalType: "address",
-                      name: "_address",
-                      type: "address",
-                    },
-                    {
-                      internalType: "uint256",
-                      name: "_quantity",
-                      type: "uint256",
-                    },
-                    {
-                      internalType: "uint32",
-                      name: "_chainId",
-                      type: "uint32",
-                    },
-                    {
-                      internalType: "address",
-                      name: "_contributor",
-                      type: "address",
-                    },
-                    {
-                      internalType: "address",
-                      name: "_aggregator",
-                      type: "address",
-                    },
-                  ],
-                  internalType: "struct TokenQuantity[]",
-                  name: "tokens",
-                  type: "tuple[]",
-                },
-              ],
-              internalType: "struct DepositInfo",
-              name: "_depositInfo",
-              type: "tuple",
+              internalType: "uint256",
+              name: "blockNumber",
+              type: "uint256",
+            },
+            {
+              internalType: "bytes32",
+              name: "blockHash",
+              type: "bytes32",
+            },
+            {
+              internalType: "bytes32",
+              name: "storedBlockHash",
+              type: "bytes32",
             },
           ],
-          name: "deposit",
-          outputs: [],
-          stateMutability: "payable",
-          type: "function",
+          name: "ConflictingBlockHeader",
+          type: "error",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "length",
+              type: "uint256",
+            },
+          ],
+          name: "InvalidBlockHeaderLength",
+          type: "error",
         },
         {
           inputs: [],
-          name: "etfToken",
+          name: "InvalidBlockHeaderRLP",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "UnauthorizedHyperlaneReceive",
+          type: "error",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "id",
+              type: "uint256",
+            },
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "hash",
+              type: "bytes32",
+            },
+          ],
+          name: "HashStored",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "previousOwner",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "newOwner",
+              type: "address",
+            },
+          ],
+          name: "OwnershipTransferred",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "chainId",
+              type: "uint256",
+            },
+            {
+              indexed: true,
+              internalType: "uint32",
+              name: "domain",
+              type: "uint32",
+            },
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "reporter",
+              type: "bytes32",
+            },
+          ],
+          name: "ReporterSet",
+          type: "event",
+        },
+        {
+          inputs: [],
+          name: "HYPERLANE_MAILBOX",
           outputs: [
             {
               internalType: "address",
@@ -260,169 +417,12 @@ const deployedContracts = {
         },
         {
           inputs: [],
-          name: "etfTokenPerVault",
+          name: "PROVIDER",
           outputs: [
             {
-              internalType: "uint256",
+              internalType: "string",
               name: "",
-              type: "uint256",
-            },
-          ],
-          stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [
-            {
-              components: [
-                {
-                  internalType: "address",
-                  name: "_address",
-                  type: "address",
-                },
-                {
-                  internalType: "uint256",
-                  name: "_quantity",
-                  type: "uint256",
-                },
-                {
-                  internalType: "uint32",
-                  name: "_chainId",
-                  type: "uint32",
-                },
-                {
-                  internalType: "address",
-                  name: "_contributor",
-                  type: "address",
-                },
-                {
-                  internalType: "address",
-                  name: "_aggregator",
-                  type: "address",
-                },
-              ],
-              internalType: "struct TokenQuantity",
-              name: "_tokenQuantity",
-              type: "tuple",
-            },
-          ],
-          name: "getIndexForDepositInfo",
-          outputs: [
-            {
-              internalType: "uint256",
-              name: "",
-              type: "uint256",
-            },
-          ],
-          stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [],
-          name: "getRequiredTokens",
-          outputs: [
-            {
-              components: [
-                {
-                  internalType: "address",
-                  name: "_address",
-                  type: "address",
-                },
-                {
-                  internalType: "uint256",
-                  name: "_quantity",
-                  type: "uint256",
-                },
-                {
-                  internalType: "uint32",
-                  name: "_chainId",
-                  type: "uint32",
-                },
-                {
-                  internalType: "address",
-                  name: "_contributor",
-                  type: "address",
-                },
-                {
-                  internalType: "address",
-                  name: "_aggregator",
-                  type: "address",
-                },
-              ],
-              internalType: "struct TokenQuantity[]",
-              name: "",
-              type: "tuple[]",
-            },
-          ],
-          stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [
-            {
-              internalType: "uint256",
-              name: "_vaultId",
-              type: "uint256",
-            },
-          ],
-          name: "getVault",
-          outputs: [
-            {
-              components: [
-                {
-                  components: [
-                    {
-                      internalType: "address",
-                      name: "_address",
-                      type: "address",
-                    },
-                    {
-                      internalType: "uint256",
-                      name: "_quantity",
-                      type: "uint256",
-                    },
-                    {
-                      internalType: "uint32",
-                      name: "_chainId",
-                      type: "uint32",
-                    },
-                    {
-                      internalType: "address",
-                      name: "_contributor",
-                      type: "address",
-                    },
-                    {
-                      internalType: "address",
-                      name: "_aggregator",
-                      type: "address",
-                    },
-                  ],
-                  internalType: "struct TokenQuantity[]",
-                  name: "_tokens",
-                  type: "tuple[]",
-                },
-                {
-                  internalType: "enum VaultState",
-                  name: "state",
-                  type: "uint8",
-                },
-              ],
-              internalType: "struct Vault",
-              name: "",
-              type: "tuple",
-            },
-          ],
-          stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [],
-          name: "getVaultStates",
-          outputs: [
-            {
-              internalType: "enum VaultState[]",
-              name: "",
-              type: "uint8[]",
+              type: "string",
             },
           ],
           stateMutability: "view",
@@ -432,17 +432,79 @@ const deployedContracts = {
           inputs: [
             {
               internalType: "uint32",
-              name: "_origin",
+              name: "",
+              type: "uint32",
+            },
+          ],
+          name: "chainIds",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint32",
+              name: "",
+              type: "uint32",
+            },
+          ],
+          name: "enabledReporters",
+          outputs: [
+            {
+              internalType: "bytes32",
+              name: "",
+              type: "bytes32",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "domain",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "id",
+              type: "uint256",
+            },
+          ],
+          name: "getHash",
+          outputs: [
+            {
+              internalType: "bytes32",
+              name: "",
+              type: "bytes32",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint32",
+              name: "origin",
               type: "uint32",
             },
             {
               internalType: "bytes32",
-              name: "_sender",
+              name: "sender",
               type: "bytes32",
             },
             {
               internalType: "bytes",
-              name: "_message",
+              name: "message",
               type: "bytes",
             },
           ],
@@ -453,138 +515,61 @@ const deployedContracts = {
         },
         {
           inputs: [],
-          name: "isMainChain",
+          name: "owner",
           outputs: [
             {
-              internalType: "bool",
+              internalType: "address",
               name: "",
-              type: "bool",
+              type: "address",
             },
           ],
           stateMutability: "view",
           type: "function",
         },
         {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "chainId",
+              type: "uint256",
+            },
+            {
+              internalType: "bytes[]",
+              name: "blockHeaders",
+              type: "bytes[]",
+            },
+          ],
+          name: "proveAncestralBlockHashes",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
           inputs: [],
-          name: "latestCommitment",
-          outputs: [
+          name: "renounceOwnership",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "chainId",
+              type: "uint256",
+            },
+            {
+              internalType: "uint32",
+              name: "domain",
+              type: "uint32",
+            },
             {
               internalType: "bytes32",
-              name: "",
+              name: "reporter",
               type: "bytes32",
             },
           ],
-          stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [],
-          name: "mainChainId",
-          outputs: [
-            {
-              internalType: "uint32",
-              name: "",
-              type: "uint32",
-            },
-          ],
-          stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [],
-          name: "mainChainLock",
-          outputs: [
-            {
-              internalType: "address",
-              name: "",
-              type: "address",
-            },
-          ],
-          stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [
-            {
-              internalType: "uint256",
-              name: "",
-              type: "uint256",
-            },
-          ],
-          name: "receivedMessages",
-          outputs: [
-            {
-              internalType: "uint32",
-              name: "",
-              type: "uint32",
-            },
-          ],
-          stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [
-            {
-              internalType: "uint256",
-              name: "",
-              type: "uint256",
-            },
-          ],
-          name: "requiredTokens",
-          outputs: [
-            {
-              internalType: "address",
-              name: "_address",
-              type: "address",
-            },
-            {
-              internalType: "uint256",
-              name: "_quantity",
-              type: "uint256",
-            },
-            {
-              internalType: "uint32",
-              name: "_chainId",
-              type: "uint32",
-            },
-            {
-              internalType: "address",
-              name: "_contributor",
-              type: "address",
-            },
-            {
-              internalType: "address",
-              name: "_aggregator",
-              type: "address",
-            },
-          ],
-          stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [
-            {
-              internalType: "address",
-              name: "_sideChainLock",
-              type: "address",
-            },
-            {
-              internalType: "uint32",
-              name: "_sideChainId",
-              type: "uint32",
-            },
-            {
-              internalType: "address",
-              name: "_outbox",
-              type: "address",
-            },
-            {
-              internalType: "address",
-              name: "_securityModule",
-              type: "address",
-            },
-          ],
-          name: "setMainChainParams",
+          name: "setReporterByChain",
           outputs: [],
           stateMutability: "nonpayable",
           type: "function",
@@ -593,382 +578,54 @@ const deployedContracts = {
           inputs: [
             {
               internalType: "address",
-              name: "_mainChainLock",
-              type: "address",
-            },
-            {
-              internalType: "address",
-              name: "_outbox",
-              type: "address",
-            },
-            {
-              internalType: "address",
-              name: "_securityModule",
+              name: "newOwner",
               type: "address",
             },
           ],
-          name: "setSideChainParams",
+          name: "transferOwnership",
           outputs: [],
           stateMutability: "nonpayable",
-          type: "function",
-        },
-        {
-          inputs: [
-            {
-              internalType: "uint256",
-              name: "_vaultId",
-              type: "uint256",
-            },
-            {
-              internalType: "enum VaultState",
-              name: "_state",
-              type: "uint8",
-            },
-          ],
-          name: "setVaultState",
-          outputs: [],
-          stateMutability: "nonpayable",
-          type: "function",
-        },
-        {
-          inputs: [],
-          name: "sideChainId",
-          outputs: [
-            {
-              internalType: "uint32",
-              name: "",
-              type: "uint32",
-            },
-          ],
-          stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [],
-          name: "sideChainLock",
-          outputs: [
-            {
-              internalType: "address",
-              name: "",
-              type: "address",
-            },
-          ],
-          stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [],
-          name: "updateCommitment",
-          outputs: [],
-          stateMutability: "nonpayable",
-          type: "function",
-        },
-        {
-          inputs: [
-            {
-              internalType: "uint256",
-              name: "",
-              type: "uint256",
-            },
-          ],
-          name: "vaults",
-          outputs: [
-            {
-              internalType: "enum VaultState",
-              name: "state",
-              type: "uint8",
-            },
-          ],
-          stateMutability: "view",
-          type: "function",
-        },
-      ],
-      inheritedFunctions: {},
-    },
-    MockAggregator: {
-      address: "0x837C6E31E0E8F8b7FE4fb5Ffdaf45Db044864ABF",
-      abi: [
-        {
-          inputs: [
-            {
-              internalType: "int256",
-              name: "_price",
-              type: "int256",
-            },
-            {
-              internalType: "uint8",
-              name: "_decimals",
-              type: "uint8",
-            },
-          ],
-          stateMutability: "nonpayable",
-          type: "constructor",
-        },
-        {
-          inputs: [],
-          name: "decimals",
-          outputs: [
-            {
-              internalType: "uint8",
-              name: "",
-              type: "uint8",
-            },
-          ],
-          stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [],
-          name: "description",
-          outputs: [
-            {
-              internalType: "string",
-              name: "",
-              type: "string",
-            },
-          ],
-          stateMutability: "pure",
-          type: "function",
-        },
-        {
-          inputs: [
-            {
-              internalType: "uint80",
-              name: "_roundId",
-              type: "uint80",
-            },
-          ],
-          name: "getRoundData",
-          outputs: [
-            {
-              internalType: "uint80",
-              name: "roundId",
-              type: "uint80",
-            },
-            {
-              internalType: "int256",
-              name: "answer",
-              type: "int256",
-            },
-            {
-              internalType: "uint256",
-              name: "startedAt",
-              type: "uint256",
-            },
-            {
-              internalType: "uint256",
-              name: "updatedAt",
-              type: "uint256",
-            },
-            {
-              internalType: "uint80",
-              name: "answeredInRound",
-              type: "uint80",
-            },
-          ],
-          stateMutability: "pure",
-          type: "function",
-        },
-        {
-          inputs: [],
-          name: "latestRoundData",
-          outputs: [
-            {
-              internalType: "uint80",
-              name: "roundId",
-              type: "uint80",
-            },
-            {
-              internalType: "int256",
-              name: "answer",
-              type: "int256",
-            },
-            {
-              internalType: "uint256",
-              name: "startedAt",
-              type: "uint256",
-            },
-            {
-              internalType: "uint256",
-              name: "updatedAt",
-              type: "uint256",
-            },
-            {
-              internalType: "uint80",
-              name: "answeredInRound",
-              type: "uint80",
-            },
-          ],
-          stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [],
-          name: "version",
-          outputs: [
-            {
-              internalType: "uint256",
-              name: "",
-              type: "uint256",
-            },
-          ],
-          stateMutability: "pure",
           type: "function",
         },
       ],
       inheritedFunctions: {
-        decimals:
-          "@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol",
-        description:
-          "@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol",
-        getRoundData:
-          "@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol",
-        latestRoundData:
-          "@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol",
-        version:
-          "@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol",
+        getHash: "contracts/adapeters/BlockHashAdapter.sol",
+        proveAncestralBlockHashes: "contracts/adapeters/BlockHashAdapter.sol",
+        owner: "@openzeppelin/contracts/access/Ownable.sol",
+        renounceOwnership: "@openzeppelin/contracts/access/Ownable.sol",
+        transferOwnership: "@openzeppelin/contracts/access/Ownable.sol",
+        handle:
+          "@hyperlane-xyz/core/contracts/interfaces/IMessageRecipient.sol",
       },
     },
-    SimpleERC20: {
-      address: "0x8e976B0eDFBF405976608B7FEa3a5b7F34f0BD17",
+    HyperlaneReporter: {
+      address: "0xAf775F72fC4158e4A4bD6EA4B389B09DF556BD46",
       abi: [
         {
           inputs: [
             {
-              internalType: "string",
-              name: "name",
-              type: "string",
+              internalType: "address",
+              name: "headerStorage",
+              type: "address",
             },
             {
-              internalType: "string",
-              name: "symbol",
-              type: "string",
+              internalType: "address",
+              name: "yaho",
+              type: "address",
             },
             {
-              internalType: "uint256",
-              name: "initialSupply",
-              type: "uint256",
+              internalType: "address",
+              name: "hyperlaneMailbox",
+              type: "address",
             },
           ],
           stateMutability: "nonpayable",
           type: "constructor",
         },
         {
-          anonymous: false,
-          inputs: [
-            {
-              indexed: true,
-              internalType: "address",
-              name: "owner",
-              type: "address",
-            },
-            {
-              indexed: true,
-              internalType: "address",
-              name: "spender",
-              type: "address",
-            },
-            {
-              indexed: false,
-              internalType: "uint256",
-              name: "value",
-              type: "uint256",
-            },
-          ],
-          name: "Approval",
-          type: "event",
-        },
-        {
-          anonymous: false,
-          inputs: [
-            {
-              indexed: true,
-              internalType: "address",
-              name: "from",
-              type: "address",
-            },
-            {
-              indexed: true,
-              internalType: "address",
-              name: "to",
-              type: "address",
-            },
-            {
-              indexed: false,
-              internalType: "uint256",
-              name: "value",
-              type: "uint256",
-            },
-          ],
-          name: "Transfer",
-          type: "event",
-        },
-        {
-          inputs: [
-            {
-              internalType: "address",
-              name: "owner",
-              type: "address",
-            },
-            {
-              internalType: "address",
-              name: "spender",
-              type: "address",
-            },
-          ],
-          name: "allowance",
-          outputs: [
-            {
-              internalType: "uint256",
-              name: "",
-              type: "uint256",
-            },
-          ],
-          stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [
-            {
-              internalType: "address",
-              name: "spender",
-              type: "address",
-            },
-            {
-              internalType: "uint256",
-              name: "amount",
-              type: "uint256",
-            },
-          ],
-          name: "approve",
-          outputs: [
-            {
-              internalType: "bool",
-              name: "",
-              type: "bool",
-            },
-          ],
-          stateMutability: "nonpayable",
-          type: "function",
-        },
-        {
-          inputs: [
-            {
-              internalType: "address",
-              name: "account",
-              type: "address",
-            },
-          ],
-          name: "balanceOf",
-          outputs: [
-            {
-              internalType: "uint256",
-              name: "",
-              type: "uint256",
-            },
-          ],
-          stateMutability: "view",
-          type: "function",
+          inputs: [],
+          name: "DomainNotAvailable",
+          type: "error",
         },
         {
           inputs: [
@@ -978,24 +635,161 @@ const deployedContracts = {
               type: "address",
             },
             {
-              internalType: "uint256",
-              name: "amount",
-              type: "uint256",
+              internalType: "address",
+              name: "expectedYaho",
+              type: "address",
             },
           ],
-          name: "burn",
-          outputs: [],
-          stateMutability: "nonpayable",
+          name: "NotYaho",
+          type: "error",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "targetChainId",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "contract IAdapter",
+              name: "adapter",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "blockNumber",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "bytes32",
+              name: "blockHeader",
+              type: "bytes32",
+            },
+          ],
+          name: "BlockDispatched",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "chainId",
+              type: "uint256",
+            },
+            {
+              indexed: true,
+              internalType: "uint32",
+              name: "domain",
+              type: "uint32",
+            },
+          ],
+          name: "DomainSet",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "targetChainId",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "contract IAdapter",
+              name: "adapter",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "messageId",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "bytes32",
+              name: "messageHash",
+              type: "bytes32",
+            },
+          ],
+          name: "MessageDispatched",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "previousOwner",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "newOwner",
+              type: "address",
+            },
+          ],
+          name: "OwnershipTransferred",
+          type: "event",
+        },
+        {
+          inputs: [],
+          name: "HEADER_STORAGE",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
           type: "function",
         },
         {
           inputs: [],
-          name: "decimals",
+          name: "HYPERLANE_MAILBOX",
           outputs: [
             {
-              internalType: "uint8",
+              internalType: "contract IMailbox",
               name: "",
-              type: "uint8",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "PROVIDER",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "YAHO",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
             },
           ],
           stateMutability: "view",
@@ -1004,77 +798,80 @@ const deployedContracts = {
         {
           inputs: [
             {
-              internalType: "address",
-              name: "spender",
+              internalType: "uint256",
+              name: "targetChainId",
+              type: "uint256",
+            },
+            {
+              internalType: "contract IAdapter",
+              name: "adapter",
               type: "address",
             },
             {
-              internalType: "uint256",
-              name: "subtractedValue",
-              type: "uint256",
+              internalType: "uint256[]",
+              name: "blockNumbers",
+              type: "uint256[]",
             },
           ],
-          name: "decreaseAllowance",
+          name: "dispatchBlocks",
           outputs: [
             {
-              internalType: "bool",
+              internalType: "bytes32",
               name: "",
-              type: "bool",
+              type: "bytes32",
             },
           ],
-          stateMutability: "nonpayable",
+          stateMutability: "payable",
           type: "function",
         },
         {
           inputs: [
             {
-              internalType: "address",
-              name: "spender",
+              internalType: "uint256",
+              name: "targetChainId",
+              type: "uint256",
+            },
+            {
+              internalType: "contract IAdapter",
+              name: "adapter",
               type: "address",
             },
             {
-              internalType: "uint256",
-              name: "addedValue",
-              type: "uint256",
+              internalType: "uint256[]",
+              name: "messageIds",
+              type: "uint256[]",
+            },
+            {
+              internalType: "bytes32[]",
+              name: "messageHashes",
+              type: "bytes32[]",
             },
           ],
-          name: "increaseAllowance",
+          name: "dispatchMessages",
           outputs: [
             {
-              internalType: "bool",
+              internalType: "bytes32",
               name: "",
-              type: "bool",
+              type: "bytes32",
             },
           ],
-          stateMutability: "nonpayable",
+          stateMutability: "payable",
           type: "function",
         },
         {
           inputs: [
             {
-              internalType: "address",
-              name: "to",
-              type: "address",
-            },
-            {
               internalType: "uint256",
-              name: "amount",
+              name: "",
               type: "uint256",
             },
           ],
-          name: "mint",
-          outputs: [],
-          stateMutability: "nonpayable",
-          type: "function",
-        },
-        {
-          inputs: [],
-          name: "name",
+          name: "domains",
           outputs: [
             {
-              internalType: "string",
+              internalType: "uint32",
               name: "",
-              type: "string",
+              type: "uint32",
             },
           ],
           stateMutability: "view",
@@ -1094,65 +891,27 @@ const deployedContracts = {
           type: "function",
         },
         {
-          inputs: [
-            {
-              internalType: "address",
-              name: "_owner",
-              type: "address",
-            },
-          ],
-          name: "setOwner",
+          inputs: [],
+          name: "renounceOwnership",
           outputs: [],
           stateMutability: "nonpayable",
           type: "function",
         },
         {
-          inputs: [],
-          name: "symbol",
-          outputs: [
-            {
-              internalType: "string",
-              name: "",
-              type: "string",
-            },
-          ],
-          stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [],
-          name: "totalSupply",
-          outputs: [
-            {
-              internalType: "uint256",
-              name: "",
-              type: "uint256",
-            },
-          ],
-          stateMutability: "view",
-          type: "function",
-        },
-        {
           inputs: [
             {
-              internalType: "address",
-              name: "to",
-              type: "address",
-            },
-            {
               internalType: "uint256",
-              name: "amount",
+              name: "chainId",
               type: "uint256",
             },
-          ],
-          name: "transfer",
-          outputs: [
             {
-              internalType: "bool",
-              name: "",
-              type: "bool",
+              internalType: "uint32",
+              name: "domain",
+              type: "uint32",
             },
           ],
+          name: "setDomainByChainId",
+          outputs: [],
           stateMutability: "nonpayable",
           type: "function",
         },
@@ -1160,439 +919,399 @@ const deployedContracts = {
           inputs: [
             {
               internalType: "address",
-              name: "from",
+              name: "newOwner",
               type: "address",
             },
-            {
-              internalType: "address",
-              name: "to",
-              type: "address",
-            },
-            {
-              internalType: "uint256",
-              name: "amount",
-              type: "uint256",
-            },
           ],
-          name: "transferFrom",
-          outputs: [
-            {
-              internalType: "bool",
-              name: "",
-              type: "bool",
-            },
-          ],
+          name: "transferOwnership",
+          outputs: [],
           stateMutability: "nonpayable",
           type: "function",
         },
       ],
       inheritedFunctions: {
-        allowance: "@openzeppelin/contracts/token/ERC20/ERC20.sol",
-        approve: "@openzeppelin/contracts/token/ERC20/ERC20.sol",
-        balanceOf: "@openzeppelin/contracts/token/ERC20/ERC20.sol",
-        decimals: "@openzeppelin/contracts/token/ERC20/ERC20.sol",
-        decreaseAllowance: "@openzeppelin/contracts/token/ERC20/ERC20.sol",
-        increaseAllowance: "@openzeppelin/contracts/token/ERC20/ERC20.sol",
-        name: "@openzeppelin/contracts/token/ERC20/ERC20.sol",
-        symbol: "@openzeppelin/contracts/token/ERC20/ERC20.sol",
-        totalSupply: "@openzeppelin/contracts/token/ERC20/ERC20.sol",
-        transfer: "@openzeppelin/contracts/token/ERC20/ERC20.sol",
-        transferFrom: "@openzeppelin/contracts/token/ERC20/ERC20.sol",
+        HEADER_STORAGE: "contracts/adapeters/Reporter.sol",
+        YAHO: "contracts/adapeters/Reporter.sol",
+        dispatchBlocks: "contracts/adapeters/Reporter.sol",
+        dispatchMessages: "contracts/adapeters/Reporter.sol",
+        owner: "@openzeppelin/contracts/access/Ownable.sol",
+        renounceOwnership: "@openzeppelin/contracts/access/Ownable.sol",
+        transferOwnership: "@openzeppelin/contracts/access/Ownable.sol",
       },
     },
-  },
-  1440002: {
-    ETFIssuingChain: {
-      address: "0xf35b99e157Bb1995C5a70106007aA77966277EBc",
+    Yaho: {
+      address: "0x73a7d1B252300b2e2e9a1119D1E490C6F9bf9c9B",
       abi: [
         {
           inputs: [
             {
-              internalType: "uint32",
-              name: "_chainId",
-              type: "uint32",
-            },
-            {
               components: [
                 {
-                  internalType: "address",
-                  name: "_address",
-                  type: "address",
-                },
-                {
                   internalType: "uint256",
-                  name: "_quantity",
+                  name: "nonce",
                   type: "uint256",
                 },
                 {
-                  internalType: "uint32",
-                  name: "_chainId",
-                  type: "uint32",
+                  internalType: "uint256",
+                  name: "targetChainId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "threshold",
+                  type: "uint256",
                 },
                 {
                   internalType: "address",
-                  name: "_contributor",
+                  name: "sender",
                   type: "address",
                 },
                 {
                   internalType: "address",
-                  name: "_aggregator",
+                  name: "receiver",
                   type: "address",
+                },
+                {
+                  internalType: "bytes",
+                  name: "data",
+                  type: "bytes",
+                },
+                {
+                  internalType: "contract IReporter[]",
+                  name: "reporters",
+                  type: "address[]",
+                },
+                {
+                  internalType: "contract IAdapter[]",
+                  name: "adapters",
+                  type: "address[]",
                 },
               ],
-              internalType: "struct TokenQuantity[]",
-              name: "_requiredTokens",
-              type: "tuple[]",
+              internalType: "struct Message",
+              name: "message",
+              type: "tuple",
             },
+          ],
+          name: "InvalidMessage",
+          type: "error",
+        },
+        {
+          inputs: [
             {
-              internalType: "address",
-              name: "_etfToken",
-              type: "address",
+              internalType: "uint256",
+              name: "threshold",
+              type: "uint256",
             },
             {
               internalType: "uint256",
-              name: "_etfTokenPerVault",
+              name: "maxThreshold",
               type: "uint256",
             },
           ],
-          stateMutability: "nonpayable",
-          type: "constructor",
+          name: "InvalidThreshold",
+          type: "error",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "messageId",
+              type: "uint256",
+            },
+          ],
+          name: "MessageHashNotFound",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "NoAdaptersGiven",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "NoMessageIdsGiven",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "NoMessagesGiven",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "NoReportersGiven",
+          type: "error",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "arrayOne",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "arrayTwo",
+              type: "uint256",
+            },
+          ],
+          name: "UnequalArrayLengths",
+          type: "error",
         },
         {
           anonymous: false,
           inputs: [
             {
-              indexed: false,
+              indexed: true,
               internalType: "uint256",
-              name: "_vaultId",
+              name: "messageId",
               type: "uint256",
             },
             {
+              components: [
+                {
+                  internalType: "uint256",
+                  name: "nonce",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "targetChainId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "threshold",
+                  type: "uint256",
+                },
+                {
+                  internalType: "address",
+                  name: "sender",
+                  type: "address",
+                },
+                {
+                  internalType: "address",
+                  name: "receiver",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes",
+                  name: "data",
+                  type: "bytes",
+                },
+                {
+                  internalType: "contract IReporter[]",
+                  name: "reporters",
+                  type: "address[]",
+                },
+                {
+                  internalType: "contract IAdapter[]",
+                  name: "adapters",
+                  type: "address[]",
+                },
+              ],
               indexed: false,
-              internalType: "address",
-              name: "_address",
-              type: "address",
-            },
-            {
-              indexed: false,
-              internalType: "uint256",
-              name: "_quantity",
-              type: "uint256",
-            },
-            {
-              indexed: false,
-              internalType: "uint32",
-              name: "_chainId",
-              type: "uint32",
-            },
-            {
-              indexed: false,
-              internalType: "address",
-              name: "_contributor",
-              type: "address",
+              internalType: "struct Message",
+              name: "message",
+              type: "tuple",
             },
           ],
-          name: "Deposit",
+          name: "MessageDispatched",
           type: "event",
         },
         {
           inputs: [
             {
-              internalType: "uint256",
-              name: "",
-              type: "uint256",
-            },
-            {
-              internalType: "address",
-              name: "",
-              type: "address",
-            },
-          ],
-          name: "accountContributionsPerVault",
-          outputs: [
-            {
-              internalType: "uint256",
-              name: "",
-              type: "uint256",
-            },
-          ],
-          stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [
-            {
-              internalType: "address",
-              name: "",
-              type: "address",
-            },
-          ],
-          name: "addressToToken",
-          outputs: [
-            {
-              internalType: "address",
-              name: "_address",
-              type: "address",
-            },
-            {
-              internalType: "uint256",
-              name: "_quantity",
-              type: "uint256",
-            },
-            {
-              internalType: "uint32",
-              name: "_chainId",
-              type: "uint32",
-            },
-            {
-              internalType: "address",
-              name: "_contributor",
-              type: "address",
-            },
-            {
-              internalType: "address",
-              name: "_aggregator",
-              type: "address",
-            },
-          ],
-          stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [
-            {
-              internalType: "uint256",
-              name: "_vaultId",
-              type: "uint256",
-            },
-          ],
-          name: "burn",
-          outputs: [],
-          stateMutability: "nonpayable",
-          type: "function",
-        },
-        {
-          inputs: [],
-          name: "chainId",
-          outputs: [
-            {
-              internalType: "uint32",
-              name: "",
-              type: "uint32",
-            },
-          ],
-          stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [
-            {
               components: [
                 {
                   internalType: "uint256",
-                  name: "vaultId",
+                  name: "nonce",
                   type: "uint256",
-                },
-                {
-                  components: [
-                    {
-                      internalType: "address",
-                      name: "_address",
-                      type: "address",
-                    },
-                    {
-                      internalType: "uint256",
-                      name: "_quantity",
-                      type: "uint256",
-                    },
-                    {
-                      internalType: "uint32",
-                      name: "_chainId",
-                      type: "uint32",
-                    },
-                    {
-                      internalType: "address",
-                      name: "_contributor",
-                      type: "address",
-                    },
-                    {
-                      internalType: "address",
-                      name: "_aggregator",
-                      type: "address",
-                    },
-                  ],
-                  internalType: "struct TokenQuantity[]",
-                  name: "tokens",
-                  type: "tuple[]",
-                },
-              ],
-              internalType: "struct DepositInfo",
-              name: "_depositInfo",
-              type: "tuple",
-            },
-          ],
-          name: "deposit",
-          outputs: [],
-          stateMutability: "nonpayable",
-          type: "function",
-        },
-        {
-          inputs: [],
-          name: "etfToken",
-          outputs: [
-            {
-              internalType: "address",
-              name: "",
-              type: "address",
-            },
-          ],
-          stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [],
-          name: "etfTokenPerVault",
-          outputs: [
-            {
-              internalType: "uint256",
-              name: "",
-              type: "uint256",
-            },
-          ],
-          stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [],
-          name: "getRequiredTokens",
-          outputs: [
-            {
-              components: [
-                {
-                  internalType: "address",
-                  name: "_address",
-                  type: "address",
                 },
                 {
                   internalType: "uint256",
-                  name: "_quantity",
+                  name: "targetChainId",
                   type: "uint256",
                 },
                 {
-                  internalType: "uint32",
-                  name: "_chainId",
-                  type: "uint32",
+                  internalType: "uint256",
+                  name: "threshold",
+                  type: "uint256",
                 },
                 {
                   internalType: "address",
-                  name: "_contributor",
+                  name: "sender",
                   type: "address",
                 },
                 {
                   internalType: "address",
-                  name: "_aggregator",
+                  name: "receiver",
                   type: "address",
+                },
+                {
+                  internalType: "bytes",
+                  name: "data",
+                  type: "bytes",
+                },
+                {
+                  internalType: "contract IReporter[]",
+                  name: "reporters",
+                  type: "address[]",
+                },
+                {
+                  internalType: "contract IAdapter[]",
+                  name: "adapters",
+                  type: "address[]",
                 },
               ],
-              internalType: "struct TokenQuantity[]",
-              name: "",
-              type: "tuple[]",
+              internalType: "struct Message",
+              name: "message",
+              type: "tuple",
             },
           ],
-          stateMutability: "view",
+          name: "calculateMessageHash",
+          outputs: [
+            {
+              internalType: "bytes32",
+              name: "",
+              type: "bytes32",
+            },
+          ],
+          stateMutability: "pure",
           type: "function",
         },
         {
           inputs: [
             {
               internalType: "uint256",
-              name: "_vaultId",
+              name: "sourceChainId",
               type: "uint256",
             },
-          ],
-          name: "getVault",
-          outputs: [
             {
-              components: [
-                {
-                  components: [
-                    {
-                      internalType: "address",
-                      name: "_address",
-                      type: "address",
-                    },
-                    {
-                      internalType: "uint256",
-                      name: "_quantity",
-                      type: "uint256",
-                    },
-                    {
-                      internalType: "uint32",
-                      name: "_chainId",
-                      type: "uint32",
-                    },
-                    {
-                      internalType: "address",
-                      name: "_contributor",
-                      type: "address",
-                    },
-                    {
-                      internalType: "address",
-                      name: "_aggregator",
-                      type: "address",
-                    },
-                  ],
-                  internalType: "struct TokenQuantity[]",
-                  name: "_tokens",
-                  type: "tuple[]",
-                },
-                {
-                  internalType: "enum VaultState",
-                  name: "state",
-                  type: "uint8",
-                },
-              ],
-              internalType: "struct Vault",
-              name: "",
-              type: "tuple",
-            },
-          ],
-          stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [],
-          name: "getVaultStates",
-          outputs: [
-            {
-              internalType: "enum VaultState[]",
-              name: "",
-              type: "uint8[]",
-            },
-          ],
-          stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [
-            {
-              internalType: "uint32",
-              name: "_origin",
-              type: "uint32",
+              internalType: "address",
+              name: "dispatcherAddress",
+              type: "address",
             },
             {
               internalType: "bytes32",
-              name: "_sender",
+              name: "messageHash",
               type: "bytes32",
+            },
+          ],
+          name: "calculateMessageId",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "pure",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "currentNonce",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "targetChainId",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "threshold",
+              type: "uint256",
+            },
+            {
+              internalType: "address",
+              name: "receiver",
+              type: "address",
             },
             {
               internalType: "bytes",
-              name: "_message",
+              name: "data",
               type: "bytes",
             },
+            {
+              internalType: "contract IReporter[]",
+              name: "reporters",
+              type: "address[]",
+            },
+            {
+              internalType: "contract IAdapter[]",
+              name: "adapters",
+              type: "address[]",
+            },
           ],
-          name: "handle",
-          outputs: [],
+          name: "dispatchMessage",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "targetChainId",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "threshold",
+              type: "uint256",
+            },
+            {
+              internalType: "address",
+              name: "receiver",
+              type: "address",
+            },
+            {
+              internalType: "bytes",
+              name: "data",
+              type: "bytes",
+            },
+            {
+              internalType: "contract IReporter[]",
+              name: "reporters",
+              type: "address[]",
+            },
+            {
+              internalType: "contract IAdapter[]",
+              name: "adapters",
+              type: "address[]",
+            },
+          ],
+          name: "dispatchMessageToAdapters",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+            {
+              internalType: "bytes32[]",
+              name: "",
+              type: "bytes32[]",
+            },
+          ],
           stateMutability: "payable",
           type: "function",
         },
@@ -1600,36 +1319,65 @@ const deployedContracts = {
           inputs: [
             {
               internalType: "uint256",
+              name: "targetChainId",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256[]",
+              name: "thresholds",
+              type: "uint256[]",
+            },
+            {
+              internalType: "address[]",
+              name: "receivers",
+              type: "address[]",
+            },
+            {
+              internalType: "bytes[]",
+              name: "data",
+              type: "bytes[]",
+            },
+            {
+              internalType: "contract IReporter[]",
+              name: "reporters",
+              type: "address[]",
+            },
+            {
+              internalType: "contract IAdapter[]",
+              name: "adapters",
+              type: "address[]",
+            },
+          ],
+          name: "dispatchMessagesToAdapters",
+          outputs: [
+            {
+              internalType: "uint256[]",
               name: "",
+              type: "uint256[]",
+            },
+            {
+              internalType: "bytes32[]",
+              name: "",
+              type: "bytes32[]",
+            },
+          ],
+          stateMutability: "payable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "messageId",
               type: "uint256",
             },
           ],
-          name: "requiredTokens",
+          name: "getPendingMessageHash",
           outputs: [
             {
-              internalType: "address",
-              name: "_address",
-              type: "address",
-            },
-            {
-              internalType: "uint256",
-              name: "_quantity",
-              type: "uint256",
-            },
-            {
-              internalType: "uint32",
-              name: "_chainId",
-              type: "uint32",
-            },
-            {
-              internalType: "address",
-              name: "_contributor",
-              type: "address",
-            },
-            {
-              internalType: "address",
-              name: "_aggregator",
-              type: "address",
+              internalType: "bytes32",
+              name: "",
+              type: "bytes32",
             },
           ],
           stateMutability: "view",
@@ -1638,575 +1386,79 @@ const deployedContracts = {
         {
           inputs: [
             {
-              internalType: "uint256",
-              name: "_vaultId",
-              type: "uint256",
-            },
-            {
-              internalType: "enum VaultState",
-              name: "_state",
-              type: "uint8",
+              components: [
+                {
+                  internalType: "uint256",
+                  name: "nonce",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "targetChainId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "threshold",
+                  type: "uint256",
+                },
+                {
+                  internalType: "address",
+                  name: "sender",
+                  type: "address",
+                },
+                {
+                  internalType: "address",
+                  name: "receiver",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes",
+                  name: "data",
+                  type: "bytes",
+                },
+                {
+                  internalType: "contract IReporter[]",
+                  name: "reporters",
+                  type: "address[]",
+                },
+                {
+                  internalType: "contract IAdapter[]",
+                  name: "adapters",
+                  type: "address[]",
+                },
+              ],
+              internalType: "struct Message[]",
+              name: "messages",
+              type: "tuple[]",
             },
           ],
-          name: "setVaultState",
-          outputs: [],
-          stateMutability: "nonpayable",
-          type: "function",
-        },
-        {
-          inputs: [],
-          name: "sideChainLock",
+          name: "relayMessagesToAdapters",
           outputs: [
             {
-              internalType: "address",
+              internalType: "bytes32[]",
               name: "",
-              type: "address",
+              type: "bytes32[]",
             },
           ],
-          stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [
-            {
-              internalType: "uint256",
-              name: "",
-              type: "uint256",
-            },
-          ],
-          name: "vaults",
-          outputs: [
-            {
-              internalType: "enum VaultState",
-              name: "state",
-              type: "uint8",
-            },
-          ],
-          stateMutability: "view",
-          type: "function",
-        },
-      ],
-      inheritedFunctions: {},
-    },
-    MockAggregator: {
-      address: "0x43522ebB10C440bE80711f9975333ED9B7F11d95",
-      abi: [
-        {
-          inputs: [
-            {
-              internalType: "int256",
-              name: "_price",
-              type: "int256",
-            },
-            {
-              internalType: "uint8",
-              name: "_decimals",
-              type: "uint8",
-            },
-          ],
-          stateMutability: "nonpayable",
-          type: "constructor",
-        },
-        {
-          inputs: [],
-          name: "decimals",
-          outputs: [
-            {
-              internalType: "uint8",
-              name: "",
-              type: "uint8",
-            },
-          ],
-          stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [],
-          name: "description",
-          outputs: [
-            {
-              internalType: "string",
-              name: "",
-              type: "string",
-            },
-          ],
-          stateMutability: "pure",
-          type: "function",
-        },
-        {
-          inputs: [
-            {
-              internalType: "uint80",
-              name: "_roundId",
-              type: "uint80",
-            },
-          ],
-          name: "getRoundData",
-          outputs: [
-            {
-              internalType: "uint80",
-              name: "roundId",
-              type: "uint80",
-            },
-            {
-              internalType: "int256",
-              name: "answer",
-              type: "int256",
-            },
-            {
-              internalType: "uint256",
-              name: "startedAt",
-              type: "uint256",
-            },
-            {
-              internalType: "uint256",
-              name: "updatedAt",
-              type: "uint256",
-            },
-            {
-              internalType: "uint80",
-              name: "answeredInRound",
-              type: "uint80",
-            },
-          ],
-          stateMutability: "pure",
-          type: "function",
-        },
-        {
-          inputs: [],
-          name: "latestRoundData",
-          outputs: [
-            {
-              internalType: "uint80",
-              name: "roundId",
-              type: "uint80",
-            },
-            {
-              internalType: "int256",
-              name: "answer",
-              type: "int256",
-            },
-            {
-              internalType: "uint256",
-              name: "startedAt",
-              type: "uint256",
-            },
-            {
-              internalType: "uint256",
-              name: "updatedAt",
-              type: "uint256",
-            },
-            {
-              internalType: "uint80",
-              name: "answeredInRound",
-              type: "uint80",
-            },
-          ],
-          stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [],
-          name: "version",
-          outputs: [
-            {
-              internalType: "uint256",
-              name: "",
-              type: "uint256",
-            },
-          ],
-          stateMutability: "pure",
+          stateMutability: "payable",
           type: "function",
         },
       ],
       inheritedFunctions: {
-        decimals:
-          "@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol",
-        description:
-          "@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol",
-        getRoundData:
-          "@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol",
-        latestRoundData:
-          "@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol",
-        version:
-          "@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol",
-      },
-    },
-    SimpleERC20: {
-      address: "0x538c96FF85Fa86Be9B7B350DD060D2f99379638D",
-      abi: [
-        {
-          inputs: [
-            {
-              internalType: "string",
-              name: "name",
-              type: "string",
-            },
-            {
-              internalType: "string",
-              name: "symbol",
-              type: "string",
-            },
-            {
-              internalType: "uint256",
-              name: "initialSupply",
-              type: "uint256",
-            },
-          ],
-          stateMutability: "nonpayable",
-          type: "constructor",
-        },
-        {
-          anonymous: false,
-          inputs: [
-            {
-              indexed: true,
-              internalType: "address",
-              name: "owner",
-              type: "address",
-            },
-            {
-              indexed: true,
-              internalType: "address",
-              name: "spender",
-              type: "address",
-            },
-            {
-              indexed: false,
-              internalType: "uint256",
-              name: "value",
-              type: "uint256",
-            },
-          ],
-          name: "Approval",
-          type: "event",
-        },
-        {
-          anonymous: false,
-          inputs: [
-            {
-              indexed: true,
-              internalType: "address",
-              name: "from",
-              type: "address",
-            },
-            {
-              indexed: true,
-              internalType: "address",
-              name: "to",
-              type: "address",
-            },
-            {
-              indexed: false,
-              internalType: "uint256",
-              name: "value",
-              type: "uint256",
-            },
-          ],
-          name: "Transfer",
-          type: "event",
-        },
-        {
-          inputs: [
-            {
-              internalType: "address",
-              name: "owner",
-              type: "address",
-            },
-            {
-              internalType: "address",
-              name: "spender",
-              type: "address",
-            },
-          ],
-          name: "allowance",
-          outputs: [
-            {
-              internalType: "uint256",
-              name: "",
-              type: "uint256",
-            },
-          ],
-          stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [
-            {
-              internalType: "address",
-              name: "spender",
-              type: "address",
-            },
-            {
-              internalType: "uint256",
-              name: "amount",
-              type: "uint256",
-            },
-          ],
-          name: "approve",
-          outputs: [
-            {
-              internalType: "bool",
-              name: "",
-              type: "bool",
-            },
-          ],
-          stateMutability: "nonpayable",
-          type: "function",
-        },
-        {
-          inputs: [
-            {
-              internalType: "address",
-              name: "account",
-              type: "address",
-            },
-          ],
-          name: "balanceOf",
-          outputs: [
-            {
-              internalType: "uint256",
-              name: "",
-              type: "uint256",
-            },
-          ],
-          stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [
-            {
-              internalType: "address",
-              name: "sender",
-              type: "address",
-            },
-            {
-              internalType: "uint256",
-              name: "amount",
-              type: "uint256",
-            },
-          ],
-          name: "burn",
-          outputs: [],
-          stateMutability: "nonpayable",
-          type: "function",
-        },
-        {
-          inputs: [],
-          name: "decimals",
-          outputs: [
-            {
-              internalType: "uint8",
-              name: "",
-              type: "uint8",
-            },
-          ],
-          stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [
-            {
-              internalType: "address",
-              name: "spender",
-              type: "address",
-            },
-            {
-              internalType: "uint256",
-              name: "subtractedValue",
-              type: "uint256",
-            },
-          ],
-          name: "decreaseAllowance",
-          outputs: [
-            {
-              internalType: "bool",
-              name: "",
-              type: "bool",
-            },
-          ],
-          stateMutability: "nonpayable",
-          type: "function",
-        },
-        {
-          inputs: [
-            {
-              internalType: "address",
-              name: "spender",
-              type: "address",
-            },
-            {
-              internalType: "uint256",
-              name: "addedValue",
-              type: "uint256",
-            },
-          ],
-          name: "increaseAllowance",
-          outputs: [
-            {
-              internalType: "bool",
-              name: "",
-              type: "bool",
-            },
-          ],
-          stateMutability: "nonpayable",
-          type: "function",
-        },
-        {
-          inputs: [
-            {
-              internalType: "address",
-              name: "to",
-              type: "address",
-            },
-            {
-              internalType: "uint256",
-              name: "amount",
-              type: "uint256",
-            },
-          ],
-          name: "mint",
-          outputs: [],
-          stateMutability: "nonpayable",
-          type: "function",
-        },
-        {
-          inputs: [],
-          name: "name",
-          outputs: [
-            {
-              internalType: "string",
-              name: "",
-              type: "string",
-            },
-          ],
-          stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [],
-          name: "owner",
-          outputs: [
-            {
-              internalType: "address",
-              name: "",
-              type: "address",
-            },
-          ],
-          stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [
-            {
-              internalType: "address",
-              name: "_owner",
-              type: "address",
-            },
-          ],
-          name: "setOwner",
-          outputs: [],
-          stateMutability: "nonpayable",
-          type: "function",
-        },
-        {
-          inputs: [],
-          name: "symbol",
-          outputs: [
-            {
-              internalType: "string",
-              name: "",
-              type: "string",
-            },
-          ],
-          stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [],
-          name: "totalSupply",
-          outputs: [
-            {
-              internalType: "uint256",
-              name: "",
-              type: "uint256",
-            },
-          ],
-          stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [
-            {
-              internalType: "address",
-              name: "to",
-              type: "address",
-            },
-            {
-              internalType: "uint256",
-              name: "amount",
-              type: "uint256",
-            },
-          ],
-          name: "transfer",
-          outputs: [
-            {
-              internalType: "bool",
-              name: "",
-              type: "bool",
-            },
-          ],
-          stateMutability: "nonpayable",
-          type: "function",
-        },
-        {
-          inputs: [
-            {
-              internalType: "address",
-              name: "from",
-              type: "address",
-            },
-            {
-              internalType: "address",
-              name: "to",
-              type: "address",
-            },
-            {
-              internalType: "uint256",
-              name: "amount",
-              type: "uint256",
-            },
-          ],
-          name: "transferFrom",
-          outputs: [
-            {
-              internalType: "bool",
-              name: "",
-              type: "bool",
-            },
-          ],
-          stateMutability: "nonpayable",
-          type: "function",
-        },
-      ],
-      inheritedFunctions: {
-        allowance: "@openzeppelin/contracts/token/ERC20/ERC20.sol",
-        approve: "@openzeppelin/contracts/token/ERC20/ERC20.sol",
-        balanceOf: "@openzeppelin/contracts/token/ERC20/ERC20.sol",
-        decimals: "@openzeppelin/contracts/token/ERC20/ERC20.sol",
-        decreaseAllowance: "@openzeppelin/contracts/token/ERC20/ERC20.sol",
-        increaseAllowance: "@openzeppelin/contracts/token/ERC20/ERC20.sol",
-        name: "@openzeppelin/contracts/token/ERC20/ERC20.sol",
-        symbol: "@openzeppelin/contracts/token/ERC20/ERC20.sol",
-        totalSupply: "@openzeppelin/contracts/token/ERC20/ERC20.sol",
-        transfer: "@openzeppelin/contracts/token/ERC20/ERC20.sol",
-        transferFrom: "@openzeppelin/contracts/token/ERC20/ERC20.sol",
+        calculateMessageHash: "contracts/utils/MessageHashCalculator.sol",
+        calculateMessageId: "contracts/utils/MessageIdCalculator.sol",
+        dispatchMessage: "contracts/interfaces/IYaho.sol",
+        dispatchMessageToAdapters: "contracts/interfaces/IYaho.sol",
+        dispatchMessagesToAdapters: "contracts/interfaces/IYaho.sol",
+        getPendingMessageHash: "contracts/interfaces/IYaho.sol",
+        relayMessagesToAdapters: "contracts/interfaces/IYaho.sol",
       },
     },
   },
   11155111: {
     Committer: {
-      address: "0x558016c6337dE3efb15Af53Cb6Dc7563988f2E62",
+      address: "0x8150e11c6dbca3b76Bb25B38ECbD05855C88a07b",
       abi: [
         {
           inputs: [
@@ -2218,6 +1470,19 @@ const deployedContracts = {
           ],
           stateMutability: "nonpayable",
           type: "constructor",
+        },
+        {
+          inputs: [],
+          name: "BROADCAST_CHAIN_ID",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
         },
         {
           inputs: [],
@@ -2275,7 +1540,7 @@ const deployedContracts = {
       inheritedFunctions: {},
     },
     ETFIssuingChain: {
-      address: "0x2eDCe1176BA33B732cc264002Df9912883411E3B",
+      address: "0x99E3741F2cccb266fAd7680E1777eCA8E9C1c763",
       abi: [
         {
           inputs: [
@@ -2320,6 +1585,26 @@ const deployedContracts = {
               internalType: "struct TokenQuantity[]",
               name: "_requiredTokens",
               type: "tuple[]",
+            },
+            {
+              internalType: "address",
+              name: "_hashi",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "_hyperlaneAdapter",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "_hyperlaneReporter",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "_yahoAddress",
+              type: "address",
             },
             {
               internalType: "address",
@@ -2442,6 +1727,43 @@ const deployedContracts = {
               name: "_vaultId",
               type: "uint256",
             },
+            {
+              components: [
+                {
+                  internalType: "uint256",
+                  name: "blockNumber",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "nonce",
+                  type: "uint256",
+                },
+                {
+                  internalType: "bytes",
+                  name: "blockHeader",
+                  type: "bytes",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "storageRoot",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "accountProof",
+                  type: "bytes",
+                },
+                {
+                  internalType: "bytes",
+                  name: "storageProof",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct Proof",
+              name: "proof",
+              type: "tuple",
+            },
           ],
           name: "burn",
           outputs: [],
@@ -2511,6 +1833,24 @@ const deployedContracts = {
           name: "deposit",
           outputs: [],
           stateMutability: "payable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "contract IReporter[]",
+              name: "reporters",
+              type: "address[]",
+            },
+            {
+              internalType: "contract IAdapter[]",
+              name: "adapters",
+              type: "address[]",
+            },
+          ],
+          name: "dispatchCommitment",
+          outputs: [],
+          stateMutability: "nonpayable",
           type: "function",
         },
         {
@@ -2832,6 +2172,61 @@ const deployedContracts = {
         {
           inputs: [
             {
+              internalType: "uint256",
+              name: "_vaultId",
+              type: "uint256",
+            },
+            {
+              internalType: "bytes32",
+              name: "mainChainLastCommitment",
+              type: "bytes32",
+            },
+            {
+              components: [
+                {
+                  internalType: "uint256",
+                  name: "blockNumber",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "nonce",
+                  type: "uint256",
+                },
+                {
+                  internalType: "bytes",
+                  name: "blockHeader",
+                  type: "bytes",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "storageRoot",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "accountProof",
+                  type: "bytes",
+                },
+                {
+                  internalType: "bytes",
+                  name: "storageProof",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct Proof",
+              name: "proof",
+              type: "tuple",
+            },
+          ],
+          name: "secureBurn",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
               internalType: "address",
               name: "_sideChainLock",
               type: "address",
@@ -2953,55 +2348,1595 @@ const deployedContracts = {
       ],
       inheritedFunctions: {},
     },
-    ETFLockingChain: {
-      address: "0x08a758eB8ba70b6b5Df483087F293cD0311b7258",
+    GiriGiriBashi: {
+      address: "0xA85A89e38b6bE6378Aa07145F7eC46F96baBcA43",
       abi: [
         {
           inputs: [
             {
-              internalType: "uint32",
-              name: "_chainId",
-              type: "uint32",
-            },
-            {
-              components: [
-                {
-                  internalType: "address",
-                  name: "_address",
-                  type: "address",
-                },
-                {
-                  internalType: "uint256",
-                  name: "_quantity",
-                  type: "uint256",
-                },
-                {
-                  internalType: "uint32",
-                  name: "_chainId",
-                  type: "uint32",
-                },
-                {
-                  internalType: "address",
-                  name: "_contributor",
-                  type: "address",
-                },
-                {
-                  internalType: "address",
-                  name: "_aggregator",
-                  type: "address",
-                },
-              ],
-              internalType: "struct TokenQuantity[]",
-              name: "_requiredTokens",
-              type: "tuple[]",
-            },
-            {
               internalType: "address",
-              name: "_outbox",
+              name: "_owner",
               type: "address",
             },
             {
               internalType: "address",
+              name: "_hashi",
+              type: "address",
+            },
+            {
+              internalType: "address payable",
+              name: "_bondRecipient",
+              type: "address",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "constructor",
+        },
+        {
+          inputs: [
+            {
+              internalType: "contract IAdapter",
+              name: "adapter",
+              type: "address",
+            },
+          ],
+          name: "AdapterAlreadyEnabled",
+          type: "error",
+        },
+        {
+          inputs: [
+            {
+              internalType: "contract IAdapter",
+              name: "adapter",
+              type: "address",
+            },
+          ],
+          name: "AdapterHasNotYetTimedOut",
+          type: "error",
+        },
+        {
+          inputs: [
+            {
+              internalType: "contract IAdapter",
+              name: "adapter",
+              type: "address",
+            },
+          ],
+          name: "AdapterNotEnabled",
+          type: "error",
+        },
+        {
+          inputs: [
+            {
+              internalType: "contract IAdapter",
+              name: "adapter",
+              type: "address",
+            },
+          ],
+          name: "AdapterNotQuarantined",
+          type: "error",
+        },
+        {
+          inputs: [
+            {
+              internalType: "contract IAdapter[]",
+              name: "adapters",
+              type: "address[]",
+            },
+            {
+              internalType: "contract IAdapter",
+              name: "adapter",
+              type: "address",
+            },
+          ],
+          name: "AdaptersCannotContainChallengedAdapter",
+          type: "error",
+        },
+        {
+          inputs: [
+            {
+              internalType: "contract IAdapter",
+              name: "adapterOne",
+              type: "address",
+            },
+            {
+              internalType: "contract IAdapter",
+              name: "adapterTwo",
+              type: "address",
+            },
+          ],
+          name: "AdaptersDisagree",
+          type: "error",
+        },
+        {
+          inputs: [
+            {
+              internalType: "contract IAdapter",
+              name: "adapter",
+              type: "address",
+            },
+          ],
+          name: "AlreadyQuarantined",
+          type: "error",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "domain",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "id",
+              type: "uint256",
+            },
+            {
+              internalType: "contract IAdapter[]",
+              name: "adapters",
+              type: "address[]",
+            },
+          ],
+          name: "CannotProveNoConfidence",
+          type: "error",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes32",
+              name: "challengeId",
+              type: "bytes32",
+            },
+            {
+              internalType: "uint256",
+              name: "domain",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "id",
+              type: "uint256",
+            },
+            {
+              internalType: "contract IAdapter",
+              name: "adapter",
+              type: "address",
+            },
+          ],
+          name: "ChallengeNotFound",
+          type: "error",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "domain",
+              type: "uint256",
+            },
+          ],
+          name: "ChallengeRangeAlreadySet",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "CountCannotBeZero",
+          type: "error",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "domain",
+              type: "uint256",
+            },
+          ],
+          name: "CountMustBeZero",
+          type: "error",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes32",
+              name: "challengeId",
+              type: "bytes32",
+            },
+            {
+              internalType: "uint256",
+              name: "domain",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "id",
+              type: "uint256",
+            },
+            {
+              internalType: "contract IAdapter",
+              name: "adapter",
+              type: "address",
+            },
+          ],
+          name: "DuplicateChallenge",
+          type: "error",
+        },
+        {
+          inputs: [
+            {
+              internalType: "contract IHashi",
+              name: "hashi",
+              type: "address",
+            },
+          ],
+          name: "DuplicateHashiAddress",
+          type: "error",
+        },
+        {
+          inputs: [
+            {
+              internalType: "contract IAdapter",
+              name: "adapterOne",
+              type: "address",
+            },
+            {
+              internalType: "contract IAdapter",
+              name: "adapterTwo",
+              type: "address",
+            },
+          ],
+          name: "DuplicateOrOutOfOrderAdapters",
+          type: "error",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "threshold",
+              type: "uint256",
+            },
+          ],
+          name: "DuplicateThreashold",
+          type: "error",
+        },
+        {
+          inputs: [
+            {
+              internalType: "contract IAdapter",
+              name: "adapter",
+              type: "address",
+            },
+          ],
+          name: "InvalidAdapter",
+          type: "error",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "threshold",
+              type: "uint256",
+            },
+          ],
+          name: "InvalidThreshold",
+          type: "error",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "domain",
+              type: "uint256",
+            },
+          ],
+          name: "NoAdaptersEnabled",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "NoAdaptersGiven",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "NoConfidenceRequired",
+          type: "error",
+        },
+        {
+          inputs: [
+            {
+              internalType: "contract IAdapter",
+              name: "adapter",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "value",
+              type: "uint256",
+            },
+          ],
+          name: "NotEnoughValue",
+          type: "error",
+        },
+        {
+          inputs: [
+            {
+              internalType: "contract IAdapter",
+              name: "adapter",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "id",
+              type: "uint256",
+            },
+          ],
+          name: "OutOfRange",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "ThresholdNotMet",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "UnequalArrayLengths",
+          type: "error",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "domain",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "contract IAdapter[]",
+              name: "adapters",
+              type: "address[]",
+            },
+          ],
+          name: "AdaptersDisabled",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "domain",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "contract IAdapter[]",
+              name: "adapters",
+              type: "address[]",
+            },
+          ],
+          name: "AdaptersEnabled",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: false,
+              internalType: "address payable",
+              name: "bondRecipient",
+              type: "address",
+            },
+          ],
+          name: "BondRecipientSet",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: false,
+              internalType: "bytes32",
+              name: "challengeId",
+              type: "bytes32",
+            },
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "domain",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "id",
+              type: "uint256",
+            },
+            {
+              indexed: true,
+              internalType: "contract IAdapter",
+              name: "adapter",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "challenger",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "timestamp",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "bond",
+              type: "uint256",
+            },
+          ],
+          name: "ChallengeCreated",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "domain",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "range",
+              type: "uint256",
+            },
+          ],
+          name: "ChallengeRangeUpdated",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: false,
+              internalType: "bytes32",
+              name: "challengeId",
+              type: "bytes32",
+            },
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "domain",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "id",
+              type: "uint256",
+            },
+            {
+              indexed: true,
+              internalType: "contract IAdapter",
+              name: "adapter",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "challenger",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "bond",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "bool",
+              name: "challengeSuccessful",
+              type: "bool",
+            },
+          ],
+          name: "ChallengeResolved",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "contract IHashi",
+              name: "hashi",
+              type: "address",
+            },
+          ],
+          name: "HashiSet",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "owner",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "contract IHashi",
+              name: "hashi",
+              type: "address",
+            },
+          ],
+          name: "Init",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: false,
+              internalType: "uint8",
+              name: "version",
+              type: "uint8",
+            },
+          ],
+          name: "Initialized",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "domain",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "head",
+              type: "uint256",
+            },
+          ],
+          name: "NewHead",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "domain",
+              type: "uint256",
+            },
+          ],
+          name: "NoConfidenceDeclared",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "previousOwner",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "newOwner",
+              type: "address",
+            },
+          ],
+          name: "OwnershipTransferred",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "domain",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "contract IAdapter",
+              name: "adapter",
+              type: "address",
+            },
+            {
+              components: [
+                {
+                  internalType: "bool",
+                  name: "quarantined",
+                  type: "bool",
+                },
+                {
+                  internalType: "uint256",
+                  name: "minimumBond",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "startId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "idDepth",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "timeout",
+                  type: "uint256",
+                },
+              ],
+              indexed: false,
+              internalType: "struct IGiriGiriBashi.Settings",
+              name: "settings",
+              type: "tuple",
+            },
+          ],
+          name: "SettingsInitialized",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "domain",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "threshold",
+              type: "uint256",
+            },
+          ],
+          name: "ThresholdSet",
+          type: "event",
+        },
+        {
+          inputs: [],
+          name: "bondRecipient",
+          outputs: [
+            {
+              internalType: "address payable",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "domain",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "id",
+              type: "uint256",
+            },
+            {
+              internalType: "contract IAdapter",
+              name: "adapter",
+              type: "address",
+            },
+          ],
+          name: "challengeAdapter",
+          outputs: [],
+          stateMutability: "payable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "domain",
+              type: "uint256",
+            },
+            {
+              internalType: "contract IAdapter[]",
+              name: "adapters",
+              type: "address[]",
+            },
+          ],
+          name: "checkAdapterOrderAndValidity",
+          outputs: [],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "domain",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "id",
+              type: "uint256",
+            },
+            {
+              internalType: "contract IAdapter[]",
+              name: "adapters",
+              type: "address[]",
+            },
+          ],
+          name: "declareNoConfidence",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "domain",
+              type: "uint256",
+            },
+            {
+              internalType: "contract IAdapter[]",
+              name: "adapters",
+              type: "address[]",
+            },
+          ],
+          name: "disableAdapters",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "domain",
+              type: "uint256",
+            },
+            {
+              internalType: "contract IAdapter[]",
+              name: "adapters",
+              type: "address[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "bool",
+                  name: "quarantined",
+                  type: "bool",
+                },
+                {
+                  internalType: "uint256",
+                  name: "minimumBond",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "startId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "idDepth",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "timeout",
+                  type: "uint256",
+                },
+              ],
+              internalType: "struct IGiriGiriBashi.Settings[]",
+              name: "settings",
+              type: "tuple[]",
+            },
+          ],
+          name: "enableAdapters",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "domain",
+              type: "uint256",
+            },
+            {
+              internalType: "contract IAdapter",
+              name: "adapter",
+              type: "address",
+            },
+          ],
+          name: "getAdapterLink",
+          outputs: [
+            {
+              components: [
+                {
+                  internalType: "contract IAdapter",
+                  name: "previous",
+                  type: "address",
+                },
+                {
+                  internalType: "contract IAdapter",
+                  name: "next",
+                  type: "address",
+                },
+              ],
+              internalType: "struct IShuSho.Link",
+              name: "",
+              type: "tuple",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "domain",
+              type: "uint256",
+            },
+          ],
+          name: "getAdapters",
+          outputs: [
+            {
+              internalType: "contract IAdapter[]",
+              name: "",
+              type: "address[]",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes32",
+              name: "challengeId",
+              type: "bytes32",
+            },
+          ],
+          name: "getChallenge",
+          outputs: [
+            {
+              components: [
+                {
+                  internalType: "address payable",
+                  name: "challenger",
+                  type: "address",
+                },
+                {
+                  internalType: "uint256",
+                  name: "timestamp",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "bond",
+                  type: "uint256",
+                },
+              ],
+              internalType: "struct IGiriGiriBashi.Challenge",
+              name: "",
+              type: "tuple",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "domain",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "id",
+              type: "uint256",
+            },
+            {
+              internalType: "contract IAdapter",
+              name: "adapter",
+              type: "address",
+            },
+          ],
+          name: "getChallengeId",
+          outputs: [
+            {
+              internalType: "bytes32",
+              name: "challengeId",
+              type: "bytes32",
+            },
+          ],
+          stateMutability: "pure",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "domain",
+              type: "uint256",
+            },
+          ],
+          name: "getChallengeRange",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "domain",
+              type: "uint256",
+            },
+          ],
+          name: "getDomain",
+          outputs: [
+            {
+              components: [
+                {
+                  internalType: "uint256",
+                  name: "threshold",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "count",
+                  type: "uint256",
+                },
+              ],
+              internalType: "struct IShuSho.Domain",
+              name: "",
+              type: "tuple",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "domain",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "id",
+              type: "uint256",
+            },
+            {
+              internalType: "contract IAdapter[]",
+              name: "adapters",
+              type: "address[]",
+            },
+          ],
+          name: "getHash",
+          outputs: [
+            {
+              internalType: "bytes32",
+              name: "hash",
+              type: "bytes32",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "domain",
+              type: "uint256",
+            },
+          ],
+          name: "getHead",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "domain",
+              type: "uint256",
+            },
+            {
+              internalType: "contract IAdapter",
+              name: "adapter",
+              type: "address",
+            },
+          ],
+          name: "getSettings",
+          outputs: [
+            {
+              components: [
+                {
+                  internalType: "bool",
+                  name: "quarantined",
+                  type: "bool",
+                },
+                {
+                  internalType: "uint256",
+                  name: "minimumBond",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "startId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "idDepth",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "timeout",
+                  type: "uint256",
+                },
+              ],
+              internalType: "struct IGiriGiriBashi.Settings",
+              name: "",
+              type: "tuple",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "domain_",
+              type: "uint256",
+            },
+          ],
+          name: "getThresholdAndCount",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "domain",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "id",
+              type: "uint256",
+            },
+          ],
+          name: "getThresholdHash",
+          outputs: [
+            {
+              internalType: "bytes32",
+              name: "hash",
+              type: "bytes32",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "domain",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "id",
+              type: "uint256",
+            },
+          ],
+          name: "getUnanimousHash",
+          outputs: [
+            {
+              internalType: "bytes32",
+              name: "hash",
+              type: "bytes32",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "hashi",
+          outputs: [
+            {
+              internalType: "contract IHashi",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes",
+              name: "initParams",
+              type: "bytes",
+            },
+          ],
+          name: "init",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "owner",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "renounceOwnership",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "domain",
+              type: "uint256",
+            },
+            {
+              internalType: "contract IAdapter[]",
+              name: "currentAdapters",
+              type: "address[]",
+            },
+            {
+              internalType: "contract IAdapter[]",
+              name: "newAdapters",
+              type: "address[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "bool",
+                  name: "quarantined",
+                  type: "bool",
+                },
+                {
+                  internalType: "uint256",
+                  name: "minimumBond",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "startId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "idDepth",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "timeout",
+                  type: "uint256",
+                },
+              ],
+              internalType: "struct IGiriGiriBashi.Settings[]",
+              name: "settings",
+              type: "tuple[]",
+            },
+          ],
+          name: "replaceQuarantinedAdapters",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "domain",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "id",
+              type: "uint256",
+            },
+            {
+              internalType: "contract IAdapter",
+              name: "adapter",
+              type: "address",
+            },
+            {
+              internalType: "contract IAdapter[]",
+              name: "adapters",
+              type: "address[]",
+            },
+          ],
+          name: "resolveChallenge",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "success",
+              type: "bool",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address payable",
+              name: "_bondRecipient",
+              type: "address",
+            },
+          ],
+          name: "setBondRecipient",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "domain",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "range",
+              type: "uint256",
+            },
+          ],
+          name: "setChallengeRange",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "contract IHashi",
+              name: "_hashi",
+              type: "address",
+            },
+          ],
+          name: "setHashi",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "domain",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "threshold",
+              type: "uint256",
+            },
+          ],
+          name: "setThreshold",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "newOwner",
+              type: "address",
+            },
+          ],
+          name: "transferOwnership",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+      ],
+      inheritedFunctions: {
+        challengeAdapter: "contracts/interfaces/IGiriGiriBashi.sol",
+        checkAdapterOrderAndValidity: "contracts/ownable/ShuSo.sol",
+        declareNoConfidence: "contracts/interfaces/IGiriGiriBashi.sol",
+        disableAdapters: "contracts/interfaces/IGiriGiriBashi.sol",
+        enableAdapters: "contracts/interfaces/IGiriGiriBashi.sol",
+        getAdapterLink: "contracts/ownable/ShuSo.sol",
+        getAdapters: "contracts/ownable/ShuSo.sol",
+        getChallenge: "contracts/interfaces/IGiriGiriBashi.sol",
+        getChallengeId: "contracts/interfaces/IGiriGiriBashi.sol",
+        getChallengeRange: "contracts/interfaces/IGiriGiriBashi.sol",
+        getDomain: "contracts/ownable/ShuSo.sol",
+        getHash: "contracts/interfaces/IGiriGiriBashi.sol",
+        getHead: "contracts/interfaces/IGiriGiriBashi.sol",
+        getSettings: "contracts/interfaces/IGiriGiriBashi.sol",
+        getThresholdAndCount: "contracts/ownable/ShuSo.sol",
+        getThresholdHash: "contracts/interfaces/IGiriGiriBashi.sol",
+        getUnanimousHash: "contracts/interfaces/IGiriGiriBashi.sol",
+        hashi: "contracts/ownable/ShuSo.sol",
+        replaceQuarantinedAdapters: "contracts/interfaces/IGiriGiriBashi.sol",
+        resolveChallenge: "contracts/interfaces/IGiriGiriBashi.sol",
+        setBondRecipient: "contracts/interfaces/IGiriGiriBashi.sol",
+        setChallengeRange: "contracts/interfaces/IGiriGiriBashi.sol",
+        setThreshold: "contracts/interfaces/IGiriGiriBashi.sol",
+        init: "contracts/ownable/ShuSo.sol",
+        owner: "contracts/ownable/ShuSo.sol",
+        renounceOwnership: "contracts/ownable/ShuSo.sol",
+        setHashi: "contracts/ownable/ShuSo.sol",
+        transferOwnership: "contracts/ownable/ShuSo.sol",
+      },
+    },
+    Hashi: {
+      address: "0xFC2c9d0094c6D64F3a4e4C6BF30E2229F4268b70",
+      abi: [
+        {
+          inputs: [
+            {
+              internalType: "contract IAdapter",
+              name: "adapterOne",
+              type: "address",
+            },
+            {
+              internalType: "contract IAdapter",
+              name: "adapterTwo",
+              type: "address",
+            },
+          ],
+          name: "AdaptersDisagree",
+          type: "error",
+        },
+        {
+          inputs: [
+            {
+              internalType: "contract IAdapter",
+              name: "adapter",
+              type: "address",
+            },
+          ],
+          name: "HashNotAvailableInAdapter",
+          type: "error",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "threshold",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "maxThreshold",
+              type: "uint256",
+            },
+          ],
+          name: "InvalidThreshold",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "NoAdaptersGiven",
+          type: "error",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "domain",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "id",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "threshold",
+              type: "uint256",
+            },
+            {
+              internalType: "contract IAdapter[]",
+              name: "adapters",
+              type: "address[]",
+            },
+          ],
+          name: "checkHashWithThresholdFromAdapters",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "domain",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "id",
+              type: "uint256",
+            },
+            {
+              internalType: "contract IAdapter[]",
+              name: "adapters",
+              type: "address[]",
+            },
+          ],
+          name: "getHash",
+          outputs: [
+            {
+              internalType: "bytes32",
+              name: "hash",
+              type: "bytes32",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "domain",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "id",
+              type: "uint256",
+            },
+            {
+              internalType: "contract IAdapter",
+              name: "adapter",
+              type: "address",
+            },
+          ],
+          name: "getHashFromAdapter",
+          outputs: [
+            {
+              internalType: "bytes32",
+              name: "",
+              type: "bytes32",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "domain",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "id",
+              type: "uint256",
+            },
+            {
+              internalType: "contract IAdapter[]",
+              name: "adapters",
+              type: "address[]",
+            },
+          ],
+          name: "getHashesFromAdapters",
+          outputs: [
+            {
+              internalType: "bytes32[]",
+              name: "",
+              type: "bytes32[]",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+      ],
+      inheritedFunctions: {
+        checkHashWithThresholdFromAdapters: "contracts/interfaces/IHashi.sol",
+        getHash: "contracts/interfaces/IHashi.sol",
+        getHashFromAdapter: "contracts/interfaces/IHashi.sol",
+        getHashesFromAdapters: "contracts/interfaces/IHashi.sol",
+      },
+    },
+    HyperlaneAdapter: {
+      address: "0x6869B0EbdC183Ab4cFc297B32214B21A417E76B2",
+      abi: [
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "hyperlaneMailbox",
+              type: "address",
+            },
+            {
+              internalType: "contract IInterchainSecurityModule",
               name: "_securityModule",
               type: "address",
             },
@@ -3010,108 +3945,113 @@ const deployedContracts = {
           type: "constructor",
         },
         {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "blockNumber",
+              type: "uint256",
+            },
+            {
+              internalType: "bytes32",
+              name: "blockHash",
+              type: "bytes32",
+            },
+            {
+              internalType: "bytes32",
+              name: "storedBlockHash",
+              type: "bytes32",
+            },
+          ],
+          name: "ConflictingBlockHeader",
+          type: "error",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "length",
+              type: "uint256",
+            },
+          ],
+          name: "InvalidBlockHeaderLength",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "InvalidBlockHeaderRLP",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "UnauthorizedHyperlaneReceive",
+          type: "error",
+        },
+        {
           anonymous: false,
           inputs: [
             {
-              indexed: false,
+              indexed: true,
               internalType: "uint256",
-              name: "_vaultId",
+              name: "id",
               type: "uint256",
             },
             {
-              indexed: false,
-              internalType: "address",
-              name: "_address",
-              type: "address",
-            },
-            {
-              indexed: false,
-              internalType: "uint256",
-              name: "_quantity",
-              type: "uint256",
-            },
-            {
-              indexed: false,
-              internalType: "uint32",
-              name: "_chainId",
-              type: "uint32",
-            },
-            {
-              indexed: false,
-              internalType: "address",
-              name: "_contributor",
-              type: "address",
+              indexed: true,
+              internalType: "bytes32",
+              name: "hash",
+              type: "bytes32",
             },
           ],
-          name: "Deposit",
+          name: "HashStored",
           type: "event",
         },
         {
+          anonymous: false,
           inputs: [
             {
-              internalType: "uint256",
-              name: "",
-              type: "uint256",
+              indexed: true,
+              internalType: "address",
+              name: "previousOwner",
+              type: "address",
             },
             {
+              indexed: true,
               internalType: "address",
-              name: "",
+              name: "newOwner",
               type: "address",
             },
           ],
-          name: "accountContributionsPerVault",
-          outputs: [
-            {
-              internalType: "uint256",
-              name: "",
-              type: "uint256",
-            },
-          ],
-          stateMutability: "view",
-          type: "function",
+          name: "OwnershipTransferred",
+          type: "event",
         },
         {
+          anonymous: false,
           inputs: [
             {
-              internalType: "address",
-              name: "",
-              type: "address",
-            },
-          ],
-          name: "addressToToken",
-          outputs: [
-            {
-              internalType: "address",
-              name: "_address",
-              type: "address",
-            },
-            {
+              indexed: true,
               internalType: "uint256",
-              name: "_quantity",
+              name: "chainId",
               type: "uint256",
             },
             {
+              indexed: true,
               internalType: "uint32",
-              name: "_chainId",
+              name: "domain",
               type: "uint32",
             },
             {
-              internalType: "address",
-              name: "_contributor",
-              type: "address",
-            },
-            {
-              internalType: "address",
-              name: "_aggregator",
-              type: "address",
+              indexed: true,
+              internalType: "bytes32",
+              name: "reporter",
+              type: "bytes32",
             },
           ],
-          stateMutability: "view",
-          type: "function",
+          name: "ReporterSet",
+          type: "event",
         },
         {
           inputs: [],
-          name: "bridge",
+          name: "HYPERLANE_MAILBOX",
           outputs: [
             {
               internalType: "address",
@@ -3124,175 +4064,31 @@ const deployedContracts = {
         },
         {
           inputs: [],
-          name: "chainId",
+          name: "PROVIDER",
           outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
             {
               internalType: "uint32",
               name: "",
               type: "uint32",
             },
           ],
-          stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [
-            {
-              components: [
-                {
-                  internalType: "uint256",
-                  name: "vaultId",
-                  type: "uint256",
-                },
-                {
-                  components: [
-                    {
-                      internalType: "address",
-                      name: "_address",
-                      type: "address",
-                    },
-                    {
-                      internalType: "uint256",
-                      name: "_quantity",
-                      type: "uint256",
-                    },
-                    {
-                      internalType: "uint32",
-                      name: "_chainId",
-                      type: "uint32",
-                    },
-                    {
-                      internalType: "address",
-                      name: "_contributor",
-                      type: "address",
-                    },
-                    {
-                      internalType: "address",
-                      name: "_aggregator",
-                      type: "address",
-                    },
-                  ],
-                  internalType: "struct TokenQuantity[]",
-                  name: "tokens",
-                  type: "tuple[]",
-                },
-              ],
-              internalType: "struct DepositInfo",
-              name: "_depositInfo",
-              type: "tuple",
-            },
-          ],
-          name: "depositAndNotify",
-          outputs: [],
-          stateMutability: "payable",
-          type: "function",
-        },
-        {
-          inputs: [],
-          name: "getRequiredTokens",
+          name: "chainIds",
           outputs: [
-            {
-              components: [
-                {
-                  internalType: "address",
-                  name: "_address",
-                  type: "address",
-                },
-                {
-                  internalType: "uint256",
-                  name: "_quantity",
-                  type: "uint256",
-                },
-                {
-                  internalType: "uint32",
-                  name: "_chainId",
-                  type: "uint32",
-                },
-                {
-                  internalType: "address",
-                  name: "_contributor",
-                  type: "address",
-                },
-                {
-                  internalType: "address",
-                  name: "_aggregator",
-                  type: "address",
-                },
-              ],
-              internalType: "struct TokenQuantity[]",
-              name: "",
-              type: "tuple[]",
-            },
-          ],
-          stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [
             {
               internalType: "uint256",
-              name: "_vaultId",
+              name: "",
               type: "uint256",
-            },
-          ],
-          name: "getVault",
-          outputs: [
-            {
-              components: [
-                {
-                  components: [
-                    {
-                      internalType: "address",
-                      name: "_address",
-                      type: "address",
-                    },
-                    {
-                      internalType: "uint256",
-                      name: "_quantity",
-                      type: "uint256",
-                    },
-                    {
-                      internalType: "uint32",
-                      name: "_chainId",
-                      type: "uint32",
-                    },
-                    {
-                      internalType: "address",
-                      name: "_contributor",
-                      type: "address",
-                    },
-                    {
-                      internalType: "address",
-                      name: "_aggregator",
-                      type: "address",
-                    },
-                  ],
-                  internalType: "struct TokenQuantity[]",
-                  name: "_tokens",
-                  type: "tuple[]",
-                },
-                {
-                  internalType: "enum VaultState",
-                  name: "state",
-                  type: "uint8",
-                },
-              ],
-              internalType: "struct Vault",
-              name: "",
-              type: "tuple",
-            },
-          ],
-          stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [],
-          name: "getVaultStates",
-          outputs: [
-            {
-              internalType: "enum VaultState[]",
-              name: "",
-              type: "uint8[]",
             },
           ],
           stateMutability: "view",
@@ -3302,17 +4098,60 @@ const deployedContracts = {
           inputs: [
             {
               internalType: "uint32",
-              name: "_origin",
+              name: "",
+              type: "uint32",
+            },
+          ],
+          name: "enabledReporters",
+          outputs: [
+            {
+              internalType: "bytes32",
+              name: "",
+              type: "bytes32",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "domain",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "id",
+              type: "uint256",
+            },
+          ],
+          name: "getHash",
+          outputs: [
+            {
+              internalType: "bytes32",
+              name: "",
+              type: "bytes32",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint32",
+              name: "origin",
               type: "uint32",
             },
             {
               internalType: "bytes32",
-              name: "_sender",
+              name: "sender",
               type: "bytes32",
             },
             {
               internalType: "bytes",
-              name: "_message",
+              name: "message",
               type: "bytes",
             },
           ],
@@ -3323,50 +4162,11 @@ const deployedContracts = {
         },
         {
           inputs: [],
-          name: "mainChainLock",
+          name: "interchainSecurityModule",
           outputs: [
             {
-              internalType: "address",
+              internalType: "contract IInterchainSecurityModule",
               name: "",
-              type: "address",
-            },
-          ],
-          stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [
-            {
-              internalType: "uint256",
-              name: "",
-              type: "uint256",
-            },
-          ],
-          name: "requiredTokens",
-          outputs: [
-            {
-              internalType: "address",
-              name: "_address",
-              type: "address",
-            },
-            {
-              internalType: "uint256",
-              name: "_quantity",
-              type: "uint256",
-            },
-            {
-              internalType: "uint32",
-              name: "_chainId",
-              type: "uint32",
-            },
-            {
-              internalType: "address",
-              name: "_contributor",
-              type: "address",
-            },
-            {
-              internalType: "address",
-              name: "_aggregator",
               type: "address",
             },
           ],
@@ -3375,7 +4175,7 @@ const deployedContracts = {
         },
         {
           inputs: [],
-          name: "sideChainLock",
+          name: "owner",
           outputs: [
             {
               internalType: "address",
@@ -3390,26 +4190,89 @@ const deployedContracts = {
           inputs: [
             {
               internalType: "uint256",
-              name: "",
+              name: "chainId",
               type: "uint256",
             },
+            {
+              internalType: "bytes[]",
+              name: "blockHeaders",
+              type: "bytes[]",
+            },
           ],
-          name: "vaults",
+          name: "proveAncestralBlockHashes",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "renounceOwnership",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "securityModule",
           outputs: [
             {
-              internalType: "enum VaultState",
-              name: "state",
-              type: "uint8",
+              internalType: "contract IInterchainSecurityModule",
+              name: "",
+              type: "address",
             },
           ],
           stateMutability: "view",
           type: "function",
         },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "chainId",
+              type: "uint256",
+            },
+            {
+              internalType: "uint32",
+              name: "domain",
+              type: "uint32",
+            },
+            {
+              internalType: "bytes32",
+              name: "reporter",
+              type: "bytes32",
+            },
+          ],
+          name: "setReporterByChain",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "newOwner",
+              type: "address",
+            },
+          ],
+          name: "transferOwnership",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
       ],
-      inheritedFunctions: {},
+      inheritedFunctions: {
+        getHash: "contracts/adapeters/BlockHashAdapter.sol",
+        proveAncestralBlockHashes: "contracts/adapeters/BlockHashAdapter.sol",
+        owner: "@openzeppelin/contracts/access/Ownable.sol",
+        renounceOwnership: "@openzeppelin/contracts/access/Ownable.sol",
+        transferOwnership: "@openzeppelin/contracts/access/Ownable.sol",
+        handle:
+          "@hyperlane-xyz/core/contracts/interfaces/IMessageRecipient.sol",
+      },
     },
     Prover: {
-      address: "0x7B25401E9ce0714FF493d0cc679806B309F9cD19",
+      address: "0xD92444568f9676a6D6C6e632E1B00FD48CABabDb",
       abi: [
         {
           inputs: [
@@ -3563,9 +4426,19 @@ const deployedContracts = {
                   type: "uint256",
                 },
                 {
+                  internalType: "bytes",
+                  name: "blockHeader",
+                  type: "bytes",
+                },
+                {
                   internalType: "bytes32",
                   name: "storageRoot",
                   type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "accountProof",
+                  type: "bytes",
                 },
                 {
                   internalType: "bytes",
@@ -3573,7 +4446,7 @@ const deployedContracts = {
                   type: "bytes",
                 },
               ],
-              internalType: "struct IProver.Proof",
+              internalType: "struct Proof",
               name: "proof",
               type: "tuple",
             },
@@ -3624,7 +4497,7 @@ const deployedContracts = {
       inheritedFunctions: {},
     },
     SimpleERC20: {
-      address: "0x5e3eFC5b603d0AfD11f664d8d58DA94159247f60",
+      address: "0x97A1E783eE95F15A5205433Cd0224C7d91f63EBA",
       abi: [
         {
           inputs: [
@@ -3992,6 +4865,344 @@ const deployedContracts = {
         totalSupply: "@openzeppelin/contracts/token/ERC20/ERC20.sol",
         transfer: "@openzeppelin/contracts/token/ERC20/ERC20.sol",
         transferFrom: "@openzeppelin/contracts/token/ERC20/ERC20.sol",
+      },
+    },
+    Yaru: {
+      address: "0x802D794421799a23C21743745218b084E8203788",
+      abi: [
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "hashi",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "yaho_",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "sourceChainId",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "constructor",
+        },
+        {
+          inputs: [],
+          name: "CallFailed",
+          type: "error",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "chainId",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "expectedChainId",
+              type: "uint256",
+            },
+          ],
+          name: "InvalidToChainId",
+          type: "error",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "messageId",
+              type: "uint256",
+            },
+          ],
+          name: "MessageIdAlreadyExecuted",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "ThresholdNotMet",
+          type: "error",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "messageId",
+              type: "uint256",
+            },
+            {
+              components: [
+                {
+                  internalType: "uint256",
+                  name: "nonce",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "targetChainId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "threshold",
+                  type: "uint256",
+                },
+                {
+                  internalType: "address",
+                  name: "sender",
+                  type: "address",
+                },
+                {
+                  internalType: "address",
+                  name: "receiver",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes",
+                  name: "data",
+                  type: "bytes",
+                },
+                {
+                  internalType: "contract IReporter[]",
+                  name: "reporters",
+                  type: "address[]",
+                },
+                {
+                  internalType: "contract IAdapter[]",
+                  name: "adapters",
+                  type: "address[]",
+                },
+              ],
+              indexed: false,
+              internalType: "struct Message",
+              name: "message",
+              type: "tuple",
+            },
+          ],
+          name: "MessageExecuted",
+          type: "event",
+        },
+        {
+          inputs: [],
+          name: "HASHI",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "SOURCE_CHAIN_ID",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "YAHO",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              components: [
+                {
+                  internalType: "uint256",
+                  name: "nonce",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "targetChainId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "threshold",
+                  type: "uint256",
+                },
+                {
+                  internalType: "address",
+                  name: "sender",
+                  type: "address",
+                },
+                {
+                  internalType: "address",
+                  name: "receiver",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes",
+                  name: "data",
+                  type: "bytes",
+                },
+                {
+                  internalType: "contract IReporter[]",
+                  name: "reporters",
+                  type: "address[]",
+                },
+                {
+                  internalType: "contract IAdapter[]",
+                  name: "adapters",
+                  type: "address[]",
+                },
+              ],
+              internalType: "struct Message",
+              name: "message",
+              type: "tuple",
+            },
+          ],
+          name: "calculateMessageHash",
+          outputs: [
+            {
+              internalType: "bytes32",
+              name: "",
+              type: "bytes32",
+            },
+          ],
+          stateMutability: "pure",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "sourceChainId",
+              type: "uint256",
+            },
+            {
+              internalType: "address",
+              name: "dispatcherAddress",
+              type: "address",
+            },
+            {
+              internalType: "bytes32",
+              name: "messageHash",
+              type: "bytes32",
+            },
+          ],
+          name: "calculateMessageId",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "pure",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              components: [
+                {
+                  internalType: "uint256",
+                  name: "nonce",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "targetChainId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "threshold",
+                  type: "uint256",
+                },
+                {
+                  internalType: "address",
+                  name: "sender",
+                  type: "address",
+                },
+                {
+                  internalType: "address",
+                  name: "receiver",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes",
+                  name: "data",
+                  type: "bytes",
+                },
+                {
+                  internalType: "contract IReporter[]",
+                  name: "reporters",
+                  type: "address[]",
+                },
+                {
+                  internalType: "contract IAdapter[]",
+                  name: "adapters",
+                  type: "address[]",
+                },
+              ],
+              internalType: "struct Message[]",
+              name: "messages",
+              type: "tuple[]",
+            },
+          ],
+          name: "executeMessages",
+          outputs: [
+            {
+              internalType: "bytes[]",
+              name: "",
+              type: "bytes[]",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          name: "executed",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+      ],
+      inheritedFunctions: {
+        calculateMessageHash: "contracts/utils/MessageHashCalculator.sol",
+        calculateMessageId: "contracts/utils/MessageIdCalculator.sol",
+        executeMessages: "contracts/interfaces/IYaru.sol",
       },
     },
   },

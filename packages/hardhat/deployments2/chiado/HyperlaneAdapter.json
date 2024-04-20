@@ -1,0 +1,484 @@
+{
+  "address": "0x84827596bfd9d4e9f723d448c751d78fa506f386",
+  "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "hyperlaneMailbox",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "blockNumber",
+          "type": "uint256"
+        },
+        {
+          "internalType": "bytes32",
+          "name": "blockHash",
+          "type": "bytes32"
+        },
+        {
+          "internalType": "bytes32",
+          "name": "storedBlockHash",
+          "type": "bytes32"
+        }
+      ],
+      "name": "ConflictingBlockHeader",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "length",
+          "type": "uint256"
+        }
+      ],
+      "name": "InvalidBlockHeaderLength",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "InvalidBlockHeaderRLP",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "UnauthorizedHyperlaneReceive",
+      "type": "error"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "uint256",
+          "name": "id",
+          "type": "uint256"
+        },
+        {
+          "indexed": true,
+          "internalType": "bytes32",
+          "name": "hash",
+          "type": "bytes32"
+        }
+      ],
+      "name": "HashStored",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "previousOwner",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "newOwner",
+          "type": "address"
+        }
+      ],
+      "name": "OwnershipTransferred",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "uint256",
+          "name": "chainId",
+          "type": "uint256"
+        },
+        {
+          "indexed": true,
+          "internalType": "uint32",
+          "name": "domain",
+          "type": "uint32"
+        },
+        {
+          "indexed": true,
+          "internalType": "bytes32",
+          "name": "reporter",
+          "type": "bytes32"
+        }
+      ],
+      "name": "ReporterSet",
+      "type": "event"
+    },
+    {
+      "inputs": [],
+      "name": "HYPERLANE_MAILBOX",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "PROVIDER",
+      "outputs": [
+        {
+          "internalType": "string",
+          "name": "",
+          "type": "string"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint32",
+          "name": "",
+          "type": "uint32"
+        }
+      ],
+      "name": "chainIds",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint32",
+          "name": "",
+          "type": "uint32"
+        }
+      ],
+      "name": "enabledReporters",
+      "outputs": [
+        {
+          "internalType": "bytes32",
+          "name": "",
+          "type": "bytes32"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "domain",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "id",
+          "type": "uint256"
+        }
+      ],
+      "name": "getHash",
+      "outputs": [
+        {
+          "internalType": "bytes32",
+          "name": "",
+          "type": "bytes32"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint32",
+          "name": "origin",
+          "type": "uint32"
+        },
+        {
+          "internalType": "bytes32",
+          "name": "sender",
+          "type": "bytes32"
+        },
+        {
+          "internalType": "bytes",
+          "name": "message",
+          "type": "bytes"
+        }
+      ],
+      "name": "handle",
+      "outputs": [],
+      "stateMutability": "payable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "owner",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "chainId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "bytes[]",
+          "name": "blockHeaders",
+          "type": "bytes[]"
+        }
+      ],
+      "name": "proveAncestralBlockHashes",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "renounceOwnership",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "chainId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint32",
+          "name": "domain",
+          "type": "uint32"
+        },
+        {
+          "internalType": "bytes32",
+          "name": "reporter",
+          "type": "bytes32"
+        }
+      ],
+      "name": "setReporterByChain",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "newOwner",
+          "type": "address"
+        }
+      ],
+      "name": "transferOwnership",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "transactionHash": "0xcdc9bb617aa46cdf167af2868c6ee125038609e1ea7d5cb30a28ee24bae63527",
+  "receipt": {
+    "to": null,
+    "from": "0x2a1f5eb3e84e58e6f1e565306298b9de1273f203",
+    "contractAddress": "0x84827596bfd9d4e9f723d448c751d78fa506f386",
+    "transactionIndex": "0x0",
+    "gasUsed": "0xd0905",
+    "logsBloom": "0x00200000000000000000000000000000000000000000000000800000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000020000000000000000000800000000000000000000000000000000400000000000000060000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000020000000000000000000000200000000000000000400000000800000000000000000",
+    "blockHash": "0xb9766ffe1b40423c9b3d35df7102812bae18ef959945f29ad1aefc6c1f5cd366",
+    "transactionHash": "0xcdc9bb617aa46cdf167af2868c6ee125038609e1ea7d5cb30a28ee24bae63527",
+    "logs": [
+      {
+        "address": "0x84827596bfd9d4e9f723d448c751d78fa506f386",
+        "topics": [
+          "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0",
+          "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "0x0000000000000000000000002a1f5eb3e84e58e6f1e565306298b9de1273f203"
+        ],
+        "data": "0x",
+        "blockNumber": "0x8ed8a0",
+        "transactionHash": "0xcdc9bb617aa46cdf167af2868c6ee125038609e1ea7d5cb30a28ee24bae63527",
+        "transactionIndex": "0x0",
+        "blockHash": "0xb9766ffe1b40423c9b3d35df7102812bae18ef959945f29ad1aefc6c1f5cd366",
+        "logIndex": "0x0",
+        "removed": false
+      }
+    ],
+    "blockNumber": "0x8ed8a0",
+    "cumulativeGasUsed": "0xd0905",
+    "status": "0x1"
+  },
+  "args": [
+    "0xC946BF8e51E6861BEf8831a458cF174771a777F7"
+  ],
+  "numDeployments": 1,
+  "solcInputHash": "310df9762748bfe64aebb5ab3f6df0e5",
+  "metadata": "{\"compiler\":{\"version\":\"0.8.20+commit.a1b79de6\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"address\",\"name\":\"hyperlaneMailbox\",\"type\":\"address\"}],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"blockNumber\",\"type\":\"uint256\"},{\"internalType\":\"bytes32\",\"name\":\"blockHash\",\"type\":\"bytes32\"},{\"internalType\":\"bytes32\",\"name\":\"storedBlockHash\",\"type\":\"bytes32\"}],\"name\":\"ConflictingBlockHeader\",\"type\":\"error\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"length\",\"type\":\"uint256\"}],\"name\":\"InvalidBlockHeaderLength\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"InvalidBlockHeaderRLP\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"UnauthorizedHyperlaneReceive\",\"type\":\"error\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"id\",\"type\":\"uint256\"},{\"indexed\":true,\"internalType\":\"bytes32\",\"name\":\"hash\",\"type\":\"bytes32\"}],\"name\":\"HashStored\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"previousOwner\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"OwnershipTransferred\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"chainId\",\"type\":\"uint256\"},{\"indexed\":true,\"internalType\":\"uint32\",\"name\":\"domain\",\"type\":\"uint32\"},{\"indexed\":true,\"internalType\":\"bytes32\",\"name\":\"reporter\",\"type\":\"bytes32\"}],\"name\":\"ReporterSet\",\"type\":\"event\"},{\"inputs\":[],\"name\":\"HYPERLANE_MAILBOX\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"PROVIDER\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint32\",\"name\":\"\",\"type\":\"uint32\"}],\"name\":\"chainIds\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint32\",\"name\":\"\",\"type\":\"uint32\"}],\"name\":\"enabledReporters\",\"outputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"domain\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"id\",\"type\":\"uint256\"}],\"name\":\"getHash\",\"outputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint32\",\"name\":\"origin\",\"type\":\"uint32\"},{\"internalType\":\"bytes32\",\"name\":\"sender\",\"type\":\"bytes32\"},{\"internalType\":\"bytes\",\"name\":\"message\",\"type\":\"bytes\"}],\"name\":\"handle\",\"outputs\":[],\"stateMutability\":\"payable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"owner\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"chainId\",\"type\":\"uint256\"},{\"internalType\":\"bytes[]\",\"name\":\"blockHeaders\",\"type\":\"bytes[]\"}],\"name\":\"proveAncestralBlockHashes\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"renounceOwnership\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"chainId\",\"type\":\"uint256\"},{\"internalType\":\"uint32\",\"name\":\"domain\",\"type\":\"uint32\"},{\"internalType\":\"bytes32\",\"name\":\"reporter\",\"type\":\"bytes32\"}],\"name\":\"setReporterByChain\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"transferOwnership\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"events\":{\"HashStored(uint256,bytes32)\":{\"details\":\"Emitted when a hash is stored.\",\"params\":{\"hash\":\"- The stored hash as bytes32 values.\",\"id\":\"- The ID of the stored hash.\"}}},\"kind\":\"dev\",\"methods\":{\"getHash(uint256,uint256)\":{\"details\":\"Returns the hash for a given ID.\",\"params\":{\"domain\":\"- Identifier for the domain to query.\",\"id\":\"- Identifier for the ID to query.\"},\"returns\":{\"_0\":\"Bytes32 hash for the given ID on the given domain.\"}},\"owner()\":{\"details\":\"Returns the address of the current owner.\"},\"proveAncestralBlockHashes(uint256,bytes[])\":{\"details\":\"Proves and stores valid ancestral block hashes for a given chain ID.\",\"params\":{\"blockHeaders\":\"- The RLP encoded block headers to prove the hashes for.\",\"chainId\":\"- The ID of the chain to prove block hashes for.\"}},\"renounceOwnership()\":{\"details\":\"Leaves the contract without owner. It will not be possible to call `onlyOwner` functions anymore. Can only be called by the current owner. NOTE: Renouncing ownership will leave the contract without an owner, thereby removing any functionality that is only available to the owner.\"},\"transferOwnership(address)\":{\"details\":\"Transfers ownership of the contract to a new account (`newOwner`). Can only be called by the current owner.\"}},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{\"getHash(uint256,uint256)\":{\"notice\":\"MUST return bytes32(0) if the hash is not present.\"},\"proveAncestralBlockHashes(uint256,bytes[])\":{\"notice\":\"Block headers should be ordered by descending block number and should start with a known block header.\"}},\"version\":1}},\"settings\":{\"compilationTarget\":{\"contracts/adapeters/Hyperlane/HyperlaneAdapter.sol\":\"HyperlaneAdapter\"},\"evmVersion\":\"paris\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\",\"useLiteralContent\":true},\"optimizer\":{\"enabled\":true,\"runs\":1000},\"remappings\":[],\"viaIR\":true},\"sources\":{\"@hyperlane-xyz/core/contracts/interfaces/IInterchainSecurityModule.sol\":{\"content\":\"// SPDX-License-Identifier: MIT OR Apache-2.0\\npragma solidity >=0.6.11;\\n\\ninterface IInterchainSecurityModule {\\n    enum Types {\\n        UNUSED,\\n        ROUTING,\\n        AGGREGATION,\\n        LEGACY_MULTISIG,\\n        MERKLE_ROOT_MULTISIG,\\n        MESSAGE_ID_MULTISIG,\\n        NULL, // used with relayer carrying no metadata\\n        CCIP_READ\\n    }\\n\\n    /**\\n     * @notice Returns an enum that represents the type of security model\\n     * encoded by this ISM.\\n     * @dev Relayers infer how to fetch and format metadata.\\n     */\\n    function moduleType() external view returns (uint8);\\n\\n    /**\\n     * @notice Defines a security model responsible for verifying interchain\\n     * messages based on the provided metadata.\\n     * @param _metadata Off-chain metadata provided by a relayer, specific to\\n     * the security model encoded by the module (e.g. validator signatures)\\n     * @param _message Hyperlane encoded interchain message\\n     * @return True if the message was verified\\n     */\\n    function verify(\\n        bytes calldata _metadata,\\n        bytes calldata _message\\n    ) external returns (bool);\\n}\\n\\ninterface ISpecifiesInterchainSecurityModule {\\n    function interchainSecurityModule()\\n        external\\n        view\\n        returns (IInterchainSecurityModule);\\n}\\n\",\"keccak256\":\"0xd144a00a15eef18012f8dae28ca1a7d965012f88ff4a07382a172ae6e02811ce\",\"license\":\"MIT OR Apache-2.0\"},\"@hyperlane-xyz/core/contracts/interfaces/IMessageRecipient.sol\":{\"content\":\"// SPDX-License-Identifier: MIT OR Apache-2.0\\npragma solidity >=0.6.11;\\n\\ninterface IMessageRecipient {\\n    function handle(\\n        uint32 _origin,\\n        bytes32 _sender,\\n        bytes calldata _message\\n    ) external payable;\\n}\\n\",\"keccak256\":\"0x145e8332a91295a710deb3cb1ab689144262ef6ec66d9570c600b778e9dd964d\",\"license\":\"MIT OR Apache-2.0\"},\"@openzeppelin/contracts/access/Ownable.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\n// OpenZeppelin Contracts (last updated v4.7.0) (access/Ownable.sol)\\n\\npragma solidity ^0.8.0;\\n\\nimport \\\"../utils/Context.sol\\\";\\n\\n/**\\n * @dev Contract module which provides a basic access control mechanism, where\\n * there is an account (an owner) that can be granted exclusive access to\\n * specific functions.\\n *\\n * By default, the owner account will be the one that deploys the contract. This\\n * can later be changed with {transferOwnership}.\\n *\\n * This module is used through inheritance. It will make available the modifier\\n * `onlyOwner`, which can be applied to your functions to restrict their use to\\n * the owner.\\n */\\nabstract contract Ownable is Context {\\n    address private _owner;\\n\\n    event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);\\n\\n    /**\\n     * @dev Initializes the contract setting the deployer as the initial owner.\\n     */\\n    constructor() {\\n        _transferOwnership(_msgSender());\\n    }\\n\\n    /**\\n     * @dev Throws if called by any account other than the owner.\\n     */\\n    modifier onlyOwner() {\\n        _checkOwner();\\n        _;\\n    }\\n\\n    /**\\n     * @dev Returns the address of the current owner.\\n     */\\n    function owner() public view virtual returns (address) {\\n        return _owner;\\n    }\\n\\n    /**\\n     * @dev Throws if the sender is not the owner.\\n     */\\n    function _checkOwner() internal view virtual {\\n        require(owner() == _msgSender(), \\\"Ownable: caller is not the owner\\\");\\n    }\\n\\n    /**\\n     * @dev Leaves the contract without owner. It will not be possible to call\\n     * `onlyOwner` functions anymore. Can only be called by the current owner.\\n     *\\n     * NOTE: Renouncing ownership will leave the contract without an owner,\\n     * thereby removing any functionality that is only available to the owner.\\n     */\\n    function renounceOwnership() public virtual onlyOwner {\\n        _transferOwnership(address(0));\\n    }\\n\\n    /**\\n     * @dev Transfers ownership of the contract to a new account (`newOwner`).\\n     * Can only be called by the current owner.\\n     */\\n    function transferOwnership(address newOwner) public virtual onlyOwner {\\n        require(newOwner != address(0), \\\"Ownable: new owner is the zero address\\\");\\n        _transferOwnership(newOwner);\\n    }\\n\\n    /**\\n     * @dev Transfers ownership of the contract to a new account (`newOwner`).\\n     * Internal function without access restriction.\\n     */\\n    function _transferOwnership(address newOwner) internal virtual {\\n        address oldOwner = _owner;\\n        _owner = newOwner;\\n        emit OwnershipTransferred(oldOwner, newOwner);\\n    }\\n}\\n\",\"keccak256\":\"0xa94b34880e3c1b0b931662cb1c09e5dfa6662f31cba80e07c5ee71cd135c9673\",\"license\":\"MIT\"},\"@openzeppelin/contracts/utils/Context.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\n// OpenZeppelin Contracts v4.4.1 (utils/Context.sol)\\n\\npragma solidity ^0.8.0;\\n\\n/**\\n * @dev Provides information about the current execution context, including the\\n * sender of the transaction and its data. While these are generally available\\n * via msg.sender and msg.data, they should not be accessed in such a direct\\n * manner, since when dealing with meta-transactions the account sending and\\n * paying for execution may not be the actual sender (as far as an application\\n * is concerned).\\n *\\n * This contract is only required for intermediate, library-like contracts.\\n */\\nabstract contract Context {\\n    function _msgSender() internal view virtual returns (address) {\\n        return msg.sender;\\n    }\\n\\n    function _msgData() internal view virtual returns (bytes calldata) {\\n        return msg.data;\\n    }\\n}\\n\",\"keccak256\":\"0xe2e337e6dde9ef6b680e07338c493ebea1b5fd09b43424112868e9cc1706bca7\",\"license\":\"MIT\"},\"contracts/adapeters/Adapter.sol\":{\"content\":\"// SPDX-License-Identifier: LGPL-3.0-only\\npragma solidity ^0.8.20;\\n\\nimport { IAdapter } from \\\"../interfaces/IAdapter.sol\\\";\\n\\nabstract contract Adapter is IAdapter {\\n    mapping(uint256 => mapping(uint256 => bytes32)) private _hashes;\\n\\n    /// @inheritdoc IAdapter\\n    function getHash(uint256 domain, uint256 id) public view returns (bytes32) {\\n        return _hashes[domain][id];\\n    }\\n\\n    function _storeHashes(uint256 domain, uint256[] memory ids, bytes32[] memory hashes) internal {\\n        for (uint256 i = 0; i < ids.length; ) {\\n            _storeHash(domain, ids[i], hashes[i]);\\n            unchecked {\\n                ++i;\\n            }\\n        }\\n    }\\n\\n    function _storeHash(uint256 domain, uint256 id, bytes32 hash) internal {\\n        bytes32 currentHash = _hashes[domain][id];\\n        if (currentHash != hash) {\\n            _hashes[domain][id] = hash;\\n            emit HashStored(id, hash);\\n        }\\n    }\\n}\\n\",\"keccak256\":\"0x06ea7188d8900e768d2e272d25e11a9b851a9b10bab80ead24735aade5dd6644\",\"license\":\"LGPL-3.0-only\"},\"contracts/adapeters/BlockHashAdapter.sol\":{\"content\":\"// SPDX-License-Identifier: LGPL-3.0-only\\npragma solidity ^0.8.20;\\n\\nimport { RLPReader } from \\\"solidity-rlp/contracts/RLPReader.sol\\\";\\nimport { Adapter } from \\\"./Adapter.sol\\\";\\nimport { IBlockHashAdapter } from \\\"../interfaces/IBlockHashAdapter.sol\\\";\\n\\nabstract contract BlockHashAdapter is IBlockHashAdapter, Adapter {\\n    using RLPReader for RLPReader.RLPItem;\\n\\n    /// @inheritdoc IBlockHashAdapter\\n    function proveAncestralBlockHashes(uint256 chainId, bytes[] memory blockHeaders) external {\\n        for (uint256 i = 0; i < blockHeaders.length; i++) {\\n            RLPReader.RLPItem memory blockHeaderRLP = RLPReader.toRlpItem(blockHeaders[i]);\\n\\n            if (!blockHeaderRLP.isList()) revert InvalidBlockHeaderRLP();\\n\\n            RLPReader.RLPItem[] memory blockHeaderContent = blockHeaderRLP.toList();\\n\\n            // A block header should have between 15 and 17 elements (baseFee and withdrawalsRoot have been added later)\\n            if (blockHeaderContent.length < 15 || blockHeaderContent.length > 17)\\n                revert InvalidBlockHeaderLength(blockHeaderContent.length);\\n\\n            bytes32 blockParent = bytes32(blockHeaderContent[0].toUint());\\n            uint256 blockNumber = uint256(blockHeaderContent[8].toUint());\\n\\n            bytes32 blockHash = keccak256(blockHeaders[i]);\\n            bytes32 storedBlockHash = getHash(chainId, blockNumber);\\n\\n            if (blockHash != storedBlockHash) revert ConflictingBlockHeader(blockNumber, blockHash, storedBlockHash);\\n\\n            _storeHash(chainId, blockNumber - 1, blockParent);\\n        }\\n    }\\n}\\n\",\"keccak256\":\"0x7108e898c79499e13cfa255a6eb5ab19602a8200443da713d2bc60b89bde2598\",\"license\":\"LGPL-3.0-only\"},\"contracts/adapeters/Hyperlane/HyperlaneAdapter.sol\":{\"content\":\"// SPDX-License-Identifier: LGPL-3.0-only\\npragma solidity ^0.8.20;\\n\\nimport { Ownable } from \\\"@openzeppelin/contracts/access/Ownable.sol\\\";\\nimport { IMessageRecipient } from \\\"@hyperlane-xyz/core/contracts/interfaces/IMessageRecipient.sol\\\";\\nimport { IInterchainSecurityModule } from \\\"@hyperlane-xyz/core/contracts/interfaces/IInterchainSecurityModule.sol\\\";\\nimport { BlockHashAdapter } from \\\"../BlockHashAdapter.sol\\\";\\n\\ncontract HyperlaneAdapter is BlockHashAdapter, Ownable, IMessageRecipient {\\n    string public constant PROVIDER = \\\"hyperlane\\\";\\n\\n    address public immutable HYPERLANE_MAILBOX;\\n\\n    mapping(uint32 => bytes32) public enabledReporters;\\n    mapping(uint32 => uint256) public chainIds;\\n\\n    error UnauthorizedHyperlaneReceive();\\n\\n    event ReporterSet(uint256 indexed chainId, uint32 indexed domain, bytes32 indexed reporter);\\n\\n    constructor(address hyperlaneMailbox) {\\n        HYPERLANE_MAILBOX = hyperlaneMailbox;\\n    }\\n\\n    function handle(uint32 origin, bytes32 sender, bytes calldata message) external payable {\\n        if (msg.sender != HYPERLANE_MAILBOX || enabledReporters[origin] != sender)\\n            revert UnauthorizedHyperlaneReceive();\\n        uint256 sourceChainId = chainIds[origin];\\n        (uint256[] memory ids, bytes32[] memory hashes) = abi.decode(message, (uint256[], bytes32[]));\\n        _storeHashes(sourceChainId, ids, hashes);\\n    }\\n\\n    function setReporterByChain(uint256 chainId, uint32 domain, bytes32 reporter) external onlyOwner {\\n        enabledReporters[domain] = reporter;\\n        chainIds[domain] = chainId;\\n        emit ReporterSet(chainId, domain, reporter);\\n    }\\n}\\n\",\"keccak256\":\"0xf847d424db1b7bd8b31d295b232258719e2bf3fe9ee4ef3730377270a087054f\",\"license\":\"LGPL-3.0-only\"},\"contracts/interfaces/IAdapter.sol\":{\"content\":\"// SPDX-License-Identifier: LGPL-3.0-only\\npragma solidity ^0.8.0;\\n\\n/**\\n * @title IAdapter\\n */\\ninterface IAdapter {\\n    error ConflictingBlockHeader(uint256 blockNumber, bytes32 blockHash, bytes32 storedBlockHash);\\n    error InvalidBlockHeaderLength(uint256 length);\\n    error InvalidBlockHeaderRLP();\\n\\n    /**\\n     * @dev Emitted when a hash is stored.\\n     * @param id - The ID of the stored hash.\\n     * @param hash - The stored hash as bytes32 values.\\n     */\\n    event HashStored(uint256 indexed id, bytes32 indexed hash);\\n\\n    /**\\n     * @dev Returns the hash for a given ID.\\n     * @param domain - Identifier for the domain to query.\\n     * @param id - Identifier for the ID to query.\\n     * @return hash Bytes32 hash for the given ID on the given domain.\\n     * @notice MUST return bytes32(0) if the hash is not present.\\n     */\\n    function getHash(uint256 domain, uint256 id) external view returns (bytes32 hash);\\n}\\n\",\"keccak256\":\"0xc3c6fca20c390f619072fe34bde40b91ceca4bbd1627a892af627b2e10f8a38d\",\"license\":\"LGPL-3.0-only\"},\"contracts/interfaces/IBlockHashAdapter.sol\":{\"content\":\"// SPDX-License-Identifier: LGPL-3.0-only\\npragma solidity ^0.8.0;\\n\\nimport { IAdapter } from \\\"./IAdapter.sol\\\";\\n\\n/**\\n * @title IBlockHashAdapter\\n */\\ninterface IBlockHashAdapter is IAdapter {\\n    /**\\n     * @dev Proves and stores valid ancestral block hashes for a given chain ID.\\n     * @param chainId - The ID of the chain to prove block hashes for.\\n     * @param blockHeaders - The RLP encoded block headers to prove the hashes for.\\n     * @notice Block headers should be ordered by descending block number and should start with a known block header.\\n     */\\n    function proveAncestralBlockHashes(uint256 chainId, bytes[] memory blockHeaders) external;\\n}\\n\",\"keccak256\":\"0x460c447b1cb9483a912754a528396c2be7d90deaf5ab6b6063f8bdfae9274989\",\"license\":\"LGPL-3.0-only\"},\"solidity-rlp/contracts/RLPReader.sol\":{\"content\":\"// SPDX-License-Identifier: Apache-2.0\\n\\n/*\\n * @author Hamdi Allam hamdi.allam97@gmail.com\\n * Please reach out with any questions or concerns\\n */\\npragma solidity >=0.5.10 <0.9.0;\\n\\nlibrary RLPReader {\\n    uint8 constant STRING_SHORT_START = 0x80;\\n    uint8 constant STRING_LONG_START = 0xb8;\\n    uint8 constant LIST_SHORT_START = 0xc0;\\n    uint8 constant LIST_LONG_START = 0xf8;\\n    uint8 constant WORD_SIZE = 32;\\n\\n    struct RLPItem {\\n        uint256 len;\\n        uint256 memPtr;\\n    }\\n\\n    struct Iterator {\\n        RLPItem item; // Item that's being iterated over.\\n        uint256 nextPtr; // Position of the next item in the list.\\n    }\\n\\n    /*\\n     * @dev Returns the next element in the iteration. Reverts if it has not next element.\\n     * @param self The iterator.\\n     * @return The next element in the iteration.\\n     */\\n    function next(Iterator memory self) internal pure returns (RLPItem memory) {\\n        require(hasNext(self));\\n\\n        uint256 ptr = self.nextPtr;\\n        uint256 itemLength = _itemLength(ptr);\\n        self.nextPtr = ptr + itemLength;\\n\\n        return RLPItem(itemLength, ptr);\\n    }\\n\\n    /*\\n     * @dev Returns true if the iteration has more elements.\\n     * @param self The iterator.\\n     * @return true if the iteration has more elements.\\n     */\\n    function hasNext(Iterator memory self) internal pure returns (bool) {\\n        RLPItem memory item = self.item;\\n        return self.nextPtr < item.memPtr + item.len;\\n    }\\n\\n    /*\\n     * @param item RLP encoded bytes\\n     */\\n    function toRlpItem(bytes memory item) internal pure returns (RLPItem memory) {\\n        uint256 memPtr;\\n        assembly {\\n            memPtr := add(item, 0x20)\\n        }\\n\\n        return RLPItem(item.length, memPtr);\\n    }\\n\\n    /*\\n     * @dev Create an iterator. Reverts if item is not a list.\\n     * @param self The RLP item.\\n     * @return An 'Iterator' over the item.\\n     */\\n    function iterator(RLPItem memory self) internal pure returns (Iterator memory) {\\n        require(isList(self));\\n\\n        uint256 ptr = self.memPtr + _payloadOffset(self.memPtr);\\n        return Iterator(self, ptr);\\n    }\\n\\n    /*\\n     * @param the RLP item.\\n     */\\n    function rlpLen(RLPItem memory item) internal pure returns (uint256) {\\n        return item.len;\\n    }\\n\\n    /*\\n     * @param the RLP item.\\n     * @return (memPtr, len) pair: location of the item's payload in memory.\\n     */\\n    function payloadLocation(RLPItem memory item) internal pure returns (uint256, uint256) {\\n        uint256 offset = _payloadOffset(item.memPtr);\\n        uint256 memPtr = item.memPtr + offset;\\n        uint256 len = item.len - offset; // data length\\n        return (memPtr, len);\\n    }\\n\\n    /*\\n     * @param the RLP item.\\n     */\\n    function payloadLen(RLPItem memory item) internal pure returns (uint256) {\\n        (, uint256 len) = payloadLocation(item);\\n        return len;\\n    }\\n\\n    /*\\n     * @param the RLP item containing the encoded list.\\n     */\\n    function toList(RLPItem memory item) internal pure returns (RLPItem[] memory) {\\n        require(isList(item));\\n\\n        uint256 items = numItems(item);\\n        RLPItem[] memory result = new RLPItem[](items);\\n\\n        uint256 memPtr = item.memPtr + _payloadOffset(item.memPtr);\\n        uint256 dataLen;\\n        for (uint256 i = 0; i < items; i++) {\\n            dataLen = _itemLength(memPtr);\\n            result[i] = RLPItem(dataLen, memPtr);\\n            memPtr = memPtr + dataLen;\\n        }\\n\\n        return result;\\n    }\\n\\n    // @return indicator whether encoded payload is a list. negate this function call for isData.\\n    function isList(RLPItem memory item) internal pure returns (bool) {\\n        if (item.len == 0) return false;\\n\\n        uint8 byte0;\\n        uint256 memPtr = item.memPtr;\\n        assembly {\\n            byte0 := byte(0, mload(memPtr))\\n        }\\n\\n        if (byte0 < LIST_SHORT_START) return false;\\n        return true;\\n    }\\n\\n    /*\\n     * @dev A cheaper version of keccak256(toRlpBytes(item)) that avoids copying memory.\\n     * @return keccak256 hash of RLP encoded bytes.\\n     */\\n    function rlpBytesKeccak256(RLPItem memory item) internal pure returns (bytes32) {\\n        uint256 ptr = item.memPtr;\\n        uint256 len = item.len;\\n        bytes32 result;\\n        assembly {\\n            result := keccak256(ptr, len)\\n        }\\n        return result;\\n    }\\n\\n    /*\\n     * @dev A cheaper version of keccak256(toBytes(item)) that avoids copying memory.\\n     * @return keccak256 hash of the item payload.\\n     */\\n    function payloadKeccak256(RLPItem memory item) internal pure returns (bytes32) {\\n        (uint256 memPtr, uint256 len) = payloadLocation(item);\\n        bytes32 result;\\n        assembly {\\n            result := keccak256(memPtr, len)\\n        }\\n        return result;\\n    }\\n\\n    /** RLPItem conversions into data types **/\\n\\n    // @returns raw rlp encoding in bytes\\n    function toRlpBytes(RLPItem memory item) internal pure returns (bytes memory) {\\n        bytes memory result = new bytes(item.len);\\n        if (result.length == 0) return result;\\n\\n        uint256 ptr;\\n        assembly {\\n            ptr := add(0x20, result)\\n        }\\n\\n        copy(item.memPtr, ptr, item.len);\\n        return result;\\n    }\\n\\n    // any non-zero byte except \\\"0x80\\\" is considered true\\n    function toBoolean(RLPItem memory item) internal pure returns (bool) {\\n        require(item.len == 1);\\n        uint256 result;\\n        uint256 memPtr = item.memPtr;\\n        assembly {\\n            result := byte(0, mload(memPtr))\\n        }\\n\\n        // SEE Github Issue #5.\\n        // Summary: Most commonly used RLP libraries (i.e Geth) will encode\\n        // \\\"0\\\" as \\\"0x80\\\" instead of as \\\"0\\\". We handle this edge case explicitly\\n        // here.\\n        if (result == 0 || result == STRING_SHORT_START) {\\n            return false;\\n        } else {\\n            return true;\\n        }\\n    }\\n\\n    function toAddress(RLPItem memory item) internal pure returns (address) {\\n        // 1 byte for the length prefix\\n        require(item.len == 21);\\n\\n        return address(uint160(toUint(item)));\\n    }\\n\\n    function toUint(RLPItem memory item) internal pure returns (uint256) {\\n        require(item.len > 0 && item.len <= 33);\\n\\n        (uint256 memPtr, uint256 len) = payloadLocation(item);\\n\\n        uint256 result;\\n        assembly {\\n            result := mload(memPtr)\\n\\n            // shift to the correct location if neccesary\\n            if lt(len, 32) {\\n                result := div(result, exp(256, sub(32, len)))\\n            }\\n        }\\n\\n        return result;\\n    }\\n\\n    // enforces 32 byte length\\n    function toUintStrict(RLPItem memory item) internal pure returns (uint256) {\\n        // one byte prefix\\n        require(item.len == 33);\\n\\n        uint256 result;\\n        uint256 memPtr = item.memPtr + 1;\\n        assembly {\\n            result := mload(memPtr)\\n        }\\n\\n        return result;\\n    }\\n\\n    function toBytes(RLPItem memory item) internal pure returns (bytes memory) {\\n        require(item.len > 0);\\n\\n        (uint256 memPtr, uint256 len) = payloadLocation(item);\\n        bytes memory result = new bytes(len);\\n\\n        uint256 destPtr;\\n        assembly {\\n            destPtr := add(0x20, result)\\n        }\\n\\n        copy(memPtr, destPtr, len);\\n        return result;\\n    }\\n\\n    /*\\n     * Private Helpers\\n     */\\n\\n    // @return number of payload items inside an encoded list.\\n    function numItems(RLPItem memory item) private pure returns (uint256) {\\n        if (item.len == 0) return 0;\\n\\n        uint256 count = 0;\\n        uint256 currPtr = item.memPtr + _payloadOffset(item.memPtr);\\n        uint256 endPtr = item.memPtr + item.len;\\n        while (currPtr < endPtr) {\\n            currPtr = currPtr + _itemLength(currPtr); // skip over an item\\n            count++;\\n        }\\n\\n        return count;\\n    }\\n\\n    // @return entire rlp item byte length\\n    function _itemLength(uint256 memPtr) private pure returns (uint256) {\\n        uint256 itemLen;\\n        uint256 byte0;\\n        assembly {\\n            byte0 := byte(0, mload(memPtr))\\n        }\\n\\n        if (byte0 < STRING_SHORT_START) {\\n            itemLen = 1;\\n        } else if (byte0 < STRING_LONG_START) {\\n            itemLen = byte0 - STRING_SHORT_START + 1;\\n        } else if (byte0 < LIST_SHORT_START) {\\n            assembly {\\n                let byteLen := sub(byte0, 0xb7) // # of bytes the actual length is\\n                memPtr := add(memPtr, 1) // skip over the first byte\\n\\n                /* 32 byte word size */\\n                let dataLen := div(mload(memPtr), exp(256, sub(32, byteLen))) // right shifting to get the len\\n                itemLen := add(dataLen, add(byteLen, 1))\\n            }\\n        } else if (byte0 < LIST_LONG_START) {\\n            itemLen = byte0 - LIST_SHORT_START + 1;\\n        } else {\\n            assembly {\\n                let byteLen := sub(byte0, 0xf7)\\n                memPtr := add(memPtr, 1)\\n\\n                let dataLen := div(mload(memPtr), exp(256, sub(32, byteLen))) // right shifting to the correct length\\n                itemLen := add(dataLen, add(byteLen, 1))\\n            }\\n        }\\n\\n        return itemLen;\\n    }\\n\\n    // @return number of bytes until the data\\n    function _payloadOffset(uint256 memPtr) private pure returns (uint256) {\\n        uint256 byte0;\\n        assembly {\\n            byte0 := byte(0, mload(memPtr))\\n        }\\n\\n        if (byte0 < STRING_SHORT_START) {\\n            return 0;\\n        } else if (byte0 < STRING_LONG_START || (byte0 >= LIST_SHORT_START && byte0 < LIST_LONG_START)) {\\n            return 1;\\n        } else if (byte0 < LIST_SHORT_START) {\\n            // being explicit\\n            return byte0 - (STRING_LONG_START - 1) + 1;\\n        } else {\\n            return byte0 - (LIST_LONG_START - 1) + 1;\\n        }\\n    }\\n\\n    /*\\n     * @param src Pointer to source\\n     * @param dest Pointer to destination\\n     * @param len Amount of memory to copy from the source\\n     */\\n    function copy(uint256 src, uint256 dest, uint256 len) private pure {\\n        if (len == 0) return;\\n\\n        // copy as many word sizes as possible\\n        for (; len >= WORD_SIZE; len -= WORD_SIZE) {\\n            assembly {\\n                mstore(dest, mload(src))\\n            }\\n\\n            src += WORD_SIZE;\\n            dest += WORD_SIZE;\\n        }\\n\\n        if (len > 0) {\\n            // left over bytes. Mask is used to remove unwanted bytes from the word\\n            uint256 mask = 256**(WORD_SIZE - len) - 1;\\n            assembly {\\n                let srcpart := and(mload(src), not(mask)) // zero out src\\n                let destpart := and(mload(dest), mask) // retrieve the bytes\\n                mstore(dest, or(destpart, srcpart))\\n            }\\n        }\\n    }\\n}\\n\",\"keccak256\":\"0x3a44f2de3c752fa4f926f3fd4cad8338dab742484150c0d7d2f785409ed8db4d\",\"license\":\"Apache-2.0\"}},\"version\":1}",
+  "bytecode": "0x60a0346100af57601f610ed638819003918201601f19168301916001600160401b038311848410176100b4578084926020946040528339810103126100af57516001600160a01b039081811681036100af5760018054336001600160a01b03198216811790925560405193167f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0600080a3608052610e0b90816100cb823960805181818161028101526104d40152f35b600080fd5b634e487b7160e01b600052604160045260246000fdfe6080604052600436101561001257600080fd5b60003560e01c8062d34411146100c65780631b855044146100c157806356d5d475146100bc5780636558b681146100b7578063715018a6146100b25780638da5cb5b146100ad5780639c475207146100a8578063c751fbfb146100a3578063e53091b71461009e578063e81900a6146100995763f2fde38b1461009457600080fd5b610652565b610584565b6104f8565b6104b4565b61047d565b610456565b6103ea565b6103b3565b61022a565b6101dd565b610148565b634e487b7160e01b600052604160045260246000fd5b604051906040820182811067ffffffffffffffff82111761010157604052565b6100cb565b6040519190601f01601f1916820167ffffffffffffffff81118382101761010157604052565b67ffffffffffffffff811161010157601f01601f191660200190565b346101d85760003660031901126101d8576101616100e1565b6009815260207f68797065726c616e650000000000000000000000000000000000000000000000818301526040908151928184928352815191828285015260005b8381106101c2575050600083830185015250601f01601f19168101030190f35b81810183015187820187015286945082016101a2565b600080fd5b346101d85760403660031901126101d857600435600052600060205260406000206024356000526020526020604060002054604051908152f35b6004359063ffffffff821682036101d857565b60603660031901126101d85761023e610217565b60443567ffffffffffffffff8082116101d857366023830112156101d85781600401358181116101d85782019060248201903682116101d8576001600160a01b037f0000000000000000000000000000000000000000000000000000000000000000163314801590610393575b6103695763ffffffff600095168552602091600383526040858188205495031261034e5760248501358281116103655785019281604385011215610365576024840135936103006102fb8661056c565b610106565b9460448387838152019160051b8301019184831161036157604401905b8282106103525750505050604485013591821161034e5760246103459261034b960101610a4d565b91610aa3565b80f35b8580fd5b8135815290830190830161031d565b8980fd5b8680fd5b60046040517ff920c49e000000000000000000000000000000000000000000000000000000008152fd5b5063ffffffff8516600052600260205260243560406000205414156102ab565b346101d85760203660031901126101d85763ffffffff6103d1610217565b1660005260036020526020604060002054604051908152f35b346101d857600080600319360112610453576104046106f7565b806001600160a01b0360015473ffffffffffffffffffffffffffffffffffffffff198116600155167f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e08280a380f35b80fd5b346101d85760003660031901126101d85760206001600160a01b0360015416604051908152f35b346101d85760203660031901126101d85763ffffffff61049b610217565b1660005260026020526020604060002054604051908152f35b346101d85760003660031901126101d85760206040516001600160a01b037f0000000000000000000000000000000000000000000000000000000000000000168152f35b346101d85760603660031901126101d85760043560243563ffffffff81168091036101d857604435906105296106f7565b600092818452600260205282604085205560036020528060408520557f33650c025ba183d07fb1e4533c7f06438835fff96b46d07d6112ed2dda6149ba8480a480f35b67ffffffffffffffff81116101015760051b60200190565b346101d85760403660031901126101d857602467ffffffffffffffff81358181116101d857366023820112156101d8578060040135926105c66102fb8561056c565b9384938186528260208097019260051b850101933685116101d857838101925b8584106105fb576105f987600435610866565b005b83358381116101d857820190366043830112156101d85785820135906106236102fb8361012c565b828152604493368585830101116101d8578b8481969582966000940183860137830101528152019301926105e6565b346101d85760203660031901126101d8576004356001600160a01b0381168082036101d85761067f6106f7565b1561068d576105f99061074f565b608460405162461bcd60e51b815260206004820152602660248201527f4f776e61626c653a206e6577206f776e657220697320746865207a65726f206160448201527f64647265737300000000000000000000000000000000000000000000000000006064820152fd5b6001600160a01b0360015416330361070b57565b606460405162461bcd60e51b815260206004820152602060248201527f4f776e61626c653a2063616c6c6572206973206e6f7420746865206f776e65726044820152fd5b600154906001600160a01b03809116918273ffffffffffffffffffffffffffffffffffffffff19821617600155167f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0600080a3565b634e487b7160e01b600052601160045260246000fd5b60001981146107c95760010190565b6107a4565b634e487b7160e01b600052603260045260246000fd5b8051156107f15760200190565b6107ce565b8051600810156107f1576101200190565b80518210156107f15760209160051b010190565b6000198101919082116107c957565b60bf198101919082116107c957565b607f198101919082116107c957565b60f6198101919082116107c957565b60b6198101919082116107c957565b91909160005b83518110156109df576108886108828286610807565b51610af8565b61089861089482610c06565b1590565b6109b5576108a590610b3d565b8051600f811080156109ab575b61097857506108d56108c96108cf6108c9846107e4565b51610c2d565b926107f6565b6108df8387610807565b516020815191012061090e826108ff876000526000602052604060002090565b90600052602052604060002090565b54808203610939575050610934929161092961092f9261081b565b856109e5565b6107ba565b61086c565b6040517fc442fd2b0000000000000000000000000000000000000000000000000000000081526004810184905260248101929092526044820152606490fd5b6040517f9fd6e11c0000000000000000000000000000000000000000000000000000000081526004810191909152602490fd5b50601181116108b2565b60046040517fe4508b9f000000000000000000000000000000000000000000000000000000008152fd5b50509050565b6000818152806020526040812083825260205283604082205403610a0a575b50505050565b7f7c57815e36323391c63e53a2fe2969599eb6dbcf52484a3bd8909aef4a6704d7918152806020526040812083825260205283604082205580a338808080610a04565b9080601f830112156101d857813590610a686102fb8361056c565b9182938184526020808095019260051b8201019283116101d8578301905b828210610a94575050505090565b81358152908301908301610a86565b92919060005b8151811015610adb5780610ad5610ac260019385610807565b51610acd8387610807565b5190886109e5565b01610aa9565b5050509050565b610aea6100e1565b906000825260006020830152565b60006020610b046100e1565b82815201526020815191610b166100e1565b92835201602082015290565b90600182018092116107c957565b919082018092116107c957565b610b4681610c06565b156101d857610b5481610c8c565b610b606102fb8261056c565b81815291601f19610b708361056c565b0160005b818110610bef575050610b95602080920151610b8f81610d75565b90610b30565b6000905b838210610ba7575050505090565b610be381610bb7610be993610cee565b90610bc06100e1565b8281528187820152610bd2868a610807565b52610bdd8589610807565b50610b30565b916107ba565b90610b99565b602090610bfa610ae2565b82828801015201610b74565b805115610c2757602060c09101515160001a10610c2257600190565b600090565b50600090565b80518015159081610c80575b50156101d8576020810190610c4e8251610d75565b9151908282018092116107c957519182039182116107c957519060208110610c74575090565b6020036101000a900490565b60219150111538610c39565b805115610c275760009060208101908151610ca681610d75565b81018091116107c9579151905181018091116107c95791905b828110610ccc5750905090565b610cd581610cee565b81018091116107c957610ce890916107ba565b90610cbf565b805160001a906080821015610d0557505060015b90565b60b8821015610d205750610d1b610d0291610839565b610b22565b9060c0811015610d445760b51991600160b783602003016101000a91015104010190565b9060f8821015610d5b5750610d1b610d029161082a565b60010151602082900360f7016101000a90040160f5190190565b5160001a6080811015610d885750600090565b60b881108015610dbf575b15610d9e5750600190565b60c0811015610db357610d1b610d0291610857565b610d1b610d0291610848565b5060c08110158015610d93575060f88110610d9356fea2646970667358221220d74882bcfbfb503365471b9cd2106ebddec2e8496ae0b3ad1859dc695e47c2bd64736f6c63430008140033",
+  "deployedBytecode": "0x6080604052600436101561001257600080fd5b60003560e01c8062d34411146100c65780631b855044146100c157806356d5d475146100bc5780636558b681146100b7578063715018a6146100b25780638da5cb5b146100ad5780639c475207146100a8578063c751fbfb146100a3578063e53091b71461009e578063e81900a6146100995763f2fde38b1461009457600080fd5b610652565b610584565b6104f8565b6104b4565b61047d565b610456565b6103ea565b6103b3565b61022a565b6101dd565b610148565b634e487b7160e01b600052604160045260246000fd5b604051906040820182811067ffffffffffffffff82111761010157604052565b6100cb565b6040519190601f01601f1916820167ffffffffffffffff81118382101761010157604052565b67ffffffffffffffff811161010157601f01601f191660200190565b346101d85760003660031901126101d8576101616100e1565b6009815260207f68797065726c616e650000000000000000000000000000000000000000000000818301526040908151928184928352815191828285015260005b8381106101c2575050600083830185015250601f01601f19168101030190f35b81810183015187820187015286945082016101a2565b600080fd5b346101d85760403660031901126101d857600435600052600060205260406000206024356000526020526020604060002054604051908152f35b6004359063ffffffff821682036101d857565b60603660031901126101d85761023e610217565b60443567ffffffffffffffff8082116101d857366023830112156101d85781600401358181116101d85782019060248201903682116101d8576001600160a01b037f0000000000000000000000000000000000000000000000000000000000000000163314801590610393575b6103695763ffffffff600095168552602091600383526040858188205495031261034e5760248501358281116103655785019281604385011215610365576024840135936103006102fb8661056c565b610106565b9460448387838152019160051b8301019184831161036157604401905b8282106103525750505050604485013591821161034e5760246103459261034b960101610a4d565b91610aa3565b80f35b8580fd5b8135815290830190830161031d565b8980fd5b8680fd5b60046040517ff920c49e000000000000000000000000000000000000000000000000000000008152fd5b5063ffffffff8516600052600260205260243560406000205414156102ab565b346101d85760203660031901126101d85763ffffffff6103d1610217565b1660005260036020526020604060002054604051908152f35b346101d857600080600319360112610453576104046106f7565b806001600160a01b0360015473ffffffffffffffffffffffffffffffffffffffff198116600155167f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e08280a380f35b80fd5b346101d85760003660031901126101d85760206001600160a01b0360015416604051908152f35b346101d85760203660031901126101d85763ffffffff61049b610217565b1660005260026020526020604060002054604051908152f35b346101d85760003660031901126101d85760206040516001600160a01b037f0000000000000000000000000000000000000000000000000000000000000000168152f35b346101d85760603660031901126101d85760043560243563ffffffff81168091036101d857604435906105296106f7565b600092818452600260205282604085205560036020528060408520557f33650c025ba183d07fb1e4533c7f06438835fff96b46d07d6112ed2dda6149ba8480a480f35b67ffffffffffffffff81116101015760051b60200190565b346101d85760403660031901126101d857602467ffffffffffffffff81358181116101d857366023820112156101d8578060040135926105c66102fb8561056c565b9384938186528260208097019260051b850101933685116101d857838101925b8584106105fb576105f987600435610866565b005b83358381116101d857820190366043830112156101d85785820135906106236102fb8361012c565b828152604493368585830101116101d8578b8481969582966000940183860137830101528152019301926105e6565b346101d85760203660031901126101d8576004356001600160a01b0381168082036101d85761067f6106f7565b1561068d576105f99061074f565b608460405162461bcd60e51b815260206004820152602660248201527f4f776e61626c653a206e6577206f776e657220697320746865207a65726f206160448201527f64647265737300000000000000000000000000000000000000000000000000006064820152fd5b6001600160a01b0360015416330361070b57565b606460405162461bcd60e51b815260206004820152602060248201527f4f776e61626c653a2063616c6c6572206973206e6f7420746865206f776e65726044820152fd5b600154906001600160a01b03809116918273ffffffffffffffffffffffffffffffffffffffff19821617600155167f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0600080a3565b634e487b7160e01b600052601160045260246000fd5b60001981146107c95760010190565b6107a4565b634e487b7160e01b600052603260045260246000fd5b8051156107f15760200190565b6107ce565b8051600810156107f1576101200190565b80518210156107f15760209160051b010190565b6000198101919082116107c957565b60bf198101919082116107c957565b607f198101919082116107c957565b60f6198101919082116107c957565b60b6198101919082116107c957565b91909160005b83518110156109df576108886108828286610807565b51610af8565b61089861089482610c06565b1590565b6109b5576108a590610b3d565b8051600f811080156109ab575b61097857506108d56108c96108cf6108c9846107e4565b51610c2d565b926107f6565b6108df8387610807565b516020815191012061090e826108ff876000526000602052604060002090565b90600052602052604060002090565b54808203610939575050610934929161092961092f9261081b565b856109e5565b6107ba565b61086c565b6040517fc442fd2b0000000000000000000000000000000000000000000000000000000081526004810184905260248101929092526044820152606490fd5b6040517f9fd6e11c0000000000000000000000000000000000000000000000000000000081526004810191909152602490fd5b50601181116108b2565b60046040517fe4508b9f000000000000000000000000000000000000000000000000000000008152fd5b50509050565b6000818152806020526040812083825260205283604082205403610a0a575b50505050565b7f7c57815e36323391c63e53a2fe2969599eb6dbcf52484a3bd8909aef4a6704d7918152806020526040812083825260205283604082205580a338808080610a04565b9080601f830112156101d857813590610a686102fb8361056c565b9182938184526020808095019260051b8201019283116101d8578301905b828210610a94575050505090565b81358152908301908301610a86565b92919060005b8151811015610adb5780610ad5610ac260019385610807565b51610acd8387610807565b5190886109e5565b01610aa9565b5050509050565b610aea6100e1565b906000825260006020830152565b60006020610b046100e1565b82815201526020815191610b166100e1565b92835201602082015290565b90600182018092116107c957565b919082018092116107c957565b610b4681610c06565b156101d857610b5481610c8c565b610b606102fb8261056c565b81815291601f19610b708361056c565b0160005b818110610bef575050610b95602080920151610b8f81610d75565b90610b30565b6000905b838210610ba7575050505090565b610be381610bb7610be993610cee565b90610bc06100e1565b8281528187820152610bd2868a610807565b52610bdd8589610807565b50610b30565b916107ba565b90610b99565b602090610bfa610ae2565b82828801015201610b74565b805115610c2757602060c09101515160001a10610c2257600190565b600090565b50600090565b80518015159081610c80575b50156101d8576020810190610c4e8251610d75565b9151908282018092116107c957519182039182116107c957519060208110610c74575090565b6020036101000a900490565b60219150111538610c39565b805115610c275760009060208101908151610ca681610d75565b81018091116107c9579151905181018091116107c95791905b828110610ccc5750905090565b610cd581610cee565b81018091116107c957610ce890916107ba565b90610cbf565b805160001a906080821015610d0557505060015b90565b60b8821015610d205750610d1b610d0291610839565b610b22565b9060c0811015610d445760b51991600160b783602003016101000a91015104010190565b9060f8821015610d5b5750610d1b610d029161082a565b60010151602082900360f7016101000a90040160f5190190565b5160001a6080811015610d885750600090565b60b881108015610dbf575b15610d9e5750600190565b60c0811015610db357610d1b610d0291610857565b610d1b610d0291610848565b5060c08110158015610d93575060f88110610d9356fea2646970667358221220d74882bcfbfb503365471b9cd2106ebddec2e8496ae0b3ad1859dc695e47c2bd64736f6c63430008140033",
+  "devdoc": {
+    "events": {
+      "HashStored(uint256,bytes32)": {
+        "details": "Emitted when a hash is stored.",
+        "params": {
+          "hash": "- The stored hash as bytes32 values.",
+          "id": "- The ID of the stored hash."
+        }
+      }
+    },
+    "kind": "dev",
+    "methods": {
+      "getHash(uint256,uint256)": {
+        "details": "Returns the hash for a given ID.",
+        "params": {
+          "domain": "- Identifier for the domain to query.",
+          "id": "- Identifier for the ID to query."
+        },
+        "returns": {
+          "_0": "Bytes32 hash for the given ID on the given domain."
+        }
+      },
+      "owner()": {
+        "details": "Returns the address of the current owner."
+      },
+      "proveAncestralBlockHashes(uint256,bytes[])": {
+        "details": "Proves and stores valid ancestral block hashes for a given chain ID.",
+        "params": {
+          "blockHeaders": "- The RLP encoded block headers to prove the hashes for.",
+          "chainId": "- The ID of the chain to prove block hashes for."
+        }
+      },
+      "renounceOwnership()": {
+        "details": "Leaves the contract without owner. It will not be possible to call `onlyOwner` functions anymore. Can only be called by the current owner. NOTE: Renouncing ownership will leave the contract without an owner, thereby removing any functionality that is only available to the owner."
+      },
+      "transferOwnership(address)": {
+        "details": "Transfers ownership of the contract to a new account (`newOwner`). Can only be called by the current owner."
+      }
+    },
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {
+      "getHash(uint256,uint256)": {
+        "notice": "MUST return bytes32(0) if the hash is not present."
+      },
+      "proveAncestralBlockHashes(uint256,bytes[])": {
+        "notice": "Block headers should be ordered by descending block number and should start with a known block header."
+      }
+    },
+    "version": 1
+  },
+  "storageLayout": {
+    "storage": [
+      {
+        "astId": 4737,
+        "contract": "contracts/adapeters/Hyperlane/HyperlaneAdapter.sol:HyperlaneAdapter",
+        "label": "_hashes",
+        "offset": 0,
+        "slot": "0",
+        "type": "t_mapping(t_uint256,t_mapping(t_uint256,t_bytes32))"
+      },
+      {
+        "astId": 354,
+        "contract": "contracts/adapeters/Hyperlane/HyperlaneAdapter.sol:HyperlaneAdapter",
+        "label": "_owner",
+        "offset": 0,
+        "slot": "1",
+        "type": "t_address"
+      },
+      {
+        "astId": 4992,
+        "contract": "contracts/adapeters/Hyperlane/HyperlaneAdapter.sol:HyperlaneAdapter",
+        "label": "enabledReporters",
+        "offset": 0,
+        "slot": "2",
+        "type": "t_mapping(t_uint32,t_bytes32)"
+      },
+      {
+        "astId": 4996,
+        "contract": "contracts/adapeters/Hyperlane/HyperlaneAdapter.sol:HyperlaneAdapter",
+        "label": "chainIds",
+        "offset": 0,
+        "slot": "3",
+        "type": "t_mapping(t_uint32,t_uint256)"
+      }
+    ],
+    "types": {
+      "t_address": {
+        "encoding": "inplace",
+        "label": "address",
+        "numberOfBytes": "20"
+      },
+      "t_bytes32": {
+        "encoding": "inplace",
+        "label": "bytes32",
+        "numberOfBytes": "32"
+      },
+      "t_mapping(t_uint256,t_bytes32)": {
+        "encoding": "mapping",
+        "key": "t_uint256",
+        "label": "mapping(uint256 => bytes32)",
+        "numberOfBytes": "32",
+        "value": "t_bytes32"
+      },
+      "t_mapping(t_uint256,t_mapping(t_uint256,t_bytes32))": {
+        "encoding": "mapping",
+        "key": "t_uint256",
+        "label": "mapping(uint256 => mapping(uint256 => bytes32))",
+        "numberOfBytes": "32",
+        "value": "t_mapping(t_uint256,t_bytes32)"
+      },
+      "t_mapping(t_uint32,t_bytes32)": {
+        "encoding": "mapping",
+        "key": "t_uint32",
+        "label": "mapping(uint32 => bytes32)",
+        "numberOfBytes": "32",
+        "value": "t_bytes32"
+      },
+      "t_mapping(t_uint32,t_uint256)": {
+        "encoding": "mapping",
+        "key": "t_uint32",
+        "label": "mapping(uint32 => uint256)",
+        "numberOfBytes": "32",
+        "value": "t_uint256"
+      },
+      "t_uint256": {
+        "encoding": "inplace",
+        "label": "uint256",
+        "numberOfBytes": "32"
+      },
+      "t_uint32": {
+        "encoding": "inplace",
+        "label": "uint32",
+        "numberOfBytes": "4"
+      }
+    }
+  }
+}

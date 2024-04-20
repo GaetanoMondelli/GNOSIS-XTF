@@ -1,0 +1,147 @@
+{
+  "address": "0x8150e11c6dbca3b76Bb25B38ECbD05855C88a07b",
+  "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "targetChainId",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    },
+    {
+      "inputs": [],
+      "name": "BROADCAST_CHAIN_ID",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "TARGET_CHAIN_ID",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes",
+          "name": "data",
+          "type": "bytes"
+        }
+      ],
+      "name": "_generateCommitment",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "latestCommitment",
+      "outputs": [
+        {
+          "internalType": "bytes32",
+          "name": "",
+          "type": "bytes32"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "nonce",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "transactionHash": "0x0d24aa5ee6a4db3a3b4658ce25d45a1b396e38ef8c4baa681d4f6d3a69367bca",
+  "receipt": {
+    "to": null,
+    "from": "0x2a1F5eB3e84e58e6F1e565306298B9dE1273f203",
+    "contractAddress": "0x8150e11c6dbca3b76Bb25B38ECbD05855C88a07b",
+    "transactionIndex": 93,
+    "gasUsed": "186273",
+    "logsBloom": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+    "blockHash": "0xd8e4f62c0dfce16c3b37cb331cff0c788d37831d0bd833630c4fdb0863218266",
+    "transactionHash": "0x0d24aa5ee6a4db3a3b4658ce25d45a1b396e38ef8c4baa681d4f6d3a69367bca",
+    "logs": [],
+    "blockNumber": 5740891,
+    "cumulativeGasUsed": "19922550",
+    "status": 1,
+    "byzantium": true
+  },
+  "args": [
+    11155111
+  ],
+  "numDeployments": 2,
+  "solcInputHash": "d4c7dc3614266a7d36c7aa07c2214cec",
+  "metadata": "{\"compiler\":{\"version\":\"0.8.20+commit.a1b79de6\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"targetChainId\",\"type\":\"uint256\"}],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"inputs\":[],\"name\":\"BROADCAST_CHAIN_ID\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"TARGET_CHAIN_ID\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes\",\"name\":\"data\",\"type\":\"bytes\"}],\"name\":\"_generateCommitment\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"latestCommitment\",\"outputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"nonce\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"contracts/Committer.sol\":\"Committer\"},\"evmVersion\":\"paris\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\",\"useLiteralContent\":true},\"optimizer\":{\"enabled\":true,\"runs\":1000},\"remappings\":[],\"viaIR\":true},\"sources\":{\"contracts/Committer.sol\":{\"content\":\"//SPDX-License-Identifier: MIT\\n\\npragma solidity ^0.8.20;\\n\\ncontract Committer {\\n    bytes32 public latestCommitment;\\n    uint256 public nonce;\\n    uint256 public immutable TARGET_CHAIN_ID;\\n    uint256 public constant BROADCAST_CHAIN_ID = 0;\\n\\n    constructor(uint256 targetChainId) {\\n        TARGET_CHAIN_ID = targetChainId;\\n    }\\n\\n    function _generateCommitment(bytes memory data) public {\\n        uint256 currentNonce = nonce;\\n        bytes32 commitment = keccak256(abi.encode(BROADCAST_CHAIN_ID, data, currentNonce));\\n        latestCommitment = commitment;\\n        unchecked {\\n            ++nonce;\\n        }\\n    }\\n}\",\"keccak256\":\"0x6dcdcd7313b4beedc85304c873e903dada7fd18d7d7d1f9c7d2bc1119abd56a7\",\"license\":\"MIT\"}},\"version\":1}",
+  "bytecode": "0x60a03461005957601f6102d638819003918201601f19168301916001600160401b0383118484101761005e5780849260209460405283398101031261005957516080526040516102619081610075823960805181606f0152f35b600080fd5b634e487b7160e01b600052604160045260246000fdfe60806040818152600436101561001457600080fd5b600091823560e01c9081633ae7538c146101da575080636268acb2146101be5780639336bd37146100b4578063affed0e0146100965763c940baf81461005957600080fd5b34610092578160031936011261009257602090517f00000000000000000000000000000000000000000000000000000000000000008152f35b5080fd5b50346100925781600319360112610092576020906001549051908152f35b5090346101bb57602080600319360112610092576004359267ffffffffffffffff918285116101b757366023860112156101b75784600401359283116101a357815192601f199561010c8388601f85011601866101f3565b818552366024838301011161019f578186926024859301838801378501015260015492825191606081840194878652840152815191826080850152865b83811061018b5750505060a0828697601f846001998561017f9786010152886060850152011681010360808101845201826101f3565b51902083550160015580f35b81810183015185820160a001528201610149565b8580fd5b602484634e487b7160e01b81526041600452fd5b8380fd5b80fd5b5034610092578160031936011261009257602091549051908152f35b8390346100925781600319360112610092576020918152f35b90601f8019910116810190811067ffffffffffffffff82111761021557604052565b634e487b7160e01b600052604160045260246000fdfea2646970667358221220f7535f4a61eb534a1fe3ee42a9eab7d0edb12770bb5e3f75946997f31cb6314264736f6c63430008140033",
+  "deployedBytecode": "0x60806040818152600436101561001457600080fd5b600091823560e01c9081633ae7538c146101da575080636268acb2146101be5780639336bd37146100b4578063affed0e0146100965763c940baf81461005957600080fd5b34610092578160031936011261009257602090517f00000000000000000000000000000000000000000000000000000000000000008152f35b5080fd5b50346100925781600319360112610092576020906001549051908152f35b5090346101bb57602080600319360112610092576004359267ffffffffffffffff918285116101b757366023860112156101b75784600401359283116101a357815192601f199561010c8388601f85011601866101f3565b818552366024838301011161019f578186926024859301838801378501015260015492825191606081840194878652840152815191826080850152865b83811061018b5750505060a0828697601f846001998561017f9786010152886060850152011681010360808101845201826101f3565b51902083550160015580f35b81810183015185820160a001528201610149565b8580fd5b602484634e487b7160e01b81526041600452fd5b8380fd5b80fd5b5034610092578160031936011261009257602091549051908152f35b8390346100925781600319360112610092576020918152f35b90601f8019910116810190811067ffffffffffffffff82111761021557604052565b634e487b7160e01b600052604160045260246000fdfea2646970667358221220f7535f4a61eb534a1fe3ee42a9eab7d0edb12770bb5e3f75946997f31cb6314264736f6c63430008140033",
+  "devdoc": {
+    "kind": "dev",
+    "methods": {},
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "version": 1
+  },
+  "storageLayout": {
+    "storage": [
+      {
+        "astId": 3,
+        "contract": "contracts/Committer.sol:Committer",
+        "label": "latestCommitment",
+        "offset": 0,
+        "slot": "0",
+        "type": "t_bytes32"
+      },
+      {
+        "astId": 5,
+        "contract": "contracts/Committer.sol:Committer",
+        "label": "nonce",
+        "offset": 0,
+        "slot": "1",
+        "type": "t_uint256"
+      }
+    ],
+    "types": {
+      "t_bytes32": {
+        "encoding": "inplace",
+        "label": "bytes32",
+        "numberOfBytes": "32"
+      },
+      "t_uint256": {
+        "encoding": "inplace",
+        "label": "uint256",
+        "numberOfBytes": "32"
+      }
+    }
+  }
+}

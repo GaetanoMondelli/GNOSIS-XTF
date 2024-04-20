@@ -1,25 +1,91 @@
 import { HardhatRuntimeEnvironment } from "hardhat/types";
 import { DeployFunction } from "hardhat-deploy/types";
-// import { RapidExample } from "../typechain-types";
-import { Contract } from "@ethersproject/contracts";
-// import { WrapperBuilder } from "@redstone-finance/evm-connector";
-import * as Committer_ARTIFACTS from "../deployments/sepolia/Committer.json";
-import { JsonRpcProvider } from "@ethersproject/providers";
-import { Wallet } from "@ethersproject/wallet";
+import { RLP } from "@ethereumjs/rlp";
+import { Trie } from "@ethereumjs/trie";
 import { defaultAbiCoder } from "@ethersproject/abi";
-import { hexlify, hexZeroPad } from "@ethersproject/bytes";
+import { hexlify } from "@ethersproject/bytes";
 import { keccak256 } from "@ethersproject/keccak256";
 
 import { Committer, Prover } from "../typechain-types";
 
-function getMappingSlot(key: any, slotNumber: any) {
-  const keyPadded = hexZeroPad(key, 32); // Pad the key to 32 bytes
-  const slotHex = hexZeroPad(hexlify(slotNumber), 32); // Slot number also padded to 32 bytes
-  const res = keccak256(keyPadded + slotHex.slice(2)); // Remove '0x' from slotHex
-  console.log("Slot hash:", res);
-  return res; // Remove '0x' from slotHex
+export function padToEven(value: string): string {
+  let a = value;
+
+  if (typeof a !== "string") {
+    throw new Error(`[padToEven] value must be type 'string', received ${typeof a}`);
+  }
+
+  if (a.length % 2) a = `0${a}`;
+
+  return a;
 }
 
+const hexToBytes = (hex: string): Uint8Array => {
+  if (typeof hex !== "string") {
+    throw new Error(`hex argument type ${typeof hex} must be of type string`);
+  }
+
+  if (!hex.startsWith("0x")) {
+    throw new Error(`prefixed hex input should start with 0x, got ${hex.substring(0, 2)}`);
+  }
+
+  hex = hex.slice(2);
+
+  if (hex.length % 2 !== 0) {
+    hex = padToEven(hex);
+  }
+
+  const byteLen = hex.length / 2;
+  const bytes = new Uint8Array(byteLen);
+  for (let i = 0; i < byteLen; i++) {
+    const byte = parseInt(hex.slice(i * 2, (i + 1) * 2), 16);
+    bytes[i] = byte;
+  }
+  return bytes;
+};
+
+const emptyHexlify = (_value: string) => {
+  const hex = hexlify(_value, { hexPad: "left" });
+  return hex === "0x00" ? "0x" : hex;
+};
+
+const rlpEncodeBlock = (_block: any) => {
+  const values = [
+    _block.parentHash,
+    _block.sha3Uncles,
+    _block.miner,
+    _block.stateRoot,
+    _block.transactionsRoot,
+    _block.receiptsRoot,
+    _block.logsBloom,
+    _block.difficulty,
+    _block.number,
+    _block.gasLimit,
+    _block.gasUsed,
+    _block.timestamp,
+    _block.extraData,
+    _block.mixHash,
+    _block.nonce,
+    _block.baseFeePerGas,
+  ];
+  return RLP.encode(values.map(emptyHexlify));
+};
+
+// function getMappingSlot(key: any, slotNumber: any) {
+//   const keyPadded = hexZeroPad(key, 32); // Pad the key to 32 bytes
+//   const slotHex = hexZeroPad(hexlify(slotNumber), 32); // Slot number also padded to 32 bytes
+//   const res = keccak256(keyPadded + slotHex.slice(2)); // Remove '0x' from slotHex
+//   console.log("Slot hash:", res);
+//   return res; // Remove '0x' from slotHex
+// }
+
+const getBlock = (_blockNumber: number, _hre: HardhatRuntimeEnvironment) =>
+  _hre.ethers.provider.send("eth_getBlockByNumber", [hexlify(_blockNumber), false]);
+
+const getRlpEncodedBlockHeaderByBlockNumber = async (_blockNumber: number, _hre: HardhatRuntimeEnvironment) => {
+  const block = await getBlock(_blockNumber, _hre);
+  return rlpEncodeBlock(block);
+};
 /**
  * Deploys a contract named "YourContract" using the deployer account and
  * constructor arguments set to the deployer address
@@ -98,9 +164,9 @@ const deployYourContract: DeployFunction = async function (hre: HardhatRuntimeEn
 
     console.log("Expected value:", expectedValue);
 
-    const block = await provider.getBlock(txReceipt?.blockHash || "");
+    const blockData = await provider.getBlock(txReceipt?.blockHash || "");
 
-    console.log("Block data:", block);
+    console.log("Block data:", blockData);
 
     const storageProofBytes = "0x" + proof?.storageProof[0].proof.map((s: any) => s.slice(2)).join("");
 
@@ -108,15 +174,66 @@ const deployYourContract: DeployFunction = async function (hre: HardhatRuntimeEn
 
     console.log("Storage proof bytes:", storageProofBytes, proof?.storageHash);
 
-    const proofObject = {
-      blockNumber: txReceipt?.blockNumber || 0,
-      nonce: nonce,
-      storageRoot: proof?.storageHash,
-      storageProof: storageProofBytes,
-    };
+    // const proofObject = {
+    //   blockNumber: txReceipt?.blockNumber || 0,
+    //   nonce: nonce,
+    //   storageRoot: proof?.storageHash,
+    //   storageProof: storageProofBytes,
+    // };
 
     //   accountProof: proof?.accountProof || [],
-    await proverContract._verifyProof(proofObject, data);
+    // await proverContract._verifyProof(proofObject, data);
+
+    const block = await getBlock(txReceipt?.blockNumber || 0, hre);
+    const blockHeader = await getRlpEncodedBlockHeaderByBlockNumber(txReceipt?.blockNumber || 0, hre);
+    console.log("Block header:", blockHeader);
+
+    const accountsTrie = new Trie();
+    const accountProofValueRlp = await accountsTrie.verifyProof(
+      hexToBytes(block.stateRoot),
+      hexToBytes(keccak256(address)),
+      proof.accountProof.map(hexToBytes),
+    );
+
+    console.log("Account proof value RLP:", accountProofValueRlp);
+
+    // const accounValueRlp = RLP.encode([
+    //   hexToBytes(proof.nonce),
+    //   hexToBytes("0x"),
+    //   hexToBytes(proof.storageHash),
+    //   hexToBytes(proof.codeHash),
+    // ]);
+
+    // SecureTrie
+    const storageTrie = new Trie({ useKeyHashing: true });
+    const storageProofValueRlp = await storageTrie.verifyProof(
+      hexToBytes(proof.storageHash),
+      hexToBytes("0x"),
+      proof?.storageProof[0].proof.map(hexToBytes),
+    );
+
+    const proofData = {
+      blockNumber: txReceipt?.blockNumber || 0,
+      accountProof: proof.accountProof,
+      storageProof: proof.storageProof,
+      accountProofRlp: RLP.encode(proof.accountProof.map((_part: string) => RLP.decode(_part))),
+      blockHeader,
+      storageProofRlp: RLP.encode(proof.storageProof[0].proof.map((_part: string) => RLP.decode(_part))),
+    };
+
+    const proofObject = {
+      blockNumber: txReceipt?.blockNumber || 0,
+      blockHeader: blockHeader,
+      accountProof: proofData.accountProofRlp,
+      nonce: nonce,
+      storageRoot: proof?.storageHash,
+      storageProof: proofData.storageProofRlp,
+    };
+
+    console.log("Proof object:", proofObject);
+
+    const result = await proverContract._verifyProof(proofObject, data);
+    console.log("Proof verification result:", result);
   }
 };
 

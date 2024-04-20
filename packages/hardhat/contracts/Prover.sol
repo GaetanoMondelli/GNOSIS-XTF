@@ -16,9 +16,9 @@ interface IGiriGiriBashi {
 struct Proof {
 	uint256 blockNumber;
 	uint256 nonce;
-	// bytes blockHeader;
+	bytes blockHeader;
 	bytes32 storageRoot;
-	// bytes accountProof;
+	bytes accountProof;
 	bytes storageProof;
 }
 
@@ -74,15 +74,11 @@ contract Prover is IProver {
 		// if (expectedBlockHeaderHash != blockHeaderHash)
 		// 	revert InvalidBlockHeader(blockHeaderHash, expectedBlockHeaderHash);
 
-		// bytes32 expectedLatestCommitment = _verifyStorageProofAndGetValue(
-		// 	_verifyAccountProofAndGetStorageRoot(
-		// 		proof.blockHeader,
-		// 		proof.accountProof
-		// 	),
-		// 	proof.storageProof
-		// );
 		bytes32 expectedLatestCommitment = _verifyStorageProofAndGetValue(
-			proof.storageRoot,
+			_verifyAccountProofAndGetStorageRoot(
+				proof.blockHeader,
+				proof.accountProof
+			),
 			proof.storageProof
 		);
 		bytes32 latestCommitment = keccak256(
@@ -96,29 +92,29 @@ contract Prover is IProver {
 		return true;
 	}
 
-	// function _verifyAccountProofAndGetStorageRoot(
-	// 	bytes memory blockHeader,
-	// 	bytes memory accountProof
-	// ) internal view returns (bytes32) {
-	// 	RLPReader.RLPItem[] memory blockHeaderFields = blockHeader
-	// 		.toRlpItem()
-	// 		.toList();
-	// 	bytes32 stateRoot = bytes32(blockHeaderFields[3].toUint());
-	// 	bytes memory accountRlp = MerklePatriciaProofVerifier.extractProofValue(
-	// 		stateRoot,
-	// 		abi.encodePacked(keccak256(abi.encodePacked(ACCOUNT))),
-	// 		accountProof.toRlpItem().toList()
-	// 	);
-	// 	bytes32 accountStorageRoot = bytes32(
-	// 		accountRlp.toRlpItem().toList()[2].toUint()
-	// 	);
-	// 	if (accountStorageRoot.length == 0) revert InvalidAccountStorageRoot();
-	// 	RLPReader.RLPItem[] memory accountFields = accountRlp
-	// 		.toRlpItem()
-	// 		.toList();
-	// 	if (accountFields.length != 4) revert InvalidAccountRlp(accountRlp); // [nonce, balance, storageRoot, codeHash]
-	// 	return bytes32(accountFields[2].toUint());
-	// }
+	function _verifyAccountProofAndGetStorageRoot(
+		bytes memory blockHeader,
+		bytes memory accountProof
+	) internal view returns (bytes32) {
+		RLPReader.RLPItem[] memory blockHeaderFields = blockHeader
+			.toRlpItem()
+			.toList();
+		bytes32 stateRoot = bytes32(blockHeaderFields[3].toUint());
+		bytes memory accountRlp = MerklePatriciaProofVerifier.extractProofValue(
+			stateRoot,
+			abi.encodePacked(keccak256(abi.encodePacked(ACCOUNT))),
+			accountProof.toRlpItem().toList()
+		);
+		bytes32 accountStorageRoot = bytes32(
+			accountRlp.toRlpItem().toList()[2].toUint()
+		);
+		if (accountStorageRoot.length == 0) revert InvalidAccountStorageRoot();
+		RLPReader.RLPItem[] memory accountFields = accountRlp
+			.toRlpItem()
+			.toList();
+		if (accountFields.length != 4) revert InvalidAccountRlp(accountRlp); // [nonce, balance, storageRoot, codeHash]
+		return bytes32(accountFields[2].toUint());
+	}
 
 	function _verifyStorageProofAndGetValue(
 		bytes32 storageRoot,

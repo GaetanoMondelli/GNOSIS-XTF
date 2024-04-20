@@ -1,0 +1,668 @@
+{
+  "address": "0x73a7d1B252300b2e2e9a1119D1E490C6F9bf9c9B",
+  "abi": [
+    {
+      "inputs": [
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "nonce",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "targetChainId",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "threshold",
+              "type": "uint256"
+            },
+            {
+              "internalType": "address",
+              "name": "sender",
+              "type": "address"
+            },
+            {
+              "internalType": "address",
+              "name": "receiver",
+              "type": "address"
+            },
+            {
+              "internalType": "bytes",
+              "name": "data",
+              "type": "bytes"
+            },
+            {
+              "internalType": "contract IReporter[]",
+              "name": "reporters",
+              "type": "address[]"
+            },
+            {
+              "internalType": "contract IAdapter[]",
+              "name": "adapters",
+              "type": "address[]"
+            }
+          ],
+          "internalType": "struct Message",
+          "name": "message",
+          "type": "tuple"
+        }
+      ],
+      "name": "InvalidMessage",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "threshold",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "maxThreshold",
+          "type": "uint256"
+        }
+      ],
+      "name": "InvalidThreshold",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "messageId",
+          "type": "uint256"
+        }
+      ],
+      "name": "MessageHashNotFound",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "NoAdaptersGiven",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "NoMessageIdsGiven",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "NoMessagesGiven",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "NoReportersGiven",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "arrayOne",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "arrayTwo",
+          "type": "uint256"
+        }
+      ],
+      "name": "UnequalArrayLengths",
+      "type": "error"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "uint256",
+          "name": "messageId",
+          "type": "uint256"
+        },
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "nonce",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "targetChainId",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "threshold",
+              "type": "uint256"
+            },
+            {
+              "internalType": "address",
+              "name": "sender",
+              "type": "address"
+            },
+            {
+              "internalType": "address",
+              "name": "receiver",
+              "type": "address"
+            },
+            {
+              "internalType": "bytes",
+              "name": "data",
+              "type": "bytes"
+            },
+            {
+              "internalType": "contract IReporter[]",
+              "name": "reporters",
+              "type": "address[]"
+            },
+            {
+              "internalType": "contract IAdapter[]",
+              "name": "adapters",
+              "type": "address[]"
+            }
+          ],
+          "indexed": false,
+          "internalType": "struct Message",
+          "name": "message",
+          "type": "tuple"
+        }
+      ],
+      "name": "MessageDispatched",
+      "type": "event"
+    },
+    {
+      "inputs": [
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "nonce",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "targetChainId",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "threshold",
+              "type": "uint256"
+            },
+            {
+              "internalType": "address",
+              "name": "sender",
+              "type": "address"
+            },
+            {
+              "internalType": "address",
+              "name": "receiver",
+              "type": "address"
+            },
+            {
+              "internalType": "bytes",
+              "name": "data",
+              "type": "bytes"
+            },
+            {
+              "internalType": "contract IReporter[]",
+              "name": "reporters",
+              "type": "address[]"
+            },
+            {
+              "internalType": "contract IAdapter[]",
+              "name": "adapters",
+              "type": "address[]"
+            }
+          ],
+          "internalType": "struct Message",
+          "name": "message",
+          "type": "tuple"
+        }
+      ],
+      "name": "calculateMessageHash",
+      "outputs": [
+        {
+          "internalType": "bytes32",
+          "name": "",
+          "type": "bytes32"
+        }
+      ],
+      "stateMutability": "pure",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "sourceChainId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "address",
+          "name": "dispatcherAddress",
+          "type": "address"
+        },
+        {
+          "internalType": "bytes32",
+          "name": "messageHash",
+          "type": "bytes32"
+        }
+      ],
+      "name": "calculateMessageId",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "pure",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "currentNonce",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "targetChainId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "threshold",
+          "type": "uint256"
+        },
+        {
+          "internalType": "address",
+          "name": "receiver",
+          "type": "address"
+        },
+        {
+          "internalType": "bytes",
+          "name": "data",
+          "type": "bytes"
+        },
+        {
+          "internalType": "contract IReporter[]",
+          "name": "reporters",
+          "type": "address[]"
+        },
+        {
+          "internalType": "contract IAdapter[]",
+          "name": "adapters",
+          "type": "address[]"
+        }
+      ],
+      "name": "dispatchMessage",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "targetChainId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "threshold",
+          "type": "uint256"
+        },
+        {
+          "internalType": "address",
+          "name": "receiver",
+          "type": "address"
+        },
+        {
+          "internalType": "bytes",
+          "name": "data",
+          "type": "bytes"
+        },
+        {
+          "internalType": "contract IReporter[]",
+          "name": "reporters",
+          "type": "address[]"
+        },
+        {
+          "internalType": "contract IAdapter[]",
+          "name": "adapters",
+          "type": "address[]"
+        }
+      ],
+      "name": "dispatchMessageToAdapters",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        },
+        {
+          "internalType": "bytes32[]",
+          "name": "",
+          "type": "bytes32[]"
+        }
+      ],
+      "stateMutability": "payable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "targetChainId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256[]",
+          "name": "thresholds",
+          "type": "uint256[]"
+        },
+        {
+          "internalType": "address[]",
+          "name": "receivers",
+          "type": "address[]"
+        },
+        {
+          "internalType": "bytes[]",
+          "name": "data",
+          "type": "bytes[]"
+        },
+        {
+          "internalType": "contract IReporter[]",
+          "name": "reporters",
+          "type": "address[]"
+        },
+        {
+          "internalType": "contract IAdapter[]",
+          "name": "adapters",
+          "type": "address[]"
+        }
+      ],
+      "name": "dispatchMessagesToAdapters",
+      "outputs": [
+        {
+          "internalType": "uint256[]",
+          "name": "",
+          "type": "uint256[]"
+        },
+        {
+          "internalType": "bytes32[]",
+          "name": "",
+          "type": "bytes32[]"
+        }
+      ],
+      "stateMutability": "payable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "messageId",
+          "type": "uint256"
+        }
+      ],
+      "name": "getPendingMessageHash",
+      "outputs": [
+        {
+          "internalType": "bytes32",
+          "name": "",
+          "type": "bytes32"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "nonce",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "targetChainId",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "threshold",
+              "type": "uint256"
+            },
+            {
+              "internalType": "address",
+              "name": "sender",
+              "type": "address"
+            },
+            {
+              "internalType": "address",
+              "name": "receiver",
+              "type": "address"
+            },
+            {
+              "internalType": "bytes",
+              "name": "data",
+              "type": "bytes"
+            },
+            {
+              "internalType": "contract IReporter[]",
+              "name": "reporters",
+              "type": "address[]"
+            },
+            {
+              "internalType": "contract IAdapter[]",
+              "name": "adapters",
+              "type": "address[]"
+            }
+          ],
+          "internalType": "struct Message[]",
+          "name": "messages",
+          "type": "tuple[]"
+        }
+      ],
+      "name": "relayMessagesToAdapters",
+      "outputs": [
+        {
+          "internalType": "bytes32[]",
+          "name": "",
+          "type": "bytes32[]"
+        }
+      ],
+      "stateMutability": "payable",
+      "type": "function"
+    }
+  ],
+  "transactionHash": "0xa4afbd701587d5f63c86e1ee878fd20fc91cd7b31a2fae6bbd3247ec52f5f1b7",
+  "receipt": {
+    "to": null,
+    "from": "0x2a1F5eB3e84e58e6F1e565306298B9dE1273f203",
+    "contractAddress": "0x73a7d1B252300b2e2e9a1119D1E490C6F9bf9c9B",
+    "transactionIndex": 0,
+    "gasUsed": "993329",
+    "logsBloom": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+    "blockHash": "0x575e4e4aaede6b5ace205f377a711205e13161dd1a0d226e62b3992e0745b145",
+    "transactionHash": "0xa4afbd701587d5f63c86e1ee878fd20fc91cd7b31a2fae6bbd3247ec52f5f1b7",
+    "logs": [],
+    "blockNumber": 9361538,
+    "cumulativeGasUsed": "993329",
+    "status": 1,
+    "byzantium": true
+  },
+  "args": [],
+  "numDeployments": 1,
+  "solcInputHash": "310df9762748bfe64aebb5ab3f6df0e5",
+  "metadata": "{\"compiler\":{\"version\":\"0.8.20+commit.a1b79de6\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"components\":[{\"internalType\":\"uint256\",\"name\":\"nonce\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"targetChainId\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"threshold\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"sender\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"receiver\",\"type\":\"address\"},{\"internalType\":\"bytes\",\"name\":\"data\",\"type\":\"bytes\"},{\"internalType\":\"contract IReporter[]\",\"name\":\"reporters\",\"type\":\"address[]\"},{\"internalType\":\"contract IAdapter[]\",\"name\":\"adapters\",\"type\":\"address[]\"}],\"internalType\":\"struct Message\",\"name\":\"message\",\"type\":\"tuple\"}],\"name\":\"InvalidMessage\",\"type\":\"error\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"threshold\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"maxThreshold\",\"type\":\"uint256\"}],\"name\":\"InvalidThreshold\",\"type\":\"error\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"messageId\",\"type\":\"uint256\"}],\"name\":\"MessageHashNotFound\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"NoAdaptersGiven\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"NoMessageIdsGiven\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"NoMessagesGiven\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"NoReportersGiven\",\"type\":\"error\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"arrayOne\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"arrayTwo\",\"type\":\"uint256\"}],\"name\":\"UnequalArrayLengths\",\"type\":\"error\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"messageId\",\"type\":\"uint256\"},{\"components\":[{\"internalType\":\"uint256\",\"name\":\"nonce\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"targetChainId\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"threshold\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"sender\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"receiver\",\"type\":\"address\"},{\"internalType\":\"bytes\",\"name\":\"data\",\"type\":\"bytes\"},{\"internalType\":\"contract IReporter[]\",\"name\":\"reporters\",\"type\":\"address[]\"},{\"internalType\":\"contract IAdapter[]\",\"name\":\"adapters\",\"type\":\"address[]\"}],\"indexed\":false,\"internalType\":\"struct Message\",\"name\":\"message\",\"type\":\"tuple\"}],\"name\":\"MessageDispatched\",\"type\":\"event\"},{\"inputs\":[{\"components\":[{\"internalType\":\"uint256\",\"name\":\"nonce\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"targetChainId\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"threshold\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"sender\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"receiver\",\"type\":\"address\"},{\"internalType\":\"bytes\",\"name\":\"data\",\"type\":\"bytes\"},{\"internalType\":\"contract IReporter[]\",\"name\":\"reporters\",\"type\":\"address[]\"},{\"internalType\":\"contract IAdapter[]\",\"name\":\"adapters\",\"type\":\"address[]\"}],\"internalType\":\"struct Message\",\"name\":\"message\",\"type\":\"tuple\"}],\"name\":\"calculateMessageHash\",\"outputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"stateMutability\":\"pure\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"sourceChainId\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"dispatcherAddress\",\"type\":\"address\"},{\"internalType\":\"bytes32\",\"name\":\"messageHash\",\"type\":\"bytes32\"}],\"name\":\"calculateMessageId\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"pure\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"currentNonce\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"targetChainId\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"threshold\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"receiver\",\"type\":\"address\"},{\"internalType\":\"bytes\",\"name\":\"data\",\"type\":\"bytes\"},{\"internalType\":\"contract IReporter[]\",\"name\":\"reporters\",\"type\":\"address[]\"},{\"internalType\":\"contract IAdapter[]\",\"name\":\"adapters\",\"type\":\"address[]\"}],\"name\":\"dispatchMessage\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"targetChainId\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"threshold\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"receiver\",\"type\":\"address\"},{\"internalType\":\"bytes\",\"name\":\"data\",\"type\":\"bytes\"},{\"internalType\":\"contract IReporter[]\",\"name\":\"reporters\",\"type\":\"address[]\"},{\"internalType\":\"contract IAdapter[]\",\"name\":\"adapters\",\"type\":\"address[]\"}],\"name\":\"dispatchMessageToAdapters\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"},{\"internalType\":\"bytes32[]\",\"name\":\"\",\"type\":\"bytes32[]\"}],\"stateMutability\":\"payable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"targetChainId\",\"type\":\"uint256\"},{\"internalType\":\"uint256[]\",\"name\":\"thresholds\",\"type\":\"uint256[]\"},{\"internalType\":\"address[]\",\"name\":\"receivers\",\"type\":\"address[]\"},{\"internalType\":\"bytes[]\",\"name\":\"data\",\"type\":\"bytes[]\"},{\"internalType\":\"contract IReporter[]\",\"name\":\"reporters\",\"type\":\"address[]\"},{\"internalType\":\"contract IAdapter[]\",\"name\":\"adapters\",\"type\":\"address[]\"}],\"name\":\"dispatchMessagesToAdapters\",\"outputs\":[{\"internalType\":\"uint256[]\",\"name\":\"\",\"type\":\"uint256[]\"},{\"internalType\":\"bytes32[]\",\"name\":\"\",\"type\":\"bytes32[]\"}],\"stateMutability\":\"payable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"messageId\",\"type\":\"uint256\"}],\"name\":\"getPendingMessageHash\",\"outputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"components\":[{\"internalType\":\"uint256\",\"name\":\"nonce\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"targetChainId\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"threshold\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"sender\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"receiver\",\"type\":\"address\"},{\"internalType\":\"bytes\",\"name\":\"data\",\"type\":\"bytes\"},{\"internalType\":\"contract IReporter[]\",\"name\":\"reporters\",\"type\":\"address[]\"},{\"internalType\":\"contract IAdapter[]\",\"name\":\"adapters\",\"type\":\"address[]\"}],\"internalType\":\"struct Message[]\",\"name\":\"messages\",\"type\":\"tuple[]\"}],\"name\":\"relayMessagesToAdapters\",\"outputs\":[{\"internalType\":\"bytes32[]\",\"name\":\"\",\"type\":\"bytes32[]\"}],\"stateMutability\":\"payable\",\"type\":\"function\"}],\"devdoc\":{\"events\":{\"MessageDispatched(uint256,(uint256,uint256,uint256,address,address,bytes,address[],address[]))\":{\"details\":\"Emitted when a message is dispatched with its associated message ID and message struct.\",\"params\":{\"message\":\"- The message struct associated with this event.\",\"messageId\":\"- The message ID associated with the dispatched message.\"}}},\"kind\":\"dev\",\"methods\":{\"calculateMessageHash((uint256,uint256,uint256,address,address,bytes,address[],address[]))\":{\"details\":\"Calculates and returns the hash of a given message.\",\"params\":{\"message\":\"- The `Message` structure containing various fields to be hashed.\"},\"returns\":{\"_0\":\"hash The keccak256 hash of the message, represented as a 32-byte hexadecimal string.\"}},\"calculateMessageId(uint256,address,bytes32)\":{\"details\":\"Calculates and returns a unique identifier (ID) for a message.\",\"params\":{\"dispatcherAddress\":\"- The address of the dispatcher sending the message.\",\"messageHash\":\"- The keccak256 hash of the message, represented as a 32-byte hexadecimal string.\",\"sourceChainId\":\"- The ID of the chain from which the message originates.\"},\"returns\":{\"_0\":\"messageId The unique identifier for the message, calculated based on the input parameters.\"}},\"dispatchMessage(uint256,uint256,address,bytes,address[],address[])\":{\"details\":\"Dispatches a message to a specified chain with a set of validation parameters without calling the reporters. It just write in storage a commitment of message. In order to dispatch it to the reporters, you must then invoke `relayMessagesToAdapters`\",\"params\":{\"adapters\":\"- An array of `IAdapter` contracts (for later validation use).\",\"data\":\"- The data being sent in the message, represented as a byte array.\",\"receiver\":\"- The address of the receiver on the target chain.\",\"reporters\":\"- An array of `IReporter` contracts (not actively used in this step).\",\"targetChainId\":\"- The ID of the target chain to which the message is being sent.\",\"threshold\":\"- The minimum number of adapters required to have stored the same message.\"},\"returns\":{\"_0\":\"messageId A unique identifier for the dispatched message, used for tracking and subsequent validation.\"}},\"dispatchMessageToAdapters(uint256,uint256,address,bytes,address[],address[])\":{\"details\":\"Dispatches a message to a specified chain with a set of validation parameters and calls the reporters.\",\"params\":{\"adapters\":\"- An array of `IAdapter` contracts (for later validation use).\",\"data\":\"- The data being sent in the message, represented as a byte array.\",\"receiver\":\"- The address of the receiver on the target chain.\",\"reporters\":\"- An array of `IReporter` contracts (not actively used in this step).\",\"targetChainId\":\"- The ID of the target chain to which the message is being sent.\",\"threshold\":\"- The minimum number of adapters required to have stored the same message.\"},\"returns\":{\"_0\":\"(messageId, result) A unique identifier for the dispatched message and an array of byte arrays, where each element is the result of dispatching a respective message to the corresponding Reporter.\"}},\"dispatchMessagesToAdapters(uint256,uint256[],address[],bytes[],address[],address[])\":{\"details\":\"Dispatches an array of messages to specified chains and calls the reporters.\",\"params\":{\"adapters\":\"- An array of `IAdapter` contracts used for the validation of each message.\",\"data\":\"- An array of data payloads for each message, represented as byte arrays.\",\"receivers\":\"- An array of addresses for the receivers on the target chain, one for each message.\",\"reporters\":\"- An array of `IReporter` contracts for reporting the status of each message.\",\"targetChainId\":\"- The ID of the target chain for all messages.\",\"thresholds\":\"- An array of minimum validation thresholds required for each message.\"},\"returns\":{\"_0\":\"(messageIds, result) An array of unique identifiers for the dispatched messages and an array of bytes32 arrays, where each element is the result of dispatching a respective message to the corresponding Reporter.\"}},\"getPendingMessageHash(uint256)\":{\"details\":\"Retrieves the hash of a pending message that was dispatched via `dispatchMessage` but has not yet been relayed to adapters using `relayingMessagesToAdapters`.\",\"params\":{\"messageId\":\"- The unique identifier of the message for which the hash is being retrieved.\"},\"returns\":{\"_0\":\"messageHash The hash of the pending message if it exists.\"}},\"relayMessagesToAdapters((uint256,uint256,uint256,address,address,bytes,address[],address[])[])\":{\"details\":\"Relays an array of messages to their respective adapters. In order to be able to aggregate messages within the reporter, it's mandatory that all messages have the same targetChainId, reporters and adapters.\",\"params\":{\"messages\":\"- An array of `Message` structures to be relayed to the adapters.\"},\"returns\":{\"_0\":\"result An array of bytes32 arrays, where each element is the result of dispatching a respective all messages to the corresponding Reporter.\"}}},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"contracts/Yaho.sol\":\"Yaho\"},\"evmVersion\":\"paris\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\",\"useLiteralContent\":true},\"optimizer\":{\"enabled\":true,\"runs\":1000},\"remappings\":[],\"viaIR\":true},\"sources\":{\"contracts/Yaho.sol\":{\"content\":\"// SPDX-License-Identifier: LGPL-3.0-only\\npragma solidity ^0.8.20;\\n\\nimport { MessageIdCalculator } from \\\"./utils/MessageIdCalculator.sol\\\";\\nimport { MessageHashCalculator } from \\\"./utils/MessageHashCalculator.sol\\\";\\nimport { IYaho } from \\\"./interfaces/IYaho.sol\\\";\\nimport { IReporter } from \\\"./interfaces/IReporter.sol\\\";\\nimport { Message } from \\\"./interfaces/IMessage.sol\\\";\\nimport { IAdapter } from \\\"./interfaces/IAdapter.sol\\\";\\n\\ncontract Yaho is IYaho, MessageIdCalculator, MessageHashCalculator {\\n    mapping(uint256 => bytes32) private _pendingMessageHashes;\\n    uint256 public currentNonce;\\n\\n    /// @inheritdoc IYaho\\n    function dispatchMessage(\\n        uint256 targetChainId,\\n        uint256 threshold,\\n        address receiver,\\n        bytes calldata data,\\n        IReporter[] calldata reporters,\\n        IAdapter[] calldata adapters\\n    ) external returns (uint256) {\\n        _checkReportersAndAdapters(threshold, reporters, adapters);\\n        (uint256 messageId, ) = _dispatchMessage(targetChainId, threshold, receiver, data, reporters, adapters);\\n        return messageId;\\n    }\\n\\n    /// @inheritdoc IYaho\\n    function dispatchMessageToAdapters(\\n        uint256 targetChainId,\\n        uint256 threshold,\\n        address receiver,\\n        bytes calldata data,\\n        IReporter[] calldata reporters,\\n        IAdapter[] calldata adapters\\n    ) external payable returns (uint256, bytes32[] memory) {\\n        _checkReportersAndAdapters(threshold, reporters, adapters);\\n        (uint256 messageId, bytes32 messageHash) = _dispatchMessage(\\n            targetChainId,\\n            threshold,\\n            receiver,\\n            data,\\n            reporters,\\n            adapters\\n        );\\n        bytes32[] memory reportersReceipts = _dispatchMessageToAdapters(\\n            targetChainId,\\n            messageId,\\n            messageHash,\\n            reporters,\\n            adapters\\n        );\\n        return (messageId, reportersReceipts);\\n    }\\n\\n    /// @inheritdoc IYaho\\n    function dispatchMessagesToAdapters(\\n        uint256 targetChainId,\\n        uint256[] calldata thresholds,\\n        address[] calldata receivers,\\n        bytes[] calldata data,\\n        IReporter[] calldata reporters,\\n        IAdapter[] calldata adapters\\n    ) external payable returns (uint256[] memory, bytes32[] memory) {\\n        if (thresholds.length != receivers.length) revert UnequalArrayLengths(thresholds.length, receivers.length);\\n        if (thresholds.length != data.length) revert UnequalArrayLengths(thresholds.length, data.length);\\n\\n        uint256[] memory messageIds = new uint256[](receivers.length);\\n        bytes32[] memory messageHashes = new bytes32[](receivers.length);\\n        for (uint256 i = 0; i < receivers.length; ) {\\n            _checkReportersAndAdapters(thresholds[i], reporters, adapters);\\n            (messageIds[i], messageHashes[i]) = _dispatchMessage(\\n                targetChainId,\\n                thresholds[i],\\n                receivers[i],\\n                data[i],\\n                reporters,\\n                adapters\\n            );\\n            unchecked {\\n                ++i;\\n            }\\n        }\\n\\n        bytes32[] memory reportersReceipts = new bytes32[](reporters.length);\\n        _resetPendingMessageHashesByMessageIds(messageIds);\\n        reportersReceipts = _dispatchMessagesToAdapters(targetChainId, messageIds, messageHashes, reporters, adapters);\\n        return (messageIds, reportersReceipts);\\n    }\\n\\n    /// @inheritdoc IYaho\\n    function getPendingMessageHash(uint256 messageId) external view returns (bytes32) {\\n        return _pendingMessageHashes[messageId];\\n    }\\n\\n    /// @inheritdoc IYaho\\n    function relayMessagesToAdapters(Message[] calldata messages) external payable returns (bytes32[] memory) {\\n        if (messages.length == 0) revert NoMessagesGiven();\\n\\n        bytes32 expectedParams = keccak256(\\n            abi.encode(messages[0].targetChainId, messages[0].reporters, messages[0].adapters)\\n        );\\n\\n        bytes32[] memory messageHashes = new bytes32[](messages.length);\\n        uint256[] memory messageIds = new uint256[](messages.length);\\n        for (uint256 i = 0; i < messages.length; i++) {\\n            Message memory message = messages[i];\\n            if (\\n                i > 0 &&\\n                expectedParams != keccak256(abi.encode(message.targetChainId, message.reporters, message.adapters))\\n            ) revert InvalidMessage(message);\\n            uint256 messageId = calculateMessageId(block.chainid, address(this), calculateMessageHash(message));\\n            bytes32 messageHash = _pendingMessageHashes[messageId];\\n            if (messageHash == bytes32(0)) revert MessageHashNotFound(messageId);\\n            messageHashes[i] = messageHash;\\n            messageIds[i] = messageId;\\n            delete _pendingMessageHashes[messageId];\\n        }\\n\\n        return\\n            _dispatchMessagesToAdapters(\\n                messages[0].targetChainId,\\n                messageIds,\\n                messageHashes,\\n                messages[0].reporters,\\n                messages[0].adapters\\n            );\\n    }\\n\\n    function _checkReportersAndAdapters(\\n        uint256 threshold,\\n        IReporter[] calldata reporters,\\n        IAdapter[] calldata adapters\\n    ) internal pure {\\n        if (reporters.length == 0) revert NoReportersGiven();\\n        if (adapters.length == 0) revert NoAdaptersGiven();\\n        if (reporters.length != adapters.length) revert UnequalArrayLengths(reporters.length, adapters.length);\\n        if (threshold > reporters.length || threshold == 0) revert InvalidThreshold(threshold, reporters.length);\\n    }\\n\\n    function _dispatchMessage(\\n        uint256 targetChainId,\\n        uint256 threshold,\\n        address receiver,\\n        bytes calldata data,\\n        IReporter[] calldata reporters,\\n        IAdapter[] calldata adapters\\n    ) internal returns (uint256, bytes32) {\\n        address sender = msg.sender;\\n        Message memory message = Message(\\n            currentNonce,\\n            targetChainId,\\n            threshold,\\n            sender,\\n            receiver,\\n            data,\\n            reporters,\\n            adapters\\n        );\\n        bytes32 messageHash = calculateMessageHash(message);\\n        uint256 messageId = calculateMessageId(block.chainid, address(this), messageHash);\\n        _pendingMessageHashes[messageId] = messageHash;\\n        unchecked {\\n            ++currentNonce;\\n        }\\n        emit MessageDispatched(messageId, message);\\n        return (messageId, messageHash);\\n    }\\n\\n    function _dispatchMessageToAdapters(\\n        uint256 targetChainId,\\n        uint256 messageId,\\n        bytes32 messageHash,\\n        IReporter[] memory reporters,\\n        IAdapter[] memory adapters\\n    ) internal returns (bytes32[] memory) {\\n        uint256[] memory messageIds = new uint256[](1);\\n        bytes32[] memory messageHashes = new bytes32[](1);\\n        messageIds[0] = messageId;\\n        messageHashes[0] = messageHash;\\n        _resetPendingMessageHashesByMessageIds(messageIds);\\n        return _dispatchMessagesToAdapters(targetChainId, messageIds, messageHashes, reporters, adapters);\\n    }\\n\\n    function _dispatchMessagesToAdapters(\\n        uint256 targetChainId,\\n        uint256[] memory messageIds,\\n        bytes32[] memory messageHashes,\\n        IReporter[] memory reporters,\\n        IAdapter[] memory adapters\\n    ) internal returns (bytes32[] memory) {\\n        bytes32[] memory reportersReceipts = new bytes32[](reporters.length);\\n\\n        for (uint256 i = 0; i < reporters.length; ) {\\n            reportersReceipts[i] = reporters[i].dispatchMessages(targetChainId, adapters[i], messageIds, messageHashes);\\n            unchecked {\\n                ++i;\\n            }\\n        }\\n\\n        return reportersReceipts;\\n    }\\n\\n    function _resetPendingMessageHashesByMessageIds(uint256[] memory messageIds) internal {\\n        for (uint256 i = 0; i < messageIds.length; ) {\\n            delete _pendingMessageHashes[messageIds[i]];\\n            unchecked {\\n                ++i;\\n            }\\n        }\\n    }\\n}\\n\",\"keccak256\":\"0xe5b1875c3d9c2dceaf7138504fa9091d1c6f4ca91538c7801ed233b0b4f10fe6\",\"license\":\"LGPL-3.0-only\"},\"contracts/interfaces/IAdapter.sol\":{\"content\":\"// SPDX-License-Identifier: LGPL-3.0-only\\npragma solidity ^0.8.0;\\n\\n/**\\n * @title IAdapter\\n */\\ninterface IAdapter {\\n    error ConflictingBlockHeader(uint256 blockNumber, bytes32 blockHash, bytes32 storedBlockHash);\\n    error InvalidBlockHeaderLength(uint256 length);\\n    error InvalidBlockHeaderRLP();\\n\\n    /**\\n     * @dev Emitted when a hash is stored.\\n     * @param id - The ID of the stored hash.\\n     * @param hash - The stored hash as bytes32 values.\\n     */\\n    event HashStored(uint256 indexed id, bytes32 indexed hash);\\n\\n    /**\\n     * @dev Returns the hash for a given ID.\\n     * @param domain - Identifier for the domain to query.\\n     * @param id - Identifier for the ID to query.\\n     * @return hash Bytes32 hash for the given ID on the given domain.\\n     * @notice MUST return bytes32(0) if the hash is not present.\\n     */\\n    function getHash(uint256 domain, uint256 id) external view returns (bytes32 hash);\\n}\\n\",\"keccak256\":\"0xc3c6fca20c390f619072fe34bde40b91ceca4bbd1627a892af627b2e10f8a38d\",\"license\":\"LGPL-3.0-only\"},\"contracts/interfaces/IMessage.sol\":{\"content\":\"// SPDX-License-Identifier: LGPL-3.0-only\\npragma solidity ^0.8.0;\\n\\nimport { IReporter } from \\\"./IReporter.sol\\\";\\nimport { IAdapter } from \\\"./IAdapter.sol\\\";\\n\\nstruct Message {\\n    uint256 nonce;\\n    uint256 targetChainId;\\n    uint256 threshold;\\n    address sender;\\n    address receiver;\\n    bytes data;\\n    IReporter[] reporters;\\n    IAdapter[] adapters;\\n}\\n\",\"keccak256\":\"0xd12970c9aaf7e4f46b436f515619f78ed6b08e9142d2ba034c18d8263bce9294\",\"license\":\"LGPL-3.0-only\"},\"contracts/interfaces/IMessageHashCalculator.sol\":{\"content\":\"// SPDX-License-Identifier: LGPL-3.0-only\\npragma solidity ^0.8.0;\\n\\nimport { Message } from \\\"./IMessage.sol\\\";\\n\\n/**\\n * @title IMessageHashCalculator\\n */\\ninterface IMessageHashCalculator {\\n    /**\\n     * @dev Calculates and returns the hash of a given message.\\n     * @param message - The `Message` structure containing various fields to be hashed.\\n     * @return hash The keccak256 hash of the message, represented as a 32-byte hexadecimal string.\\n     */\\n    function calculateMessageHash(Message memory message) external pure returns (bytes32);\\n}\\n\",\"keccak256\":\"0x17b81d1ad11d6ff10fb563134f7ba306fe9c4dd1c9db543fe7214182b3b6ba07\",\"license\":\"LGPL-3.0-only\"},\"contracts/interfaces/IMessageIdCalculator.sol\":{\"content\":\"// SPDX-License-Identifier: LGPL-3.0-only\\npragma solidity ^0.8.0;\\n\\n/**\\n * @title IMessageIdCalculator\\n */\\ninterface IMessageIdCalculator {\\n    /**\\n     * @dev Calculates and returns a unique identifier (ID) for a message.\\n     *\\n     * @param sourceChainId - The ID of the chain from which the message originates.\\n     * @param dispatcherAddress - The address of the dispatcher sending the message.\\n     * @param messageHash - The keccak256 hash of the message, represented as a 32-byte hexadecimal string.\\n     * @return messageId The unique identifier for the message, calculated based on the input parameters.\\n     */\\n    function calculateMessageId(\\n        uint256 sourceChainId,\\n        address dispatcherAddress,\\n        bytes32 messageHash\\n    ) external pure returns (uint256);\\n}\\n\",\"keccak256\":\"0xd74a8068483d1dc5bb3d1c707597fd39133c2626bd2f165f0f354afdb7e3b9f3\",\"license\":\"LGPL-3.0-only\"},\"contracts/interfaces/IReporter.sol\":{\"content\":\"// SPDX-License-Identifier: LGPL-3.0-only\\npragma solidity ^0.8.0;\\n\\nimport { IAdapter } from \\\"./IAdapter.sol\\\";\\n\\ninterface IReporter {\\n    error NotYaho(address sender, address expectedYaho);\\n\\n    /**\\n     * @dev Emitted when a block is dispatched to another chain.\\n     * @param targetChainId - The target chain's identifier associated with the dispatched block.\\n     * @param adapter - The adapter address associated with the dispatched block.\\n     * @param blockNumber - The block number associated with the dispatched block.\\n     * @param blockHeader - The dispatched block header as a bytes32 value.\\n     */\\n    event BlockDispatched(\\n        uint256 indexed targetChainId,\\n        IAdapter adapter,\\n        uint256 indexed blockNumber,\\n        bytes32 blockHeader\\n    );\\n\\n    /**\\n     * @dev Emitted when a message is dispatched to another chain.\\n     * @param targetChainId - The target chain's identifier associated with the dispatched message.\\n     * @param adapter - The adapter address associated with the dispatched message.\\n     * @param messageId - The message identifier associated with the dispatched message.\\n     * @param messageHash - The dispatched message hash as a bytes32 value.\\n     */\\n    event MessageDispatched(\\n        uint256 indexed targetChainId,\\n        IAdapter adapter,\\n        uint256 indexed messageId,\\n        bytes32 messageHash\\n    );\\n\\n    /**\\n     * @dev Dispatches blocks to a given adapter on the target chaib.\\n     * @param targetChainId - The target chain's Uint256 identifier.\\n     * @param adapter - The adapter instance to use.\\n     * @param blockNumbers - An array of Uint256 block numbers to dispatch.\\n     * @notice blockNumbers must include block numbers that are greater than or equal to (currentBlock - 256) due to EVM limitations.\\n     * @return result - The result returned by the adapter as bytes.\\n     */\\n    function dispatchBlocks(\\n        uint256 targetChainId,\\n        IAdapter adapter,\\n        uint256[] memory blockNumbers\\n    ) external payable returns (bytes32);\\n\\n    /**\\n     * @dev Dispatches messages to a target chain using the specified adapter.\\n     * @param targetChainId - The target chain's Uint256 identifier.\\n     * @param adapter - The adapter instance to use.\\n     * @param messageIds - An array of Uint256 message identifiers.\\n     * @param messageHashes - An array of bytes32 message hashes.\\n     * @notice This function can be called only by Yaho\\n     * @return result - The result returned by the adapter as bytes.\\n     */\\n    function dispatchMessages(\\n        uint256 targetChainId,\\n        IAdapter adapter,\\n        uint256[] memory messageIds,\\n        bytes32[] memory messageHashes\\n    ) external payable returns (bytes32);\\n}\\n\",\"keccak256\":\"0xda2089ab19b5517907b3ea017e2d6bb83bd38eb687eca8867f1bec7533e3d0a3\",\"license\":\"LGPL-3.0-only\"},\"contracts/interfaces/IYaho.sol\":{\"content\":\"// SPDX-License-Identifier: LGPL-3.0-only\\npragma solidity ^0.8.0;\\n\\nimport { IMessageHashCalculator } from \\\"./IMessageHashCalculator.sol\\\";\\nimport { IMessageIdCalculator } from \\\"./IMessageIdCalculator.sol\\\";\\nimport { Message } from \\\"./IMessage.sol\\\";\\nimport { IReporter } from \\\"./IReporter.sol\\\";\\nimport { IAdapter } from \\\"./IAdapter.sol\\\";\\n\\n/**\\n * @title IYaho\\n */\\ninterface IYaho is IMessageHashCalculator, IMessageIdCalculator {\\n    error NoMessagesGiven();\\n    error NoMessageIdsGiven();\\n    error NoReportersGiven();\\n    error NoAdaptersGiven();\\n    error UnequalArrayLengths(uint256 arrayOne, uint256 arrayTwo);\\n    error MessageHashNotFound(uint256 messageId);\\n    error InvalidMessage(Message message);\\n    error InvalidThreshold(uint256 threshold, uint256 maxThreshold);\\n\\n    /**\\n     * @dev Emitted when a message is dispatched with its associated message ID and message struct.\\n     * @param messageId - The message ID associated with the dispatched message.\\n     * @param message - The message struct associated with this event.\\n     */\\n    event MessageDispatched(uint256 indexed messageId, Message message);\\n\\n    /**\\n     * @dev Dispatches a message to a specified chain with a set of validation parameters without calling the reporters. It just write in storage a commitment of message. In order to dispatch it to the reporters, you must then invoke `relayMessagesToAdapters`\\n     * @param targetChainId - The ID of the target chain to which the message is being sent.\\n     * @param threshold - The minimum number of adapters required to have stored the same message.\\n     * @param receiver - The address of the receiver on the target chain.\\n     * @param data - The data being sent in the message, represented as a byte array.\\n     * @param reporters - An array of `IReporter` contracts (not actively used in this step).\\n     * @param adapters - An array of `IAdapter` contracts (for later validation use).\\n     * @return messageId A unique identifier for the dispatched message, used for tracking and subsequent validation.\\n     */\\n    function dispatchMessage(\\n        uint256 targetChainId,\\n        uint256 threshold,\\n        address receiver,\\n        bytes calldata data,\\n        IReporter[] calldata reporters,\\n        IAdapter[] calldata adapters\\n    ) external returns (uint256);\\n\\n    /**\\n     * @dev Dispatches a message to a specified chain with a set of validation parameters and calls the reporters.\\n     * @param targetChainId - The ID of the target chain to which the message is being sent.\\n     * @param threshold - The minimum number of adapters required to have stored the same message.\\n     * @param receiver - The address of the receiver on the target chain.\\n     * @param data - The data being sent in the message, represented as a byte array.\\n     * @param reporters - An array of `IReporter` contracts (not actively used in this step).\\n     * @param adapters - An array of `IAdapter` contracts (for later validation use).\\n     * @return (messageId, result) A unique identifier for the dispatched message and an array of byte arrays, where each element is the result of dispatching a respective message to the corresponding Reporter.\\n     */\\n    function dispatchMessageToAdapters(\\n        uint256 targetChainId,\\n        uint256 threshold,\\n        address receiver,\\n        bytes calldata data,\\n        IReporter[] calldata reporters,\\n        IAdapter[] calldata adapters\\n    ) external payable returns (uint256, bytes32[] memory);\\n\\n    /**\\n     * @dev Dispatches an array of messages to specified chains and calls the reporters.\\n     * @param targetChainId - The ID of the target chain for all messages.\\n     * @param thresholds - An array of minimum validation thresholds required for each message.\\n     * @param receivers - An array of addresses for the receivers on the target chain, one for each message.\\n     * @param data - An array of data payloads for each message, represented as byte arrays.\\n     * @param reporters - An array of `IReporter` contracts for reporting the status of each message.\\n     * @param adapters - An array of `IAdapter` contracts used for the validation of each message.\\n     * @return (messageIds, result) An array of unique identifiers for the dispatched messages and an array of bytes32 arrays, where each element is the result of dispatching a respective message to the corresponding Reporter.\\n     */\\n    function dispatchMessagesToAdapters(\\n        uint256 targetChainId,\\n        uint256[] calldata thresholds,\\n        address[] calldata receivers,\\n        bytes[] calldata data,\\n        IReporter[] calldata reporters,\\n        IAdapter[] calldata adapters\\n    ) external payable returns (uint256[] memory, bytes32[] memory);\\n\\n    /**\\n     * @dev Retrieves the hash of a pending message that was dispatched via `dispatchMessage` but has not yet been relayed to adapters using `relayingMessagesToAdapters`.\\n     * @param messageId - The unique identifier of the message for which the hash is being retrieved.\\n     * @return messageHash The hash of the pending message if it exists.\\n     */\\n    function getPendingMessageHash(uint256 messageId) external view returns (bytes32);\\n\\n    /**\\n     * @dev Relays an array of messages to their respective adapters. In order to be able to aggregate messages within the reporter, it's mandatory that all messages have the same targetChainId, reporters and adapters.\\n     * @param messages - An array of `Message` structures to be relayed to the adapters.\\n     * @return result An array of bytes32 arrays, where each element is the result of dispatching a respective all messages to the corresponding Reporter.\\n     */\\n    function relayMessagesToAdapters(Message[] calldata messages) external payable returns (bytes32[] memory);\\n}\\n\",\"keccak256\":\"0x13cd1d161be43083bb445e1d325ed0c14365ce7b2a2e01e8be81227a2f24ce77\",\"license\":\"LGPL-3.0-only\"},\"contracts/utils/MessageHashCalculator.sol\":{\"content\":\"// SPDX-License-Identifier: LGPL-3.0-only\\npragma solidity ^0.8.20;\\n\\nimport { IMessageHashCalculator } from \\\"../interfaces/IMessageHashCalculator.sol\\\";\\nimport { Message } from \\\"../interfaces/IMessage.sol\\\";\\n\\ncontract MessageHashCalculator is IMessageHashCalculator {\\n    /// @inheritdoc IMessageHashCalculator\\n    function calculateMessageHash(Message memory message) public pure returns (bytes32) {\\n        return keccak256(abi.encode(message));\\n    }\\n}\\n\",\"keccak256\":\"0xcb6c06700dbaa9cde9cc8f13ad49228ae60f6eff6c53dd24c1754fc53747c424\",\"license\":\"LGPL-3.0-only\"},\"contracts/utils/MessageIdCalculator.sol\":{\"content\":\"// SPDX-License-Identifier: LGPL-3.0-only\\npragma solidity ^0.8.20;\\n\\nimport { IMessageIdCalculator } from \\\"../interfaces/IMessageIdCalculator.sol\\\";\\n\\ncontract MessageIdCalculator is IMessageIdCalculator {\\n    /// @inheritdoc IMessageIdCalculator\\n    function calculateMessageId(\\n        uint256 sourceChainId,\\n        address dispatcherAddress,\\n        bytes32 messageHash\\n    ) public pure returns (uint256) {\\n        return uint256(keccak256(abi.encode(sourceChainId, dispatcherAddress, messageHash)));\\n    }\\n}\\n\",\"keccak256\":\"0x6bd8bfe677dae7d6fc20803035a07f923a3c84696b1025d712856aae343adde6\",\"license\":\"LGPL-3.0-only\"}},\"version\":1}",
+  "bytecode": "0x6080806040523461001657611109908161001c8239f35b600080fdfe610140604052600436101561001357600080fd5b60003560e01c806331fa321b1461094757806339d0bf63146108af5780633db59eeb1461079a578063543836b114610757578063553c19dd14610405578063adb610a3146103e7578063b38fda7c146100a65763feed46df1461007557600080fd5b346100a15760203660031901126100a15760043560005260006020526020604060002054604051908152f35b600080fd5b60c03660031901126100a15760243567ffffffffffffffff81116100a1576100d2903690600401610991565b9060443567ffffffffffffffff81116100a1576100f3903690600401610991565b9260643567ffffffffffffffff81116100a157610114903690600401610991565b94909160843567ffffffffffffffff81116100a157610137903690600401610991565b6101205260e05260a43567ffffffffffffffff81116100a15761015e903690600401610991565b60c052610100528181036103ca578581036103ac5761017c82610ca2565b60a05261018882610ca2565b60805260005b82811061020d576101a161012051610ca2565b506101ad60a051611040565b6102096101e26101c3366101205160e051610b61565b6101d33660c05161010051610b61565b9060805160a051600435610f26565b604051918291604083526101fb6040840160a051610a5d565b908382036020850152610a5d565b0390f35b610218818388610cd4565b3561012051156103825760c051156103585760c051610120510361033657610120518111801561032e575b61030d5750610253818388610cd4565b3590610260818588610cd4565b35916001600160a01b03831683036100a157888210156102f7578160051b860135601e19873603018112156100a15786019267ffffffffffffffff8435116100a1578335360360208501136100a1576001936102d79260c051926101005192610120519260e0519260208335930191600435610e59565b6102e383608051610cf1565b526102f08260a051610cf1565b520161018e565b634e487b7160e01b600052603260045260246000fd5b60449060405190637b7a98f160e01b82526004820152610120516024820152fd5b508015610243565b604460405163df9ccef560e01b815261012051600482015260c0516024820152fd5b60046040517fc77f9c81000000000000000000000000000000000000000000000000000000008152fd5b60046040517f66ab7afe000000000000000000000000000000000000000000000000000000008152fd5b604490866040519163df9ccef560e01b835260048301526024820152fd5b6044916040519163df9ccef560e01b835260048301526024820152fd5b346100a15760003660031901126100a1576020600154604051908152f35b60203660031901126100a15760043567ffffffffffffffff81116100a157610431903690600401610991565b801561072d5760206104438284610d05565b013561045c6104528385610d05565b60c0810190610d20565b6104736104698587610d05565b60e0810190610d20565b919060405193828593602085019760808601908952606060408701525260a08401919060005b8181106106fd57505050602090601f1984820301606085015284815201909260005b8181106106cf5750506104d7925003601f198101835282610ae0565b5190206104e382610ca2565b906104ed83610ca2565b9060005b84811061055e5761020961054a8688878761054460206105118686610d05565b01359461053c61053261046961052a610452858a610d05565b949098610d05565b9690923691610b61565b943691610b61565b93610f26565b604051918291602083526020830190610a5d565b8060051b86013560fe19873603018112156100a1576105809036908801610bb7565b8115158061066d575b610633576105996105a091611075565b3046611090565b8060005260006020526040600020548015610602576105bf8387610cf1565b52806105cb8386610cf1565b5260005260006020526000604081205560001981146105ec576001016104f1565b634e487b7160e01b600052601160045260246000fd5b602482604051907f92e4a25e0000000000000000000000000000000000000000000000000000000082526004820152fd5b610669906040519182917f69b2c1a400000000000000000000000000000000000000000000000000000000835260048301610d93565b0390fd5b5060208101516106a46106c460c08401516106b660e086015160405194859360208501978852606060408601526080850190610d56565b838103601f1901606085015290610d56565b03601f198101835282610ae0565b519020831415610589565b916001919350602080916001600160a01b036106ea8861097d565b16815201940191019184929391936104bb565b9193959450916020806001926001600160a01b0361071a8861097d565b1681520194019101918694959392610499565b60046040517f6832f637000000000000000000000000000000000000000000000000000000008152fd5b346100a15760203660031901126100a15760043567ffffffffffffffff81116100a15761079261078d6020923690600401610bb7565b611075565b604051908152f35b6107a3366109c2565b9490929391969795871561038257851561035857858803610891578789118015610889575b61086b57858489876107fa97966107f2966107e89661084e9e9f8e610e59565b9490983691610b61565b933691610b61565b926040519061080882610ac4565b60018252602036818401376040519261082084610ac4565b60018452602036818601378761083584610ce4565b5261083f84610ce4565b5261084982611040565b610f26565b906102096040519283928352604060208401526040830190610a5d565b6044898960405191637b7a98f160e01b835260048301526024820152fd5b5088156107c8565b604488876040519163df9ccef560e01b835260048301526024820152fd5b346100a1576108bd366109c2565b978296929791979593951561038257881561035857888703610929578682118015610921575b61090357916108fa97959391602099979593610e59565b50604051908152f35b6044828860405191637b7a98f160e01b835260048301526024820152fd5b5081156108e3565b6044878a6040519163df9ccef560e01b835260048301526024820152fd5b346100a15760603660031901126100a1576024356001600160a01b03811681036100a15761079260209160443590600435611090565b35906001600160a01b03821682036100a157565b9181601f840112156100a15782359167ffffffffffffffff83116100a1576020808501948460051b0101116100a157565b60c06003198201126100a15760043591602435916044356001600160a01b03811681036100a157916064359167ffffffffffffffff908184116100a157806023850112156100a1578360040135938285116100a15781602486830101116100a15760240193926084358381116100a15782610a3f91600401610991565b9390939260a4359182116100a157610a5991600401610991565b9091565b90815180825260208080930193019160005b828110610a7d575050505090565b835185529381019392810192600101610a6f565b610100810190811067ffffffffffffffff821117610aae57604052565b634e487b7160e01b600052604160045260246000fd5b6040810190811067ffffffffffffffff821117610aae57604052565b90601f8019910116810190811067ffffffffffffffff821117610aae57604052565b92919267ffffffffffffffff8211610aae5760405191610b2c601f8201601f191660200184610ae0565b8294818452818301116100a1578281602093846000960137010152565b67ffffffffffffffff8111610aae5760051b60200190565b9291610b6c82610b49565b91610b7a6040519384610ae0565b829481845260208094019160051b81019283116100a157905b828210610ba05750505050565b838091610bac8461097d565b815201910190610b93565b9190610100838203126100a15760405190610bd182610a91565b8193803583526020810135602084015260408101356040840152610bf76060820161097d565b6060840152610c086080820161097d565b608084015267ffffffffffffffff9060a08101358281116100a157810183601f820112156100a15783816020610c4093359101610b02565b60a085015260c08101358281116100a157810183601f820112156100a15783816020610c6e93359101610b61565b60c085015260e08101359182116100a1570181601f820112156100a15760e091816020610c9d93359101610b61565b910152565b90610cac82610b49565b610cb96040519182610ae0565b8281528092610cca601f1991610b49565b0190602036910137565b91908110156102f75760051b0190565b8051156102f75760200190565b80518210156102f75760209160051b010190565b90156102f75780359060fe19813603018212156100a1570190565b903590601e19813603018212156100a1570180359067ffffffffffffffff82116100a157602001918160051b360383136100a157565b90815180825260208080930193019160005b828110610d76575050505090565b83516001600160a01b031685529381019392810192600101610d68565b6020808252825181830152808301516040830152604083015160608301526001600160a01b0380606085015116608084015260808401511660a083015260a0830151610100918260c085015281519061012092828487015260005b838110610e44575050509160e0610e31610e41969593601f9561014090600082828901015287199788910116860160c08901519287820301858801520190610d56565b9401519282850301910152610d56565b90565b81810183015187820161014001528201610dee565b989795939190600154996040519a610e708c610a91565b8b5260208b015260408a01523360608a01526001600160a01b031660808901523690610e9b92610b02565b60a08701523690610eab92610b61565b60c08501523690610ebb92610b61565b60e0830152610ec982611075565b91610ed5833046611090565b809181600052600060205284604060002055600154600101600155604051610efe819282610d93565b037f218247aabc759e65b5bb92ccc074f9d62cd187259f2a0984c3c9cf91f67ff7cf91a29190565b9194939094610f358451610ca2565b9360005b815181101561103657610fce906001600160a01b0380610f598386610cf1565b511690610f668388610cf1565b51166040918251917fb4a90ff700000000000000000000000000000000000000000000000000000000835289600484015260248301526080604483015281610fb28d6084830190610a5d565b91600319828403016064830152816000816020998a968d610a5d565b03925af191821561102c5750600091610ff8575b5060019250610ff18289610cf1565b5201610f39565b919282813d8311611025575b61100e8183610ae0565b810103126110225750906001915138610fe2565b80fd5b503d611004565b513d6000823e3d90fd5b5093955050505050565b9060005b8251811015611070578061105a60019285610cf1565b5160005260006020526000604081205501611044565b509050565b60405161108a816106b6602082019485610d93565b51902090565b916001600160a01b0360405192602084019485521660408301526060820152606081526080810181811067ffffffffffffffff821117610aae576040525190209056fea2646970667358221220f224c1de115054c97ac2e3bf07a1e51c985a6dc579acb1677658d319741b026664736f6c63430008140033",
+  "deployedBytecode": "0x610140604052600436101561001357600080fd5b60003560e01c806331fa321b1461094757806339d0bf63146108af5780633db59eeb1461079a578063543836b114610757578063553c19dd14610405578063adb610a3146103e7578063b38fda7c146100a65763feed46df1461007557600080fd5b346100a15760203660031901126100a15760043560005260006020526020604060002054604051908152f35b600080fd5b60c03660031901126100a15760243567ffffffffffffffff81116100a1576100d2903690600401610991565b9060443567ffffffffffffffff81116100a1576100f3903690600401610991565b9260643567ffffffffffffffff81116100a157610114903690600401610991565b94909160843567ffffffffffffffff81116100a157610137903690600401610991565b6101205260e05260a43567ffffffffffffffff81116100a15761015e903690600401610991565b60c052610100528181036103ca578581036103ac5761017c82610ca2565b60a05261018882610ca2565b60805260005b82811061020d576101a161012051610ca2565b506101ad60a051611040565b6102096101e26101c3366101205160e051610b61565b6101d33660c05161010051610b61565b9060805160a051600435610f26565b604051918291604083526101fb6040840160a051610a5d565b908382036020850152610a5d565b0390f35b610218818388610cd4565b3561012051156103825760c051156103585760c051610120510361033657610120518111801561032e575b61030d5750610253818388610cd4565b3590610260818588610cd4565b35916001600160a01b03831683036100a157888210156102f7578160051b860135601e19873603018112156100a15786019267ffffffffffffffff8435116100a1578335360360208501136100a1576001936102d79260c051926101005192610120519260e0519260208335930191600435610e59565b6102e383608051610cf1565b526102f08260a051610cf1565b520161018e565b634e487b7160e01b600052603260045260246000fd5b60449060405190637b7a98f160e01b82526004820152610120516024820152fd5b508015610243565b604460405163df9ccef560e01b815261012051600482015260c0516024820152fd5b60046040517fc77f9c81000000000000000000000000000000000000000000000000000000008152fd5b60046040517f66ab7afe000000000000000000000000000000000000000000000000000000008152fd5b604490866040519163df9ccef560e01b835260048301526024820152fd5b6044916040519163df9ccef560e01b835260048301526024820152fd5b346100a15760003660031901126100a1576020600154604051908152f35b60203660031901126100a15760043567ffffffffffffffff81116100a157610431903690600401610991565b801561072d5760206104438284610d05565b013561045c6104528385610d05565b60c0810190610d20565b6104736104698587610d05565b60e0810190610d20565b919060405193828593602085019760808601908952606060408701525260a08401919060005b8181106106fd57505050602090601f1984820301606085015284815201909260005b8181106106cf5750506104d7925003601f198101835282610ae0565b5190206104e382610ca2565b906104ed83610ca2565b9060005b84811061055e5761020961054a8688878761054460206105118686610d05565b01359461053c61053261046961052a610452858a610d05565b949098610d05565b9690923691610b61565b943691610b61565b93610f26565b604051918291602083526020830190610a5d565b8060051b86013560fe19873603018112156100a1576105809036908801610bb7565b8115158061066d575b610633576105996105a091611075565b3046611090565b8060005260006020526040600020548015610602576105bf8387610cf1565b52806105cb8386610cf1565b5260005260006020526000604081205560001981146105ec576001016104f1565b634e487b7160e01b600052601160045260246000fd5b602482604051907f92e4a25e0000000000000000000000000000000000000000000000000000000082526004820152fd5b610669906040519182917f69b2c1a400000000000000000000000000000000000000000000000000000000835260048301610d93565b0390fd5b5060208101516106a46106c460c08401516106b660e086015160405194859360208501978852606060408601526080850190610d56565b838103601f1901606085015290610d56565b03601f198101835282610ae0565b519020831415610589565b916001919350602080916001600160a01b036106ea8861097d565b16815201940191019184929391936104bb565b9193959450916020806001926001600160a01b0361071a8861097d565b1681520194019101918694959392610499565b60046040517f6832f637000000000000000000000000000000000000000000000000000000008152fd5b346100a15760203660031901126100a15760043567ffffffffffffffff81116100a15761079261078d6020923690600401610bb7565b611075565b604051908152f35b6107a3366109c2565b9490929391969795871561038257851561035857858803610891578789118015610889575b61086b57858489876107fa97966107f2966107e89661084e9e9f8e610e59565b9490983691610b61565b933691610b61565b926040519061080882610ac4565b60018252602036818401376040519261082084610ac4565b60018452602036818601378761083584610ce4565b5261083f84610ce4565b5261084982611040565b610f26565b906102096040519283928352604060208401526040830190610a5d565b6044898960405191637b7a98f160e01b835260048301526024820152fd5b5088156107c8565b604488876040519163df9ccef560e01b835260048301526024820152fd5b346100a1576108bd366109c2565b978296929791979593951561038257881561035857888703610929578682118015610921575b61090357916108fa97959391602099979593610e59565b50604051908152f35b6044828860405191637b7a98f160e01b835260048301526024820152fd5b5081156108e3565b6044878a6040519163df9ccef560e01b835260048301526024820152fd5b346100a15760603660031901126100a1576024356001600160a01b03811681036100a15761079260209160443590600435611090565b35906001600160a01b03821682036100a157565b9181601f840112156100a15782359167ffffffffffffffff83116100a1576020808501948460051b0101116100a157565b60c06003198201126100a15760043591602435916044356001600160a01b03811681036100a157916064359167ffffffffffffffff908184116100a157806023850112156100a1578360040135938285116100a15781602486830101116100a15760240193926084358381116100a15782610a3f91600401610991565b9390939260a4359182116100a157610a5991600401610991565b9091565b90815180825260208080930193019160005b828110610a7d575050505090565b835185529381019392810192600101610a6f565b610100810190811067ffffffffffffffff821117610aae57604052565b634e487b7160e01b600052604160045260246000fd5b6040810190811067ffffffffffffffff821117610aae57604052565b90601f8019910116810190811067ffffffffffffffff821117610aae57604052565b92919267ffffffffffffffff8211610aae5760405191610b2c601f8201601f191660200184610ae0565b8294818452818301116100a1578281602093846000960137010152565b67ffffffffffffffff8111610aae5760051b60200190565b9291610b6c82610b49565b91610b7a6040519384610ae0565b829481845260208094019160051b81019283116100a157905b828210610ba05750505050565b838091610bac8461097d565b815201910190610b93565b9190610100838203126100a15760405190610bd182610a91565b8193803583526020810135602084015260408101356040840152610bf76060820161097d565b6060840152610c086080820161097d565b608084015267ffffffffffffffff9060a08101358281116100a157810183601f820112156100a15783816020610c4093359101610b02565b60a085015260c08101358281116100a157810183601f820112156100a15783816020610c6e93359101610b61565b60c085015260e08101359182116100a1570181601f820112156100a15760e091816020610c9d93359101610b61565b910152565b90610cac82610b49565b610cb96040519182610ae0565b8281528092610cca601f1991610b49565b0190602036910137565b91908110156102f75760051b0190565b8051156102f75760200190565b80518210156102f75760209160051b010190565b90156102f75780359060fe19813603018212156100a1570190565b903590601e19813603018212156100a1570180359067ffffffffffffffff82116100a157602001918160051b360383136100a157565b90815180825260208080930193019160005b828110610d76575050505090565b83516001600160a01b031685529381019392810192600101610d68565b6020808252825181830152808301516040830152604083015160608301526001600160a01b0380606085015116608084015260808401511660a083015260a0830151610100918260c085015281519061012092828487015260005b838110610e44575050509160e0610e31610e41969593601f9561014090600082828901015287199788910116860160c08901519287820301858801520190610d56565b9401519282850301910152610d56565b90565b81810183015187820161014001528201610dee565b989795939190600154996040519a610e708c610a91565b8b5260208b015260408a01523360608a01526001600160a01b031660808901523690610e9b92610b02565b60a08701523690610eab92610b61565b60c08501523690610ebb92610b61565b60e0830152610ec982611075565b91610ed5833046611090565b809181600052600060205284604060002055600154600101600155604051610efe819282610d93565b037f218247aabc759e65b5bb92ccc074f9d62cd187259f2a0984c3c9cf91f67ff7cf91a29190565b9194939094610f358451610ca2565b9360005b815181101561103657610fce906001600160a01b0380610f598386610cf1565b511690610f668388610cf1565b51166040918251917fb4a90ff700000000000000000000000000000000000000000000000000000000835289600484015260248301526080604483015281610fb28d6084830190610a5d565b91600319828403016064830152816000816020998a968d610a5d565b03925af191821561102c5750600091610ff8575b5060019250610ff18289610cf1565b5201610f39565b919282813d8311611025575b61100e8183610ae0565b810103126110225750906001915138610fe2565b80fd5b503d611004565b513d6000823e3d90fd5b5093955050505050565b9060005b8251811015611070578061105a60019285610cf1565b5160005260006020526000604081205501611044565b509050565b60405161108a816106b6602082019485610d93565b51902090565b916001600160a01b0360405192602084019485521660408301526060820152606081526080810181811067ffffffffffffffff821117610aae576040525190209056fea2646970667358221220f224c1de115054c97ac2e3bf07a1e51c985a6dc579acb1677658d319741b026664736f6c63430008140033",
+  "devdoc": {
+    "events": {
+      "MessageDispatched(uint256,(uint256,uint256,uint256,address,address,bytes,address[],address[]))": {
+        "details": "Emitted when a message is dispatched with its associated message ID and message struct.",
+        "params": {
+          "message": "- The message struct associated with this event.",
+          "messageId": "- The message ID associated with the dispatched message."
+        }
+      }
+    },
+    "kind": "dev",
+    "methods": {
+      "calculateMessageHash((uint256,uint256,uint256,address,address,bytes,address[],address[]))": {
+        "details": "Calculates and returns the hash of a given message.",
+        "params": {
+          "message": "- The `Message` structure containing various fields to be hashed."
+        },
+        "returns": {
+          "_0": "hash The keccak256 hash of the message, represented as a 32-byte hexadecimal string."
+        }
+      },
+      "calculateMessageId(uint256,address,bytes32)": {
+        "details": "Calculates and returns a unique identifier (ID) for a message.",
+        "params": {
+          "dispatcherAddress": "- The address of the dispatcher sending the message.",
+          "messageHash": "- The keccak256 hash of the message, represented as a 32-byte hexadecimal string.",
+          "sourceChainId": "- The ID of the chain from which the message originates."
+        },
+        "returns": {
+          "_0": "messageId The unique identifier for the message, calculated based on the input parameters."
+        }
+      },
+      "dispatchMessage(uint256,uint256,address,bytes,address[],address[])": {
+        "details": "Dispatches a message to a specified chain with a set of validation parameters without calling the reporters. It just write in storage a commitment of message. In order to dispatch it to the reporters, you must then invoke `relayMessagesToAdapters`",
+        "params": {
+          "adapters": "- An array of `IAdapter` contracts (for later validation use).",
+          "data": "- The data being sent in the message, represented as a byte array.",
+          "receiver": "- The address of the receiver on the target chain.",
+          "reporters": "- An array of `IReporter` contracts (not actively used in this step).",
+          "targetChainId": "- The ID of the target chain to which the message is being sent.",
+          "threshold": "- The minimum number of adapters required to have stored the same message."
+        },
+        "returns": {
+          "_0": "messageId A unique identifier for the dispatched message, used for tracking and subsequent validation."
+        }
+      },
+      "dispatchMessageToAdapters(uint256,uint256,address,bytes,address[],address[])": {
+        "details": "Dispatches a message to a specified chain with a set of validation parameters and calls the reporters.",
+        "params": {
+          "adapters": "- An array of `IAdapter` contracts (for later validation use).",
+          "data": "- The data being sent in the message, represented as a byte array.",
+          "receiver": "- The address of the receiver on the target chain.",
+          "reporters": "- An array of `IReporter` contracts (not actively used in this step).",
+          "targetChainId": "- The ID of the target chain to which the message is being sent.",
+          "threshold": "- The minimum number of adapters required to have stored the same message."
+        },
+        "returns": {
+          "_0": "(messageId, result) A unique identifier for the dispatched message and an array of byte arrays, where each element is the result of dispatching a respective message to the corresponding Reporter."
+        }
+      },
+      "dispatchMessagesToAdapters(uint256,uint256[],address[],bytes[],address[],address[])": {
+        "details": "Dispatches an array of messages to specified chains and calls the reporters.",
+        "params": {
+          "adapters": "- An array of `IAdapter` contracts used for the validation of each message.",
+          "data": "- An array of data payloads for each message, represented as byte arrays.",
+          "receivers": "- An array of addresses for the receivers on the target chain, one for each message.",
+          "reporters": "- An array of `IReporter` contracts for reporting the status of each message.",
+          "targetChainId": "- The ID of the target chain for all messages.",
+          "thresholds": "- An array of minimum validation thresholds required for each message."
+        },
+        "returns": {
+          "_0": "(messageIds, result) An array of unique identifiers for the dispatched messages and an array of bytes32 arrays, where each element is the result of dispatching a respective message to the corresponding Reporter."
+        }
+      },
+      "getPendingMessageHash(uint256)": {
+        "details": "Retrieves the hash of a pending message that was dispatched via `dispatchMessage` but has not yet been relayed to adapters using `relayingMessagesToAdapters`.",
+        "params": {
+          "messageId": "- The unique identifier of the message for which the hash is being retrieved."
+        },
+        "returns": {
+          "_0": "messageHash The hash of the pending message if it exists."
+        }
+      },
+      "relayMessagesToAdapters((uint256,uint256,uint256,address,address,bytes,address[],address[])[])": {
+        "details": "Relays an array of messages to their respective adapters. In order to be able to aggregate messages within the reporter, it's mandatory that all messages have the same targetChainId, reporters and adapters.",
+        "params": {
+          "messages": "- An array of `Message` structures to be relayed to the adapters."
+        },
+        "returns": {
+          "_0": "result An array of bytes32 arrays, where each element is the result of dispatching a respective all messages to the corresponding Reporter."
+        }
+      }
+    },
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "version": 1
+  },
+  "storageLayout": {
+    "storage": [
+      {
+        "astId": 3641,
+        "contract": "contracts/Yaho.sol:Yaho",
+        "label": "_pendingMessageHashes",
+        "offset": 0,
+        "slot": "0",
+        "type": "t_mapping(t_uint256,t_bytes32)"
+      },
+      {
+        "astId": 3643,
+        "contract": "contracts/Yaho.sol:Yaho",
+        "label": "currentNonce",
+        "offset": 0,
+        "slot": "1",
+        "type": "t_uint256"
+      }
+    ],
+    "types": {
+      "t_bytes32": {
+        "encoding": "inplace",
+        "label": "bytes32",
+        "numberOfBytes": "32"
+      },
+      "t_mapping(t_uint256,t_bytes32)": {
+        "encoding": "mapping",
+        "key": "t_uint256",
+        "label": "mapping(uint256 => bytes32)",
+        "numberOfBytes": "32",
+        "value": "t_bytes32"
+      },
+      "t_uint256": {
+        "encoding": "inplace",
+        "label": "uint256",
+        "numberOfBytes": "32"
+      }
+    }
+  }
+}

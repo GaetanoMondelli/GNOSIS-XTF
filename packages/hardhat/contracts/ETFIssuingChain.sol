@@ -9,11 +9,11 @@ import "@hyperlane-xyz/core/contracts/interfaces/IMailbox.sol";
 import { IInterchainSecurityModule } from "@hyperlane-xyz/core/contracts/interfaces/IInterchainSecurityModule.sol";
 import "@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol";
 import { Proof, Prover } from "./Prover.sol";
-import {IYaho} from "./interfaces/IYaho.sol";
-import {IHashi} from "./interfaces/IHashi.sol";
-import {GiriGiriBashi} from "./ownable/GiriGiriBashi.sol";
-import {IReporter} from "./interfaces/IReporter.sol";
-import {IAdapter} from "./interfaces/IAdapter.sol";
+import { IYaho } from "./interfaces/IYaho.sol";
+import { IHashi } from "./interfaces/IHashi.sol";
+import { GiriGiriBashi } from "./ownable/GiriGiriBashi.sol";
+import { IReporter } from "./interfaces/IReporter.sol";
+import { IAdapter } from "./interfaces/IAdapter.sol";
 import "hardhat/console.sol";
 
 struct TokenQuantity {
@@ -23,7 +23,6 @@ struct TokenQuantity {
 	address _contributor;
 	address _aggregator;
 }
-
 
 struct Vault {
 	TokenQuantity[] _tokens;
@@ -74,6 +73,7 @@ contract ETFIssuingChain {
 	address public etfToken;
 	uint256 public etfTokenPerVault;
 	uint256 THRESHOLD = 1;
+	uint256 nonce = 0;
 
 	mapping(uint256 => address[]) contributorsByVault;
 	mapping(uint256 => mapping(address => uint256))
@@ -111,7 +111,11 @@ contract ETFIssuingChain {
 		adapter = IAdapter(_hyperlaneAdapter);
 		reporter = IReporter(_hyperlaneReporter);
 		hashi = _hashi;
-		giriGiriBashi = new GiriGiriBashi(msg.sender, hashi, payable(msg.sender));
+		giriGiriBashi = new GiriGiriBashi(
+			msg.sender,
+			hashi,
+			payable(msg.sender)
+		);
 		proverSlotZero = new Prover(_chainId, 0x0, address(giriGiriBashi));
 		yaho = IYaho(_yahoAddress);
 	}
@@ -149,7 +153,10 @@ contract ETFIssuingChain {
 	function updateCommitment() public {
 		// based on states values, generate a commitment
 		VaultState[] memory states = getVaultStates();
-		latestCommitment = keccak256(abi.encodePacked(states));
+		// fixed nonce for demo
+		latestCommitment = keccak256(
+			abi.encode(block.chainid, states, nonce)
+		);
 	}
 
 	function getVaultStates() public view returns (VaultState[] memory) {
@@ -334,17 +341,11 @@ contract ETFIssuingChain {
 		bytes32 _sender,
 		bytes calldata _message
 	) external payable {
-		// require(
-		// 	isMainChain() && bytes32ToAddress(_sender) == sideChainLock,
-		// 	"Sender to mainChain is not the sideChainLock"
-		// );
-
-		// require(
-		// 	!isMainChain() && bytes32ToAddress(_sender) == mainChainLock,
-		// 	"Sender to sideChain is not the mainChainLock"
-		// );
-
 		if (isMainChain()) {
+			require(
+				bytes32ToAddress(_sender) == sideChainLock,
+				"Sender to mainChain is not the sideChainLock"
+			);
 			DepositInfo memory _depositInfo = abi.decode(
 				_message,
 				(DepositInfo)
@@ -353,6 +354,10 @@ contract ETFIssuingChain {
 			_deposit(_depositInfo, chainId);
 			return;
 		} else {
+			require(
+				bytes32ToAddress(_sender) == mainChainLock,
+				"Sender to sideChain is not the mainChainLock"
+			);
 			uint256 _vaultId = abi.decode(_message, (uint256));
 			_burn(_vaultId);
 		}
@@ -375,8 +380,8 @@ contract ETFIssuingChain {
 	}
 
 	function dispatchCommitment(
-        IReporter[] calldata reporters,
-        IAdapter[] calldata adapters
+		IReporter[] calldata reporters,
+		IAdapter[] calldata adapters
 	) public {
 		// make sure that the commitment is updated
 		yaho.dispatchMessage(
@@ -389,13 +394,24 @@ contract ETFIssuingChain {
 		);
 	}
 
-
-	function secureBurn(uint256 _vaultId, bytes32 mainChainLastCommitment, Proof calldata proof) public {
-		require(!isMainChain(), "Secure Hashi burn can only be called on side chain");
-		require(
-			proverSlotZero._verifyProof(proof, abi.encode(mainChainLastCommitment)),
-			"Proof verification failed"
-		);
+	function secureBurn(
+		uint256 _vaultId,
+		bytes32 mainChainLastCommitment,
+		Proof calldata proof
+	) public {
+		// require(
+		// 	!isMainChain(),
+		// 	"Secure Hashi burn can only be called on side chain"
+		// );
+		// require(
+		// 	proverSlotZero._verifyProof(
+		// 		proof,
+		// 		abi.encode(mainChainLastCommitment)
+		// 	),
+		// 	"Proof verification failed"
+		// );
+		_burn(_vaultId);
+		setVaultState(_vaultId, VaultState.BURNED);
 	}
 
 	function burn(uint256 _vaultId, Proof calldata proof) public {

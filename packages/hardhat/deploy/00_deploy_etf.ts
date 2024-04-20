@@ -22,7 +22,7 @@ const deployYourContract: DeployFunction = async function (hre: HardhatRuntimeEn
   const sepoliaMailBoxAddress = CORE_DEPLOYMENT["sepolia"]["mailbox"];
   const sepoliaISMAddress = CORE_DEPLOYMENT["sepolia"]["messageIdMultisigIsm"];
 
-  const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+  const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
   if (hre.network.name === "sepolia") {
     const requiredSideTokens = [
@@ -42,7 +42,6 @@ const deployYourContract: DeployFunction = async function (hre: HardhatRuntimeEn
       log: true,
     });
 
-
     for (let i = 0; i < requiredSideTokens.length; i++) {
       await deploy("SimpleERC20", {
         from: deployer,
@@ -55,10 +54,26 @@ const deployYourContract: DeployFunction = async function (hre: HardhatRuntimeEn
       requiredSideTokens[i]._address = await t.getAddress();
     }
 
+    const sepoliaHahiAddress = "0xFC2c9d0094c6D64F3a4e4C6BF30E2229F4268b70";
+    const hyperlaneAdapterAddress = "0x6869B0EbdC183Ab4cFc297B32214B21A417E76B2";
+    const hyperlaneReporterAddress = zeroAddress; // deployed in chiado (main chain for etf)
+    const yahooAddress = zeroAddress; // deployed in chiado too(main chain for etf)
+    const etfTokenAddress = zeroAddress; // deployed in chiado too(main chain only for etf token not in side chain)
+
     console.log("Required side tokens: ", requiredSideTokens);
     await deploy("ETFIssuingChain", {
       from: deployer,
-      args: [chiadoChainId, sepoliaChainId, requiredSideTokens, zeroAddress, tokenPerVault],
+      args: [
+        chiadoChainId, // main chain id
+        sepoliaChainId,
+        requiredSideTokens,
+        sepoliaHahiAddress,
+        hyperlaneAdapterAddress,
+        hyperlaneReporterAddress,
+        yahooAddress,
+        etfTokenAddress,
+        tokenPerVault,
+      ],
       log: true,
     });
 
@@ -75,6 +90,15 @@ const deployYourContract: DeployFunction = async function (hre: HardhatRuntimeEn
     // set side chain params
     await etfSide.setSideChainParams(mainETFAddress, sepoliaMailBoxAddress, sepoliaISMAddress);
   }
+
+  // if (hre.network.name === "chiado") {
+  //   // get simpleerc20 token at 0x13F5e337ea0fe2ff0470a6e29E4D10D6B0Da2c58
+  //   const tokenA = await hre.ethers.getContractAt("SimpleERC20", "0x13F5e337ea0fe2ff0470a6e29E4D10D6B0Da2c58");
+  //   await tokenA.mint(
+  //     "0x2a1F5eB3e84e58e6F1e565306298B9dE1273f203",
+  //     BigNumber.from(10000).mul(BigNumber.from(10).pow(18)).toString(),
+  //   );
+  // }
 
   if (hre.network.name === "chiado") {
     console.log("Deploying ETF contract");
@@ -120,7 +144,6 @@ const deployYourContract: DeployFunction = async function (hre: HardhatRuntimeEn
       await sleep(4000);
     }
 
-
     for (let i = 1; i < 2; i++) {
       await deploy("SimpleERC20", {
         from: deployer,
@@ -145,7 +168,6 @@ const deployYourContract: DeployFunction = async function (hre: HardhatRuntimeEn
       await sleep(4000);
     }
 
-
     await deploy("MockAggregator", {
       from: deployer,
       args: [5, 18],
@@ -162,6 +184,11 @@ const deployYourContract: DeployFunction = async function (hre: HardhatRuntimeEn
       _aggregator: await aggregatorForForeignToken.getAddress(),
     });
 
+    const gnosisChiadoHashiAddress = "0xd07eF911359F161A2361a62c6281c66de639f8A6";
+    const gnosisChiadohyperlaneAdapterAddress = "0x84827596bFd9D4e9f723d448c751D78Fa506F386";
+    const gnosisChiadohhyperlaneReporterAddress = "0xAf775F72fC4158e4A4bD6EA4B389B09DF556BD46";
+    const yahooAddress = "0x73a7d1B252300b2e2e9a1119D1E490C6F9bf9c9B";
+
     console.log("Required tokens: ", requiredTokens);
 
     // deploy etfToken contract
@@ -175,13 +202,22 @@ const deployYourContract: DeployFunction = async function (hre: HardhatRuntimeEn
 
     await deploy("ETFIssuingChain", {
       from: deployer,
-      args: [chiadoChainId, chiadoChainId, requiredTokens, await etfToken.getAddress(), tokenPerVault],
+      args: [
+        chiadoChainId,
+        chiadoChainId,
+        requiredTokens,
+        gnosisChiadoHashiAddress,
+        gnosisChiadohyperlaneAdapterAddress,
+        gnosisChiadohhyperlaneReporterAddress,
+        yahooAddress,
+        await etfToken.getAddress(),
+        tokenPerVault
+      ],
       log: true,
     });
     const etf = await hre.ethers.getContract<ETFIssuingChain>("ETFIssuingChain", deployer);
     await etfToken.setOwner(await etf.getAddress());
     await sleep(4000);
-
 
     await etf.setMainChainParams(
       "0x5e3eFC5b603d0AfD11f664d8d58DA94159247f60",

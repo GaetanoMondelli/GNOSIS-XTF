@@ -24,7 +24,7 @@ const deployYourContract: DeployFunction = async function (hre: HardhatRuntimeEn
 
   const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
-  if (hre.network.name === "sepolia") {
+  if (hre.network.name === "sepolia2") {
     const requiredSideTokens = [
       {
         _address: "",
@@ -85,22 +85,23 @@ const deployYourContract: DeployFunction = async function (hre: HardhatRuntimeEn
     // });
 
     // const main ETF contract
-    const mainETFAddress = "0x39C07e48dfCAfd49A6e4be9ca0164c5Be9A505fc";
+    const mainETFAddress = "0x79aa80021eD7F22A1c494F851A8254733383B232";
 
     // set side chain params
     await etfSide.setSideChainParams(mainETFAddress, sepoliaMailBoxAddress, sepoliaISMAddress);
   }
 
-  // if (hre.network.name === "chiado") {
-  //   // get simpleerc20 token at 0x13F5e337ea0fe2ff0470a6e29E4D10D6B0Da2c58
-  //   const tokenA = await hre.ethers.getContractAt("SimpleERC20", "0x13F5e337ea0fe2ff0470a6e29E4D10D6B0Da2c58");
-  //   await tokenA.mint(
-  //     "0x2a1F5eB3e84e58e6F1e565306298B9dE1273f203",
-  //     BigNumber.from(10000).mul(BigNumber.from(10).pow(18)).toString(),
-  //   );
-  // }
-
   if (hre.network.name === "chiado") {
+    // get simpleerc20 token at 0x13F5e337ea0fe2ff0470a6e29E4D10D6B0Da2c58
+    // const tokenA = await hre.ethers.getContractAt("SimpleERC20", "0x3A9A620b1E8B151A575c067605150347887819E4");
+    // await tokenA.mint(
+    //   "0x2a1F5eB3e84e58e6F1e565306298B9dE1273f203",
+    //   BigNumber.from(10000).mul(BigNumber.from(10).pow(18)).toString(),
+    // );
+
+  }
+
+  if (hre.network.name === "chiado2") {
     console.log("Deploying ETF contract");
     //deploy tokenA and tokenB contracts
     const requiredTokens = [
@@ -211,7 +212,7 @@ const deployYourContract: DeployFunction = async function (hre: HardhatRuntimeEn
         gnosisChiadohhyperlaneReporterAddress,
         yahooAddress,
         await etfToken.getAddress(),
-        tokenPerVault
+        tokenPerVault,
       ],
       log: true,
     });
@@ -220,7 +221,7 @@ const deployYourContract: DeployFunction = async function (hre: HardhatRuntimeEn
     await sleep(4000);
 
     await etf.setMainChainParams(
-      "0x5e3eFC5b603d0AfD11f664d8d58DA94159247f60",
+      "0xb7979b6D6ff00E34Fb7b2823e825ba16232C3551", // _sideChainLock
       sepoliaChainId,
       CORE_DEPLOYMENT["chiado"]["mailbox"],
       CORE_DEPLOYMENT["chiado"]["messageIdMultisigIsm"],

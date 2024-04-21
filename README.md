@@ -1,96 +1,33 @@
 https://www.gnosis.io/
 
-# 🏗 Scaffold-ETH 2
+# 🏗 Deployment Guide
 
-<h4 align="center">
-  <a href="https://docs.scaffoldeth.io">Documentation</a> |
-  <a href="https://scaffoldeth.io">Website</a>
-</h4>
 
-🧪 An open-source, up-to-date toolkit for building decentralized applications (dapps) on the Ethereum blockchain. It's designed to make it easier for developers to create and deploy smart contracts and build user interfaces that interact with those contracts.
+1. hardhat % npm run deploy-chiado
 
-⚙️ Built using NextJS, RainbowKit, Hardhat, Wagmi, Viem, and Typescript.
-
-- ✅ **Contract Hot Reload**: Your frontend auto-adapts to your smart contract as you edit it.
-- 🪝 **[Custom hooks](https://docs.scaffoldeth.io/hooks/)**: Collection of React hooks wrapper around [wagmi](https://wagmi.sh/) to simplify interactions with smart contracts with typescript autocompletion.
-- 🧱 [**Components**](https://docs.scaffoldeth.io/components/): Collection of common web3 components to quickly build your frontend.
-- 🔥 **Burner Wallet & Local Faucet**: Quickly test your application with a burner wallet and local faucet.
-- 🔐 **Integration with Wallet Providers**: Connect to different wallet providers and interact with the Ethereum network.
-
-![Debug Contracts tab](https://github.com/scaffold-eth/scaffold-eth-2/assets/55535804/b237af0c-5027-4849-a5c1-2e31495cccb1)
-
-## Requirements
-
-Before you begin, you need to install the following tools:
-
-- [Node (>= v18.17)](https://nodejs.org/en/download/)
-- Yarn ([v1](https://classic.yarnpkg.com/en/docs/install/) or [v2+](https://yarnpkg.com/getting-started/install))
-- [Git](https://git-scm.com/downloads)
-
-## Quickstart
-
-To get started with Scaffold-ETH 2, follow the steps below:
-
-1. Install dependencies if it was skipped in CLI:
+2. get the address of ETFIssuingChain from maicn chain chiado 0xF8e05F51C334c632e3D194a1A7c349033C5d9dd1
 
 ```
-cd my-dapp-example
-yarn install
+deploying "ETFIssuingChain" (tx: 0xc4b3a3af2239d40ff9354479f7f1ca2f56bb0ed594945d414db8b1cdf9c34e0a)...: deployed at 0xF8e05F51C334c632e3D194a1A7c349033C5d9dd1 with 6435684 gas
 ```
 
-2. Run a local network in the first terminal:
+3. edit the depoy-etf script when we are passing the mainnet lock contract and update with 0xF8e05F51C334c632e3D194a1A7c349033C5d9dd1
+4.  hardhat % npm run deploy-sepolia
+5 et the address of ETFIssuingChain from maicn chain sepolia 0xb7979b6D6ff00E34Fb7b2823e825ba16232C3551
+deploying "ETFIssuingChain" (tx: 0xd9d922f01171b18f1d9bfa1fde081c5c1879ef53f760b68295bfec06fcc89c4d)...: deployed at 0xb7979b6D6ff00E34Fb7b2823e825ba16232C3551 with 5975046 gas
+6. update the side lock with 0xb7979b6D6ff00E34Fb7b2823e825ba16232C3551 and re run the  npm run deploy-chiado
+
+NOTE: the deployment script will reuse the deployed contract and will onl;y update the sidechain param in chiado, if it redeploys well does not work and need to comment the part of deployment before! (Note the reusing..)
 
 ```
-yarn chain
+Nothing to compile
+No need to generate any newer typings.
+deploying "SimpleERC20" (tx: 0x997833562d211f1fb689235ab285d87b1b2b75054944e16126bd4a2cdd6e470d)...: deployed at 0x3A9A620b1E8B151A575c067605150347887819E4 with 850197 gas
+reusing "SimpleERC20" at 0x3A9A620b1E8B151A575c067605150347887819E4
+Required side tokens:  [
 ```
 
-This command starts a local Ethereum network using Hardhat. The network runs on your local machine and can be used for testing and development. You can customize the network configuration in `packages/hardhat/hardhat.config.ts`.
-
-3. On a second terminal, deploy the test contract:
-
-```
-yarn deploy
-```
-
-This command deploys a test smart contract to the local network. The contract is located in `packages/hardhat/contracts` and can be modified to suit your needs. The `yarn deploy` command uses the deploy script located in `packages/hardhat/deploy` to deploy the contract to the network. You can also customize the deploy script.
-
-4. On a third terminal, start your NextJS app:
-
-```
-yarn start
-```
-
-Visit your app on: `http://localhost:3000`. You can interact with your smart contract using the `Debug Contracts` page. You can tweak the app config in `packages/nextjs/scaffold.config.ts`.
-
-Run smart contract test with `yarn hardhat:test`
-
-- Edit your smart contract `YourContract.sol` in `packages/hardhat/contracts`
-- Edit your frontend homepage at `packages/nextjs/app/page.tsx`. For guidance on [routing](https://nextjs.org/docs/app/building-your-application/routing/defining-routes) and configuring [pages/layouts](https://nextjs.org/docs/app/building-your-application/routing/pages-and-layouts) checkout the Next.js documentation.
-- Edit your deployment scripts in `packages/hardhat/deploy`
-
-## Documentation
-
-Visit our [docs](https://docs.scaffoldeth.io) to learn how to start building with Scaffold-ETH 2.
-
-To know more about its features, check out our [website](https://scaffoldeth.io).
-
-## Contributing to Scaffold-ETH 2
-
-We welcome contributions to Scaffold-ETH 2!
-
-Please see [CONTRIBUTING.MD](https://github.com/scaffold-eth/scaffold-eth-2/blob/main/CONTRIBUTING.md) for more information and guidelines for contributing to Scaffold-ETH 2.
+---------
 
 
-# 🏗 BRIDGE SOLUTIONS
 
-
-Terms used in this context from https://opensource.ripple.com/
-
-**Locking Chain:** The chain where the token originally exists. If the locking chain is an XRPL chain, the bridge IOU issuer isn't the bridge door account. If the locking chain is an EVM chain, the ERC20 owner isn't the bridge door account.
-**Issuing Chain**: The chain the token is bridged to. If the issuing chain is an XRPL chain, the bridged IOU issuer is the bridge door account. If the issuing chain is an EVM chain, the bridged ERC20 owner is the bridge door account and can mint/burn tokens.
-
-
-# First implementation we wrapped tokens on Locking Chain and we do not port wrapped tokens
-
-Alternatlively we can implement a messaging system that is not wrapping tokens so we can have 1:1 messages and 1:n messgaes (Broadcast)
-Chainlink - CCIP is the leader for x-chains messanging solution XRP Legder is not supported by Chainlink. So we can deploy a Hyperlane bridge for this demo

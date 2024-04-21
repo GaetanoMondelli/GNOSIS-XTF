@@ -68,11 +68,11 @@ contract Prover is IProver {
 		Proof calldata proof,
 		bytes memory data
 	) public returns (bool) {
-		// bytes32 expectedBlockHeaderHash = IGiriGiriBashi(GIRI_GIRI_BASHI)
-		// 	.getThresholdHash(SOURCE_CHAIN_ID, proof.blockNumber);
-		// bytes32 blockHeaderHash = keccak256(proof.blockHeader);
-		// if (expectedBlockHeaderHash != blockHeaderHash)
-		// 	revert InvalidBlockHeader(blockHeaderHash, expectedBlockHeaderHash);
+		bytes32 expectedBlockHeaderHash = IGiriGiriBashi(GIRI_GIRI_BASHI)
+			.getThresholdHash(SOURCE_CHAIN_ID, proof.blockNumber);
+		bytes32 blockHeaderHash = keccak256(proof.blockHeader);
+		if (expectedBlockHeaderHash != blockHeaderHash)
+			revert InvalidBlockHeader(blockHeaderHash, expectedBlockHeaderHash);
 
 		bytes32 expectedLatestCommitment = _verifyStorageProofAndGetValue(
 			_verifyAccountProofAndGetStorageRoot(

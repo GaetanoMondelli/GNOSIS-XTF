@@ -49,7 +49,7 @@ struct DepositInfo {
 }
 
 contract ETFIssuingChain {
-	bytes32 public latestCommitment;
+	bytes32 public latestCommitment;  // first slot
 	address public sideChainLock;
 	uint32 public sideChainId;
 	TokenQuantity[] public requiredTokens;
@@ -88,6 +88,7 @@ contract ETFIssuingChain {
 	);
 
 	mapping(uint256 => Vault) public vaults;
+	
 
 	constructor(
 		uint32 _mainChain,
@@ -153,9 +154,18 @@ contract ETFIssuingChain {
 	function updateCommitment() public {
 		// based on states values, generate a commitment
 		VaultState[] memory states = getVaultStates();
+		VaultState[] memory commitment = new VaultState[](states.length);
 		// fixed nonce for demo
+		for (uint256 i = 0; i < states.length; i++) {
+			if (states[i] != VaultState.BURNED) {
+				commitment[i] = 0;
+			}
+			else {
+				commitment[i] = 1;
+			}
+		}
 		latestCommitment = keccak256(
-			abi.encode(block.chainid, states, nonce)
+			abi.encode(block.chainid, commitment, nonce)
 		);
 	}
 
@@ -269,9 +279,9 @@ contract ETFIssuingChain {
 
 				// uint256 price = AggregatorV3Interface(_tokens[i]._aggretator).latestRoundData().answer;
 
-				// (, /* uint80 roundID */ int answer, , , ) = AggregatorV3Interface(
-				// 	_tokens[i]._aggregator
-				// ).latestRoundData();
+				(, /* uint80 roundID */ int answer, , , ) = AggregatorV3Interface(
+					_tokens[i]._aggregator
+				).latestRoundData();
 
 				accountContributionsPerVault[_vaultId][
 					_tokens[i]._contributor
@@ -359,7 +369,7 @@ contract ETFIssuingChain {
 				"Sender to sideChain is not the mainChainLock"
 			);
 			uint256 _vaultId = abi.decode(_message, (uint256));
-			_burn(_vaultId);
+			// _burn(_vaultId);
 		}
 	}
 
@@ -381,17 +391,26 @@ contract ETFIssuingChain {
 
 	function dispatchCommitment(
 		IReporter[] calldata reporters,
-		IAdapter[] calldata adapters
+		IAdapter[] calldata adapters,
+		uint256[] memory blockNumbers
 	) public {
 		// make sure that the commitment is updated
-		yaho.dispatchMessage(
-			chainId,
-			THRESHOLD,
-			sideChainLock,
-			abi.encode(latestCommitment),
-			reporters,
-			adapters
-		);
+		// yaho.dispatchMessage(
+		// 	chainId,
+		// 	THRESHOLD,
+		// 	sideChainLock,
+		// 	abi.encode(latestCommitment),
+		// 	reporters,
+		// 	adapters
+		// );
+		// get the current block number
+		for (uint256 i = 0; i < reporters.length; i++) {
+			reporters[i].dispatchBlocks(
+				sideChainId,
+				adapters[i],
+				blockNumbers
+			);
+		}
 	}
 
 	function secureBurn(
@@ -399,17 +418,17 @@ contract ETFIssuingChain {
 		bytes32 mainChainLastCommitment,
 		Proof calldata proof
 	) public {
-		// require(
-		// 	!isMainChain(),
-		// 	"Secure Hashi burn can only be called on side chain"
-		// );
-		// require(
-		// 	proverSlotZero._verifyProof(
-		// 		proof,
-		// 		abi.encode(mainChainLastCommitment)
-		// 	),
-		// 	"Proof verification failed"
-		// );
+		require(
+			!isMainChain(),
+			"Secure Hashi burn can only be called on side chain"
+		);
+		require(
+			proverSlotZero._verifyProof(
+				proof,
+				abi.encode(mainChainLastCommitment)
+			),
+			"Proof verification failed"
+		);
 		_burn(_vaultId);
 		setVaultState(_vaultId, VaultState.BURNED);
 	}

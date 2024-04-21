@@ -34,9 +34,23 @@ const deployYourContract: DeployFunction = async function (hre: HardhatRuntimeEn
   const sepoliaMailBoxAddress = CORE_DEPLOYMENT["sepolia"]["mailbox"];
   const sepoliaISMAddress = CORE_DEPLOYMENT["sepolia"]["messageIdMultisigIsm"];
 
-  const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+  // const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+
 
   if (hre.network.name === "chiado") {
+    console.log("Dispatching chiado blocks to sepolia");
+    const hyperlaneReporterAddress = "0xAf775F72fC4158e4A4bD6EA4B389B09DF556BD46"; 
+    const hyperlaneReporter = await hre.ethers.getContractAt("HyperlaneReporter", hyperlaneReporterAddress, owner);
+    const sepoliaHyperlaneAdapterAddress = "0x6869B0EbdC183Ab4cFc297B32214B21A417E76B2";
+
+    // await hyperlaneReporter.setDomainByChainId(sepoliaChainId, sepoliaChainId);
+    await hyperlaneReporter.dispatchBlocks(sepoliaChainId, sepoliaHyperlaneAdapterAddress, [9370742], {
+      value: ethers.parseEther("0.06"),
+    });
+  }
+
+
+  if (hre.network.name === "chiado2") {
     await deploy("Hashi", {
       from: deployer,
       args: [],
@@ -127,7 +141,7 @@ const deployYourContract: DeployFunction = async function (hre: HardhatRuntimeEn
     // await hyperlaneReporter.dispatchMessages(sepoliaChainId, hyperlaneAdapter, [1], ["0x"]);
   }
 
-  if (hre.network.name === "sepolia") {
+  if (hre.network.name === "sepolia2") {
     await deploy("Hashi", {
       from: deployer,
       args: [],

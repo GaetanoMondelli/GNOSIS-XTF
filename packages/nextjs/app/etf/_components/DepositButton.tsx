@@ -29,7 +29,17 @@ export function DepositButton({
     address: contractsData["ETFIssuingChain"].address,
     functionName: "burn",
     abi: contractsData["ETFIssuingChain"].abi,
-    args: [bundleId],
+    args: [
+      bundleId,
+      {
+        blockNumber: 0,
+        nonce: 0,
+        blockHeader: "0x",
+        storageRoot: "0x7465737400000000000000000000000000000000000000000000000000000000",
+        accountProof: "0x",
+        storageProof: "0x",
+      },
+    ],
   });
 
   const contractName = "ETFIssuingChain";

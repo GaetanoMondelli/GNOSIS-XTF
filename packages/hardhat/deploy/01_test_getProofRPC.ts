@@ -103,6 +103,8 @@ const deployYourContract: DeployFunction = async function (hre: HardhatRuntimeEn
     const committer = "Committer";
     const prover = "Prover";
 
+    const blockNumberCommiter = 9370742;
+
     await deploy(committer, {
       from: deployer,
       args: [sepoliaChainId],
@@ -224,16 +226,17 @@ const deployYourContract: DeployFunction = async function (hre: HardhatRuntimeEn
     const proofObject = {
       blockNumber: txReceipt?.blockNumber || 0,
       blockHeader: blockHeader,
-      accountProof: proofData.accountProofRlp,
+      // accountProof: proofData.accountProofRlp,
+      accountProof: proof.accountProof,
       nonce: nonce,
       storageRoot: proof?.storageHash,
-      storageProof: proofData.storageProofRlp,
+      // storageProof: proofData.storageProofRlp,
     };
 
     console.log("Proof object:", proofObject);
 
-    const result = await proverContract._verifyProof(proofObject, data);
-    console.log("Proof verification result:", result);
+    // const result = await proverContract._verifyProof(proofObject, data);
+    // console.log("Proof verification result:", result);
   }
 };
 
